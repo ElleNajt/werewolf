@@ -42,13 +42,16 @@ class GameCoordinator:
         self.output_dir = self.base_dir / f"game{self.game_id}"
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        # Initialize 6 players with roles
-        player_names = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"]
-        roles = [
-            Role.WEREWOLF, Role.WEREWOLF,  # 2 werewolves
-            Role.SEER,                      # 1 seer
-            Role.VILLAGER, Role.VILLAGER, Role.VILLAGER  # 3 villagers
-        ]
+        # Initialize players dynamically based on config
+        player_names = [f"Player{i+1}" for i in range(self.config.num_players)]
+
+        # Build role list: werewolves, 1 seer, remaining villagers
+        num_villagers = self.config.num_players - self.config.num_werewolves - 1  # -1 for seer
+        roles = (
+            [Role.WEREWOLF] * self.config.num_werewolves +
+            [Role.SEER] +
+            [Role.VILLAGER] * num_villagers
+        )
         random.shuffle(roles)
 
         self.game = GameState(player_names, roles)
@@ -552,14 +555,16 @@ Output format: {self.get_output_format("vote analysis", "name")}"""
         self.log(f"\nGame stats saved to {stats_file}")
 
     def run_game(self, max_turns: Optional[int] = None):
-        """Run the complete game."""
+        """Run the complete game until a side wins."""
+        # Keep max_turns as safety limit to prevent infinite loops (default 100)
         if max_turns is None:
-            max_turns = self.config.max_turns
+            max_turns = self.config.max_turns if hasattr(self.config, 'max_turns') else 100
 
         self.save_state()
 
         try:
-            for turn in range(max_turns):
+            turn = 0
+            while True:
                 winner = self.run_turn()
                 if winner:
                     self.log(f"\n{'='*50}")
@@ -570,10 +575,12 @@ Output format: {self.get_output_format("vote analysis", "name")}"""
                     self.save_game_stats(winner)
                     return winner
 
-            self.log("\nGame reached maximum turns without a winner.")
-            self.save_state()
-            self.save_game_stats("Draw")
-            return "Draw"
+                turn += 1
+                if turn >= max_turns:
+                    self.log(f"\nWARNING: Safety limit of {max_turns} turns reached. Ending game.")
+                    self.save_state()
+                    self.save_game_stats("Draw (max turns)")
+                    return "Draw"
 
         except GameAbortException as e:
             self.log(f"\n{'='*50}")

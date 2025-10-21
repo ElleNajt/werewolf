@@ -22,7 +22,9 @@ class GameConfig:
                  quantization_bits: int = 8,
                  modal_app_name: Optional[str] = None,
                  output_dir: str = "/workspace/werewolf_game",
-                 max_turns: int = 5):
+                 max_turns: int = 5,
+                 num_players: int = 12,
+                 num_werewolves: int = 3):
         """
         Args:
             backend_type: "claude", "local", "probe", or "modal_probe"
@@ -37,6 +39,8 @@ class GameConfig:
             modal_app_name: Modal app name (for "modal_probe" backend)
             output_dir: Directory to save game results
             max_turns: Maximum number of game turns
+            num_players: Total number of players in the game
+            num_werewolves: Number of werewolves in the game
         """
         self.backend_type = backend_type
         self.model_url = model_url or "http://localhost:8000"
@@ -50,6 +54,8 @@ class GameConfig:
         self.modal_app_name = modal_app_name or "werewolf-apollo-probe"
         self.output_dir = output_dir
         self.max_turns = max_turns
+        self.num_players = num_players
+        self.num_werewolves = num_werewolves
 
     @classmethod
     def from_file(cls, config_path: str) -> 'GameConfig':
@@ -72,7 +78,9 @@ class GameConfig:
             "quantization_bits": self.quantization_bits,
             "modal_app_name": self.modal_app_name,
             "output_dir": self.output_dir,
-            "max_turns": self.max_turns
+            "max_turns": self.max_turns,
+            "num_players": self.num_players,
+            "num_werewolves": self.num_werewolves
         }
 
     def save(self, config_path: str):
