@@ -109,7 +109,10 @@ class GameCoordinator:
 
     def call_agent(self, player_name: str, prompt: str, expect_json: bool = False, max_retries: int = 5) -> str:
         """Call agent backend with a prompt for a specific player, with retry logic."""
-        self.log(f"\n[Calling agent for {player_name}]")
+        # Get player role for annotation
+        player = self.game.get_player(player_name)
+        role_annotation = f" ({player.role.value})" if player else ""
+        self.log(f"\n[Calling agent for {player_name}]{role_annotation}")
 
         # System prompt - minimal and clear
         system_prompt = """You are a game AI. Respond only with JSON."""
