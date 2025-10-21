@@ -16,19 +16,23 @@ class GameConfig:
                  probe_url: Optional[str] = None,
                  detector_path: Optional[str] = None,
                  provide_probe_scores: bool = False,
+                 probe_explanation: Optional[str] = None,
                  use_quantized: bool = False,
                  quantization_bits: int = 8,
+                 modal_app_name: Optional[str] = None,
                  output_dir: str = "/workspace/werewolf_game",
                  max_turns: int = 5):
         """
         Args:
-            backend_type: "claude", "local", or "probe"
+            backend_type: "claude", "local", "probe", or "modal_probe"
             model_url: URL for local model server (for "local" backend)
             probe_url: URL for probe server (deprecated, not used)
-            detector_path: Path to Apollo detector file (for "probe" backend)
+            detector_path: Path to Apollo detector file (for "probe" or "modal_probe" backend)
             provide_probe_scores: If True, show probe scores to players as "lie detector"
+            probe_explanation: Explanation text for lie detector scores (shown to players)
             use_quantized: If True, load model with quantization (for "probe" backend)
             quantization_bits: 4 or 8 bit quantization (for "probe" backend)
+            modal_app_name: Modal app name (for "modal_probe" backend)
             output_dir: Directory to save game results
             max_turns: Maximum number of game turns
         """
@@ -37,8 +41,10 @@ class GameConfig:
         self.probe_url = probe_url or "http://localhost:8001"  # Deprecated
         self.detector_path = detector_path
         self.provide_probe_scores = provide_probe_scores
+        self.probe_explanation = probe_explanation or "Higher scores indicate greater likelihood of deception."
         self.use_quantized = use_quantized
         self.quantization_bits = quantization_bits
+        self.modal_app_name = modal_app_name or "werewolf-apollo-probe"
         self.output_dir = output_dir
         self.max_turns = max_turns
 
@@ -57,8 +63,10 @@ class GameConfig:
             "probe_url": self.probe_url,
             "detector_path": self.detector_path,
             "provide_probe_scores": self.provide_probe_scores,
+            "probe_explanation": self.probe_explanation,
             "use_quantized": self.use_quantized,
             "quantization_bits": self.quantization_bits,
+            "modal_app_name": self.modal_app_name,
             "output_dir": self.output_dir,
             "max_turns": self.max_turns
         }
