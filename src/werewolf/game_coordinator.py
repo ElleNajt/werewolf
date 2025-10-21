@@ -53,6 +53,7 @@ class GameCoordinator:
 
         self.game = GameState(player_names, roles)
         self.log_file = self.output_dir / "game_log.txt"
+        self.llm_log_file = self.output_dir / "llm_log.txt"
         self.state_file = self.output_dir / "game_state.json"
 
         # Track each player's private reasoning history
@@ -93,6 +94,11 @@ class GameCoordinator:
         with open(self.log_file, 'a') as f:
             f.write(message + "\n")
 
+    def log_llm(self, message: str):
+        """Log detailed LLM interactions to separate file (not printed to console)."""
+        with open(self.llm_log_file, 'a') as f:
+            f.write(message + "\n")
+
     def save_state(self):
         """Save current game state."""
         self.game.save(str(self.state_file))
@@ -117,13 +123,30 @@ class GameCoordinator:
         # System prompt - minimal and clear
         system_prompt = """You are a game AI. Respond only with JSON."""
 
+        # Log prompts to LLM log
+        self.log_llm(f"\n{'='*80}")
+        self.log_llm(f"[LLM Call for {player_name}]{role_annotation}")
+        self.log_llm(f"{'='*80}")
+        self.log_llm(f"\n--- SYSTEM PROMPT ---")
+        self.log_llm(system_prompt)
+        self.log_llm(f"\n--- USER PROMPT ---")
+        self.log_llm(prompt)
+
         for attempt in range(max_retries):
             if attempt > 0:
                 self.log(f"  Retry {attempt}/{max_retries} for {player_name}...")
+                self.log_llm(f"\n[Retry {attempt}/{max_retries}]")
 
             try:
                 # Call backend
                 response, metadata = self.backend.call(prompt, system_prompt, max_retries=1)
+
+                # Log response to LLM log
+                self.log_llm(f"\n--- LLM RESPONSE ---")
+                self.log_llm(response)
+                if metadata:
+                    self.log_llm(f"\n--- METADATA ---")
+                    self.log_llm(json.dumps(metadata, indent=2))
 
                 if expect_json:
                     # Parse JSON response
