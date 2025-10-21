@@ -1,4 +1,132 @@
 #+title: Research Journal
 
+* [2025-10-19] Implemented backend abstraction for Werewolf game
+  :PROPERTIES:
+  :GIT_HASH: (uncommitted - git not configured)
+  :FILES: src/werewolf/{agent_backend.py,config.py,game_coordinator.py}
+  :END:
+
+** What was done
+   Implemented pluggable backend system to support multiple LLM backends with
+   optional deception probe integration for the multi-agent Werewolf game.
+
+   Created three backend implementations:
+   - ClaudeBackend: Uses claude -p CLI (existing, now abstracted)
+   - LocalModelBackend: Calls local Llama via HTTP API (OpenAI-compatible)
+   - ProbeBackend: Calls model + retrieves per-token deception scores
+
+** Architecture
+   #+begin_src
+   GameCoordinator
+       ├── GameConfig (backend_type, model_url, probe_url, provide_probe_scores)
+       └── AgentBackend (abstract base class)
+            ├── ClaudeBackend (subprocess)
+            ├── LocalModelBackend (HTTP /v1/chat/completions)
+            └── ProbeBackend (model + probe activations)
+   #+end_src
+
+** Key features implemented
+   1. *GameConfig class* (config.py)
+      - from_file() to load JSON configs
+      - Support for all backend parameters
+
+   2. *ProbeBackend with lie detector*
+      - Calls model for response
+      - Calls probe API (/probe endpoint) for activations
+      - Returns per-token scores + aggregate deception probability
+      - format_activations_for_context() presents as "lie detector reading"
+
+   3. *Game coordinator integration*
+      - call_agent() now uses backend.call() instead of subprocess
+      - Tracks probe activations in player_activations dict
+      - get_lie_detector_context() shows activations during voting phase
+      - Activations saved to game_stats.json
+
+   4. *Two probe modes*
+      - provide_probe_scores=true: Players see lie detector readings
+      - provide_probe_scores=false: Activations logged but hidden (blind)
+
+** Output format
+   During voting phase, players see:
+   #+begin_example
+   Lie detector readings (may be faulty):
+   Lie detector reading for Alice: Overall deception probability: 0.65 (high on: suspicious, definitely)
+   Lie detector reading for Bob: Overall deception probability: 0.32
+   #+end_example
+
+   Game stats JSON includes:
+   #+begin_src json
+   {
+     "backend_type": "probe",
+     "probe_enabled": true,
+     "player_activations": {
+       "Alice": [
+         {
+           "action": "I think Bob is suspicious",
+           "activations": {
+             "tokens": ["I", "think", "Bob", "is", "suspicious"],
+             "scores": [0.12, 0.34, 0.56, 0.78, 0.87],
+             "aggregate": 0.65
+           }
+         }
+       ]
+     }
+   }
+   #+end_src
+
+** Technical challenges
+   - Needed to track activations per player per statement
+   - Lie detector context only shown during voting (after statements made)
+   - Backend abstraction had to preserve retry logic from original code
+   - Metadata passing: backend returns (response, metadata) tuple
+
+** Integration with deception-detection codebase
+   ProbeBackend has placeholder _get_activations() method (agent_backend.py:205-237)
+   that needs integration with probe code.
+
+   Two options:
+   1. HTTP API (recommended for RunPod):
+      - Start probe server on port 8001
+      - Implement /probe endpoint: {"text": "..."} -> {"tokens": [...], "scores": [...], "aggregate": float}
+
+   2. Direct import (local dev):
+      - Edit agent_backend.py lines 141-144
+      - Import probe function from deception-detection
+      - Uncomment and update self.probe_module
+
+** Next steps
+   1. Integrate with actual deception-detection probe code
+   2. Deploy to RunPod with local Llama model
+   3. Run experiments comparing:
+      - Claude vs local model behavior
+      - Games with vs without probe scores visible
+      - Probe accuracy at detecting werewolf deception
+   4. Analyze player_activations data:
+      - Do werewolves have higher deception scores?
+      - Do scores correlate with lying behavior?
+      - How do players respond to lie detector readings?
+
+** Files created
+   - src/werewolf/agent_backend.py (292 lines)
+   - src/werewolf/config.py (58 lines)
+   - src/werewolf/config.claude.json
+   - src/werewolf/config.probe.json
+   - src/werewolf/test_backend_integration.py
+   - src/werewolf/README_BACKENDS.md (comprehensive docs)
+
+** Files modified
+   - src/werewolf/game_coordinator.py
+     - Updated __init__ to accept GameConfig
+     - call_agent() uses backend.call()
+     - Added get_lie_detector_context()
+     - player_activations tracking
+     - save_game_stats() includes activations
+
+** Lessons learned
+   - Abstraction allows testing with Claude before deploying expensive GPU
+   - Separating reasoning/action/activations enables multi-level analysis
+   - "Lie detector" framing makes probe scores interpretable to agents
+   - Metadata dict allows extensibility (could add token logprobs, etc.)
+
 
 

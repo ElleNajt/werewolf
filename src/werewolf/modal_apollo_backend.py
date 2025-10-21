@@ -1,0 +1,388 @@
+"""
+Modal backend for serving Apollo deception probes with Llama 70B.
+Provides inference API for werewolf game with deception detection.
+"""
+
+import modal
+import torch
+import json
+from typing import List, Dict, Any, Optional
+from pathlib import Path
+import os
+import pickle
+
+# Model configuration
+DEFAULT_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
+N_GPU = 4  # Use 4x H100 for longer context (320GB total)
+GPU_CONFIG = f"H100:{N_GPU}"
+SCALEDOWN_WINDOW = 2 * 60  # 2 minutes
+TIMEOUT = 20 * 60  # 20 minutes
+
+# Volume for storing models and detectors
+VOLUME = modal.Volume.from_name("werewolf-apollo-probes", create_if_missing=True)
+VOLUME_PATH = "/models"
+DETECTOR_DIR = Path(VOLUME_PATH) / "detectors"
+
+# Load HF token for accessing Llama models
+if modal.is_local():
+    from dotenv import load_dotenv
+    load_dotenv()
+    hf_token = os.getenv("HF_TOKEN")
+    if not hf_token:
+        raise ValueError("HF_TOKEN must be set in environment or .env file")
+    LOCAL_HF_TOKEN_SECRET = modal.Secret.from_dict({"HF_TOKEN": hf_token})
+else:
+    LOCAL_HF_TOKEN_SECRET = modal.Secret.from_dict({})
+
+# Modal image with dependencies
+image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .pip_install(
+        "torch>=2.0.0",
+        "transformers>=4.40.0",
+        "accelerate>=0.20.0",
+        "numpy>=1.24.0",
+        "vllm==0.6.3",  # Pin to 0.6.3 - last version before V1 engine
+        "huggingface_hub>=0.20.0",
+        "scikit-learn>=1.3.0",  # For LogisticRegressionDetector
+        "jaxtyping>=0.2.0",
+    )
+)
+
+app = modal.App("werewolf-apollo-probe", image=image)
+
+
+@app.cls(
+    image=image,
+    gpu=GPU_CONFIG,
+    scaledown_window=SCALEDOWN_WINDOW,
+    volumes={VOLUME_PATH: VOLUME},
+    timeout=TIMEOUT,
+    allow_concurrent_inputs=10,
+    secrets=[LOCAL_HF_TOKEN_SECRET],
+)
+class ApolloProbeService:
+    """Modal service for Apollo deception probe inference with Llama 70B."""
+
+    def __init__(self, model_name: Optional[str] = None):
+        self.model_name = model_name or DEFAULT_MODEL
+        self.llm = None
+        self.tokenizer = None
+        self.detector = None
+        self.detector_layer = 22  # Default layer for roleplaying detector
+
+    @modal.enter()
+    def load_model(self):
+        """Load vLLM model and detector on container startup."""
+        from vllm import LLM
+        from transformers import AutoTokenizer
+
+        print(f"Loading vLLM model: {self.model_name}")
+
+        # Initialize vLLM with tensor parallelism for 70B model
+        self.llm = LLM(
+            model=self.model_name,
+            gpu_memory_utilization=0.90,  # 4x H100 = 320GB total, plenty of room
+            max_model_len=4096,  # Sufficient for multi-turn werewolf games
+            trust_remote_code=True,
+            enforce_eager=True,  # Required for hooks
+            download_dir=VOLUME_PATH,
+            tensor_parallel_size=N_GPU,
+        )
+
+        # Load tokenizer
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            self.model_name,
+            token=os.environ.get("HF_TOKEN")
+        )
+
+        print("Model loaded successfully!")
+
+        # Load default detector if available
+        default_detector_path = DETECTOR_DIR / "detector.pt"
+        if default_detector_path.exists():
+            self._load_detector(str(default_detector_path))
+        else:
+            print("No default detector found. Use load_detector() to load one.")
+
+    def _load_detector(self, detector_path: str):
+        """Load Apollo detector from pickle file."""
+        print(f"Loading detector from {detector_path}...")
+
+        with open(detector_path, 'rb') as f:
+            data = pickle.load(f)
+
+        # Reconstruct detector (simplified version for inference)
+        class SimpleDetector:
+            def __init__(self, layers, directions, scaler_mean=None, scaler_scale=None,
+                         normalize=True, reg_coeff=10.0):
+                self.layers = layers if isinstance(layers, list) else [layers]
+                # Handle both dict and tensor formats
+                if isinstance(directions, dict):
+                    self.directions = directions
+                else:
+                    # Single layer detector - directions is just a tensor
+                    self.directions = {self.layers[0]: directions}
+                self.scaler_mean = scaler_mean
+                self.scaler_scale = scaler_scale
+                self.normalize = normalize
+                self.reg_coeff = reg_coeff
+
+            def score_activations(self, activations: torch.Tensor, layer: int) -> torch.Tensor:
+                """Score activations for a single layer."""
+                direction = self.directions[layer].to(activations.device)
+
+                # Normalize if needed
+                if self.normalize and self.scaler_mean is not None:
+                    if isinstance(self.scaler_mean, dict):
+                        mean = self.scaler_mean[layer].to(activations.device)
+                        scale = self.scaler_scale[layer].to(activations.device)
+                    else:
+                        # Single layer - scaler is just a tensor
+                        mean = self.scaler_mean.to(activations.device)
+                        scale = self.scaler_scale.to(activations.device)
+                    activations = (activations - mean) / (scale + 1e-8)
+
+                # Project onto direction and apply regularization
+                scores = torch.matmul(activations, direction) * self.reg_coeff
+                return scores
+
+        self.detector = SimpleDetector(
+            layers=data["layers"],
+            directions=data["directions"],
+            scaler_mean=data.get("scaler_mean"),
+            scaler_scale=data.get("scaler_scale"),
+            normalize=data.get("normalize", True),
+            reg_coeff=data.get("reg_coeff", 10.0)
+        )
+
+        # Set the layer to use (use first layer from detector)
+        self.detector_layer = data["layers"][0]
+
+        print(f"Detector loaded successfully! Using layer {self.detector_layer}")
+
+    @modal.method()
+    def load_detector_from_path(self, detector_path: str) -> Dict[str, Any]:
+        """Load a detector from a file path."""
+        try:
+            self._load_detector(detector_path)
+            return {"status": "success", "layer": self.detector_layer}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    @modal.method()
+    def generate_with_probe(
+        self,
+        messages: List[Dict[str, str]],
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+    ) -> Dict[str, Any]:
+        """
+        Generate a response and score it with the probe.
+
+        Args:
+            messages: Chat messages (e.g., [{"role": "system", "content": "..."}, ...])
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+
+        Returns:
+            Dictionary with generated_text, aggregate_score, and token_scores
+        """
+        from vllm import SamplingParams
+
+        if self.detector is None:
+            return {"error": "No detector loaded. Use load_detector_from_path() first."}
+
+        try:
+            # Format the conversation
+            prompt_token_ids = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=True,
+                add_generation_prompt=True
+            )
+
+            # Set up sampling parameters
+            sampling_params = SamplingParams(
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=0.9 if temperature > 0 else 1.0,
+            )
+
+            # Get the model for hook registration
+            model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+            target_layer = model.model.layers[self.detector_layer]
+
+            # Storage for activations
+            layer_activations = []
+            first_fwd_pass = True
+
+            def activation_hook(module, input, output):
+                """Extract activations during generation."""
+                nonlocal first_fwd_pass, layer_activations
+
+                if first_fwd_pass:
+                    # Skip the first forward pass (prompt processing)
+                    first_fwd_pass = False
+                    return
+
+                # Extract hidden states
+                # vLLM layers return (hidden_states, residual)
+                assert len(output) == 2
+                hidden_states, residual = output
+                resid_post = hidden_states + residual
+
+                # Store the last token's activations
+                layer_activations.append(resid_post[-1:].detach().cpu())
+
+            # Register hook
+            hook_handle = target_layer.register_forward_hook(activation_hook)
+
+            try:
+                # Generate with vLLM
+                from vllm import TokensPrompt
+                outputs = self.llm.generate(
+                    prompts=[TokensPrompt(prompt_token_ids=prompt_token_ids)],
+                    sampling_params=sampling_params,
+                    use_tqdm=False
+                )
+
+                # Extract generated text
+                generated_text = outputs[0].outputs[0].text
+                generated_ids = list(outputs[0].outputs[0].token_ids)
+
+            finally:
+                # Remove hook
+                hook_handle.remove()
+
+            # Score the activations
+            if layer_activations:
+                # Stack all activations [num_tokens, hidden_dim]
+                all_activations = torch.cat(layer_activations, dim=0).to("cuda")
+
+                # Score with detector
+                scores = self.detector.score_activations(all_activations, self.detector_layer)
+                token_scores = scores.cpu().tolist()
+
+                # Compute aggregate score
+                aggregate_score = sum(token_scores) / len(token_scores) if token_scores else 0.5
+            else:
+                token_scores = []
+                aggregate_score = 0.5
+
+            return {
+                "generated_text": generated_text,
+                "aggregate_score": aggregate_score,
+                "token_scores": token_scores,
+                "num_tokens": len(generated_ids),
+            }
+
+        except Exception as e:
+            import traceback
+            return {
+                "error": f"Generation failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }
+
+    @modal.method()
+    def score_text(self, text: str, system_prompt: str = "") -> Dict[str, Any]:
+        """
+        Score existing text for deception (no generation).
+
+        Args:
+            text: Text to score
+            system_prompt: Optional system prompt
+
+        Returns:
+            Dictionary with aggregate_score and token_scores
+        """
+        if self.detector is None:
+            return {"error": "No detector loaded. Use load_detector_from_path() first."}
+
+        try:
+            # Build messages
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "assistant", "content": text})
+
+            # Tokenize
+            formatted = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=False,
+                add_generation_prompt=False
+            )
+
+            inputs = self.tokenizer(formatted, return_tensors="pt").to("cuda")
+
+            # Get model for activation extraction
+            model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+
+            # Forward pass to get activations
+            with torch.no_grad():
+                # Get layer outputs
+                # This is a simplified approach - in practice, you'd want to
+                # extract activations more carefully
+                target_layer = model.model.layers[self.detector_layer]
+
+                layer_output = None
+
+                def hook_fn(module, input, output):
+                    nonlocal layer_output
+                    hidden_states, residual = output
+                    layer_output = hidden_states + residual
+
+                hook = target_layer.register_forward_hook(hook_fn)
+
+                try:
+                    _ = model(**inputs)
+                finally:
+                    hook.remove()
+
+                if layer_output is None:
+                    return {"error": "Failed to extract activations"}
+
+                # Score the activations
+                scores = self.detector.score_activations(
+                    layer_output.squeeze(0),  # Remove batch dim
+                    self.detector_layer
+                )
+                token_scores = scores.cpu().tolist()
+
+                # Compute aggregate
+                aggregate_score = sum(token_scores) / len(token_scores) if token_scores else 0.5
+
+                return {
+                    "aggregate_score": aggregate_score,
+                    "token_scores": token_scores,
+                    "num_tokens": len(token_scores),
+                    "text": text,
+                }
+
+        except Exception as e:
+            import traceback
+            return {
+                "error": f"Scoring failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }
+
+
+@app.function(image=image)
+def health_check():
+    """Simple health check endpoint."""
+    return {"status": "healthy", "service": "werewolf-apollo-probe"}
+
+
+if __name__ == "__main__":
+    # Test the service
+    with app.run():
+        service = ApolloProbeService()
+
+        # Example: generate with probe
+        result = service.generate_with_probe.remote(
+            messages=[
+                {"role": "system", "content": "You are playing Werewolf. You are a werewolf."},
+                {"role": "user", "content": "Who do you think is suspicious?"}
+            ],
+            max_tokens=100
+        )
+        print(result)
