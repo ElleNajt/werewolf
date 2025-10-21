@@ -97,12 +97,15 @@ class GameCoordinator:
         """Save current game state."""
         self.game.save(str(self.state_file))
 
-    def get_output_format(self, reasoning_label: str, action_label: str) -> str:
+    def get_output_format(self, reasoning_label: str, action_label: str, action_example: str = "") -> str:
         """Get the output format string based on whether reasoning is requested."""
         if self.config.request_reasoning:
             return f'{{"reasoning": "{reasoning_label}", "action": "{action_label}"}}'
         else:
-            return f'{{"action": "{action_label}"}}'
+            if action_example:
+                return f'{{"action": "<{action_label}>"}}\nExample: {{"action": "{action_example}"}}'
+            else:
+                return f'{{"action": "<{action_label}>"}}'
 
     def call_agent(self, player_name: str, prompt: str, expect_json: bool = False, max_retries: int = 5) -> str:
         """Call agent backend with a prompt for a specific player, with retry logic."""
@@ -378,7 +381,7 @@ Your character: {player.name} - {role_info}{secret_info}
 Phase: DAY DISCUSSION
 Task: Make a public statement (1-2 sentences)
 
-Output format: {self.get_output_format("private thoughts", "public statement")}"""
+Output format: {self.get_output_format("private thoughts", "your 1-2 sentence statement", "I'm concerned about Alice's death and want to hear what everyone else thinks.")}"""
 
             statement = self.call_agent(player.name, prompt, expect_json=True)
             self.game.add_event("day_statement", {"player": player.name, "statement": statement})
