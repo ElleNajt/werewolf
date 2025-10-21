@@ -58,18 +58,19 @@ app = modal.App("werewolf-apollo-probe", image=image)
     scaledown_window=SCALEDOWN_WINDOW,
     volumes={VOLUME_PATH: VOLUME},
     timeout=TIMEOUT,
-    allow_concurrent_inputs=10,
     secrets=[LOCAL_HF_TOKEN_SECRET],
 )
 class ApolloProbeService:
     """Modal service for Apollo deception probe inference with Llama 70B."""
 
-    def __init__(self, model_name: Optional[str] = None):
-        self.model_name = model_name or DEFAULT_MODEL
-        self.llm = None
-        self.tokenizer = None
-        self.detector = None
-        self.detector_layer = 22  # Default layer for roleplaying detector
+    # Use modal.parameter() for class parameterization (Modal 1.0)
+    model_name: str = modal.parameter(default=DEFAULT_MODEL)
+
+    # These are initialized in load_model()
+    llm: Any = None
+    tokenizer: Any = None
+    detector: Any = None
+    detector_layer: int = 22  # Default layer for roleplaying detector
 
     @modal.enter()
     def load_model(self):
@@ -132,6 +133,10 @@ class ApolloProbeService:
                 """Score activations for a single layer."""
                 direction = self.directions[layer].to(activations.device)
 
+                # Ensure direction is 1D for proper matrix multiplication
+                if direction.dim() > 1:
+                    direction = direction.squeeze()
+
                 # Normalize if needed
                 if self.normalize and self.scaler_mean is not None:
                     if isinstance(self.scaler_mean, dict):
@@ -141,6 +146,13 @@ class ApolloProbeService:
                         # Single layer - scaler is just a tensor
                         mean = self.scaler_mean.to(activations.device)
                         scale = self.scaler_scale.to(activations.device)
+
+                    # Ensure mean/scale are broadcastable
+                    if mean.dim() > 1:
+                        mean = mean.squeeze()
+                    if scale.dim() > 1:
+                        scale = scale.squeeze()
+
                     activations = (activations - mean) / (scale + 1e-8)
 
                 # Project onto direction and apply regularization
