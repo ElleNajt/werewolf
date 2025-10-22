@@ -457,6 +457,88 @@ Output format: {self.get_output_format("private thoughts", "your 1-2 sentence st
             statement = self.call_agent(player.name, prompt, expect_json=True)
             self.game.add_event("day_statement", {"player": player.name, "statement": statement})
 
+        # Allow players to call on others for additional statements
+        if self.config.allow_player_callouts:
+            self.player_callout_phase()
+
+    def player_callout_phase(self):
+        """Allow players to call on others to make additional statements."""
+        self.log(f"\n--- Player Callouts ---")
+
+        public_info = self.get_public_info()
+        alive_players = self.game.get_alive_players()
+        alive_names = [p.name for p in alive_players]
+
+        # Track who has been called on to avoid duplicates
+        called_players = set()
+
+        # Each player can optionally call on someone
+        for player in alive_players:
+            role_info = f"You are a {player.role.value.upper()}."
+
+            # Add secret info for werewolves
+            secret_info = ""
+            if player.role == Role.WEREWOLF:
+                ww_names = [w.name for w in self.game.get_werewolves() if w.name != player.name]
+                if ww_names:
+                    secret_info = f"\nYour fellow werewolf is: {ww_names[0]}"
+
+            player_context = self.get_player_context(player.name)
+            lie_detector_context = self.get_lie_detector_context()
+
+            # Options are other alive players who haven't been called yet
+            options = [name for name in alive_names if name != player.name and name not in called_players]
+            if not options:
+                continue
+
+            prompt = f"""GAME AI QUERY
+Game: Werewolf
+Your character: {player.name} - {role_info}{secret_info}
+
+{public_info}{lie_detector_context}
+{player_context}
+
+Phase: PLAYER CALLOUT
+Task: Optionally call on another player to make an additional statement. This is useful if you want to hear more from a suspicious player to get additional lie detector readings.
+
+Options: {', '.join(options)}, or 'PASS' to not call on anyone
+
+Output format: {self.get_output_format("private reasoning about who to call on", "player name or PASS", "Player5")}"""
+
+            response = self.call_agent(player.name, prompt, expect_json=True)
+
+            if response and response.upper() != "PASS" and response in options:
+                self.log(f"{player.name} calls on {response} to speak")
+                called_players.add(response)
+
+                # Get the called player to make a statement
+                called_player = next(p for p in alive_players if p.name == response)
+                called_role_info = f"You are a {called_player.role.value.upper()}."
+
+                called_secret_info = ""
+                if called_player.role == Role.WEREWOLF:
+                    ww_names = [w.name for w in self.game.get_werewolves() if w.name != called_player.name]
+                    if ww_names:
+                        called_secret_info = f"\nYour fellow werewolf is: {ww_names[0]}"
+
+                called_context = self.get_player_context(called_player.name)
+                called_lie_detector = self.get_lie_detector_context()
+
+                called_prompt = f"""GAME AI QUERY
+Game: Werewolf
+Your character: {called_player.name} - {called_role_info}{called_secret_info}
+
+{public_info}{called_lie_detector}
+{called_context}
+
+Phase: DAY DISCUSSION (Called Upon by {player.name})
+Task: {player.name} has called on you to make an additional statement. Make a public statement (1-2 sentences)
+
+Output format: {self.get_output_format("private thoughts", "your 1-2 sentence statement", "I understand your suspicion, but I'm just a villager trying to help.")}"""
+
+                statement = self.call_agent(called_player.name, called_prompt, expect_json=True)
+                self.game.add_event("day_statement", {"player": called_player.name, "statement": statement, "called_by": player.name})
+
     def day_vote_phase(self):
         """Execute day vote phase: players vote to eliminate someone."""
         self.log(f"\n{'='*50}")
