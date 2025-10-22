@@ -216,7 +216,18 @@ class GameCoordinator:
         alive = self.game.get_alive_players()
         dead = [p for p in self.game.players if not p.alive]
 
-        info = f"Turn {self.game.turn_number}\n"
+        # Game setup information
+        num_villagers = self.config.num_players - self.config.num_werewolves
+        if not self.config.no_seer:
+            num_villagers -= 1  # One villager is the seer
+
+        info = f"GAME SETUP: {self.config.num_players} players total - {self.config.num_werewolves} werewolves, "
+        if not self.config.no_seer:
+            info += f"1 seer, {num_villagers} villagers\n\n"
+        else:
+            info += f"{num_villagers} villagers (no seer)\n\n"
+
+        info += f"Turn {self.game.turn_number}\n"
         info += f"Alive players: {', '.join(p.name for p in alive)}\n"
         if dead:
             info += f"Dead players: {', '.join(p.name for p in dead)}\n"
