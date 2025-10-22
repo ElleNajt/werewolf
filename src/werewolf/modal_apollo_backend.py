@@ -363,78 +363,78 @@ class ApolloProbeService:
         Returns:
             Dictionary with aggregate_score and token_scores
         """
+        from vllm import SamplingParams
+
         if self.detector is None:
             return {"error": "No detector loaded. Use load_detector_from_path() first."}
 
-        try:
-            # Build messages
-            messages = []
-            if system_prompt:
-                messages.append({"role": "system", "content": system_prompt})
-            messages.append({"role": "assistant", "content": text})
+        # Build messages - text as assistant message (already generated)
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "assistant", "content": text})
 
-            # Tokenize
-            formatted = self.tokenizer.apply_chat_template(
-                messages,
-                tokenize=False,
-                add_generation_prompt=False
-            )
+        # Format for vLLM
+        formatted_prompt = self.tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=False
+        )
 
-            inputs = self.tokenizer(formatted, return_tensors="pt").to("cuda")
+        # Get model for activation extraction
+        model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+        target_layer = model.model.layers[self.detector_layer]
 
-            # Extract only input_ids (vLLM model doesn't accept attention_mask directly)
-            input_ids = inputs["input_ids"]
+        # Storage for activations
+        layer_activations = []
 
-            # Get model for activation extraction
-            model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+        def hook_fn(module, input, output):
+            hidden_states, residual = output
+            activations = (hidden_states + residual).clone()
+            layer_activations.append(activations)
 
-            # Forward pass to get activations
-            with torch.no_grad():
-                # Get layer outputs
-                # This is a simplified approach - in practice, you'd want to
-                # extract activations more carefully
-                target_layer = model.model.layers[self.detector_layer]
+        # Register hook
+        hook = target_layer.register_forward_hook(hook_fn)
 
-                layer_output = None
+        # Use vLLM API with minimal generation to trigger prompt processing
+        sampling_params = SamplingParams(
+            temperature=0.0,
+            max_tokens=1,  # Minimal generation - we only want prompt processing
+            logprobs=0
+        )
 
-                def hook_fn(module, input, output):
-                    nonlocal layer_output
-                    hidden_states, residual = output
-                    layer_output = hidden_states + residual
+        outputs = self.llm.generate(
+            formatted_prompt,
+            sampling_params,
+            use_tqdm=False
+        )
 
-                hook = target_layer.register_forward_hook(hook_fn)
+        # Remove hook
+        hook.remove()
 
-                try:
-                    _ = model(input_ids=input_ids)
-                finally:
-                    hook.remove()
+        if not layer_activations:
+            return {"error": "Failed to extract activations"}
 
-                if layer_output is None:
-                    return {"error": "Failed to extract activations"}
+        # Get activations from prompt processing (first forward pass)
+        # vLLM does prefill (prompt) then decode (generation)
+        activations = layer_activations[0].squeeze(0)  # Remove batch dim
 
-                # Score the activations
-                scores = self.detector.score_activations(
-                    layer_output.squeeze(0),  # Remove batch dim
-                    self.detector_layer
-                )
-                token_scores = scores.cpu().tolist()
+        # Score the activations
+        scores = self.detector.score_activations(
+            activations,
+            self.detector_layer
+        )
+        token_scores = scores.cpu().tolist()
 
-                # Compute aggregate
-                aggregate_score = sum(token_scores) / len(token_scores) if token_scores else 0.5
+        # Compute aggregate
+        aggregate_score = sum(token_scores) / len(token_scores) if token_scores else 0.0
 
-                return {
-                    "aggregate_score": aggregate_score,
-                    "token_scores": token_scores,
-                    "num_tokens": len(token_scores),
-                    "text": text,
-                }
-
-        except Exception as e:
-            import traceback
-            return {
-                "error": f"Scoring failed: {str(e)}",
-                "traceback": traceback.format_exc()
-            }
+        return {
+            "aggregate_score": aggregate_score,
+            "token_scores": token_scores,
+            "num_tokens": len(token_scores),
+            "text": text,
+        }
 
 
 @app.function(image=image)

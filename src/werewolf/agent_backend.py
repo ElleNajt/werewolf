@@ -6,7 +6,6 @@ Supports multiple LLM backends with optional deception probe integration.
 import subprocess
 import json
 import requests
-import torch
 from typing import Dict, List, Optional, Tuple
 from abc import ABC, abstractmethod
 
@@ -165,7 +164,6 @@ class ProbeBackend(AgentBackend):
 
             if self.use_quantized:
                 # Load with quantization using bitsandbytes
-                import torch
                 from transformers import BitsAndBytesConfig
 
                 quantization_config = BitsAndBytesConfig(
@@ -216,6 +214,7 @@ class ProbeBackend(AgentBackend):
         Returns:
             Tuple of (response_text, metadata_dict)
         """
+        import torch
         self._ensure_loaded()
 
         # Build chat messages
@@ -298,6 +297,7 @@ class ProbeBackend(AgentBackend):
             "scored_text": "..."  # What was actually sent to the probe
         }
         """
+        import torch
         self._ensure_loaded()
 
         print(f"[PROBE] Scoring text: {text[:100]}{'...' if len(text) > 100 else ''}")
@@ -398,16 +398,19 @@ class ModalProbeBackend(AgentBackend):
     def __init__(self,
                  detector_path: Optional[str] = None,
                  provide_scores: bool = True,
-                 modal_app_name: str = "werewolf-apollo-probe"):
+                 modal_app_name: str = "werewolf-apollo-probe",
+                 score_without_role_context: bool = False):
         """
         Args:
             detector_path: Path to Apollo detector (.pt file) on Modal volume
             provide_scores: If True, probe scores are provided to other players
             modal_app_name: Name of the Modal app to connect to
+            score_without_role_context: If True, re-score text without role context (ablation)
         """
         self.provide_scores = provide_scores
         self.modal_app_name = modal_app_name
         self.detector_path = detector_path
+        self.score_without_role_context = score_without_role_context
         self.service = None
 
         print(f"ModalProbeBackend initialized (app={modal_app_name})")
@@ -514,9 +517,27 @@ class ModalProbeBackend(AgentBackend):
                     metadata = None
                     if self.provide_scores:
                         print(f"[PROBE] Scoring action text: {action_text[:100]}{'...' if len(action_text) > 100 else ''}")
+
+                        # Re-score without role context if ablation study enabled
+                        if self.score_without_role_context:
+                            print(f"[ABLATION] Re-scoring text without role context...")
+                            rescore_result = self.service.score_text.remote(
+                                text=action_text,
+                                system_prompt=""  # No role context
+                            )
+                            if "error" not in rescore_result:
+                                aggregate_score = rescore_result["aggregate_score"]
+                                print(f"[ABLATION] Context-free score: {aggregate_score:.2f} (original: {action_result['aggregate_score']:.2f})")
+                            else:
+                                print(f"[ABLATION] Re-scoring failed: {rescore_result.get('error', 'Unknown error')}")
+                                print(f"[ABLATION] Using original score instead")
+                                aggregate_score = action_result["aggregate_score"]
+                        else:
+                            aggregate_score = action_result["aggregate_score"]
+
                         metadata = {
                             "activations": {
-                                "aggregate_score": action_result["aggregate_score"],
+                                "aggregate_score": aggregate_score,
                                 "text": action_text,
                                 "scored_text": action_text,
                                 "num_tokens": action_result.get("num_tokens", 0),
@@ -556,9 +577,27 @@ class ModalProbeBackend(AgentBackend):
                     metadata = None
                     if self.provide_scores:
                         print(f"[PROBE] Scoring action text: {action_text[:100]}{'...' if len(action_text) > 100 else ''}")
+
+                        # Re-score without role context if ablation study enabled
+                        if self.score_without_role_context:
+                            print(f"[ABLATION] Re-scoring text without role context...")
+                            rescore_result = self.service.score_text.remote(
+                                text=action_text,
+                                system_prompt=""  # No role context
+                            )
+                            if "error" not in rescore_result:
+                                aggregate_score = rescore_result["aggregate_score"]
+                                print(f"[ABLATION] Context-free score: {aggregate_score:.2f} (original: {action_result['aggregate_score']:.2f})")
+                            else:
+                                print(f"[ABLATION] Re-scoring failed: {rescore_result.get('error', 'Unknown error')}")
+                                print(f"[ABLATION] Using original score instead")
+                                aggregate_score = action_result["aggregate_score"]
+                        else:
+                            aggregate_score = action_result["aggregate_score"]
+
                         metadata = {
                             "activations": {
-                                "aggregate_score": action_result["aggregate_score"],
+                                "aggregate_score": aggregate_score,
                                 "text": action_text,
                                 "scored_text": action_text,
                                 "num_tokens": action_result.get("num_tokens", 0),
@@ -620,7 +659,8 @@ def create_backend(backend_type: str = "claude", **kwargs) -> AgentBackend:
         return ModalProbeBackend(
             detector_path=kwargs.get("detector_path", None),
             provide_scores=kwargs.get("provide_scores", True),
-            modal_app_name=kwargs.get("modal_app_name", "werewolf-apollo-probe")
+            modal_app_name=kwargs.get("modal_app_name", "werewolf-apollo-probe"),
+            score_without_role_context=kwargs.get("score_without_role_context", False)
         )
     else:
         raise ValueError(f"Unknown backend type: {backend_type}")

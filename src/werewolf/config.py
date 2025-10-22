@@ -18,6 +18,7 @@ class GameConfig:
                  provide_probe_scores: bool = False,
                  probe_explanation: Optional[str] = None,
                  request_reasoning: bool = True,
+                 score_without_role_context: bool = False,
                  use_quantized: bool = False,
                  quantization_bits: int = 8,
                  modal_app_name: Optional[str] = None,
@@ -35,6 +36,7 @@ class GameConfig:
             provide_probe_scores: If True, show probe scores to players as "lie detector"
             probe_explanation: Explanation text for lie detector scores (shown to players)
             request_reasoning: If True, ask models for private reasoning before actions
+            score_without_role_context: If True, re-score utterances without role information (ablation study)
             use_quantized: If True, load model with quantization (for "probe" backend)
             quantization_bits: 4 or 8 bit quantization (for "probe" backend)
             modal_app_name: Modal app name (for "modal_probe" backend)
@@ -51,6 +53,7 @@ class GameConfig:
         self.provide_probe_scores = provide_probe_scores
         self.probe_explanation = probe_explanation or "Higher scores indicate greater likelihood of deception."
         self.request_reasoning = request_reasoning
+        self.score_without_role_context = score_without_role_context
         self.use_quantized = use_quantized
         self.quantization_bits = quantization_bits
         self.modal_app_name = modal_app_name or "werewolf-apollo-probe"
@@ -77,6 +80,7 @@ class GameConfig:
             "provide_probe_scores": self.provide_probe_scores,
             "probe_explanation": self.probe_explanation,
             "request_reasoning": self.request_reasoning,
+            "score_without_role_context": self.score_without_role_context,
             "use_quantized": self.use_quantized,
             "quantization_bits": self.quantization_bits,
             "modal_app_name": self.modal_app_name,
