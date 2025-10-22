@@ -26,14 +26,18 @@ This experiment tests whether Apollo deception detection probes can help LLM age
 
 ### Key Implementation Details
 
-**Probe Isolation**
-The probe scoring is carefully isolated to avoid contamination:
-- ✅ Probes score ONLY newly generated public utterances
-- ❌ Probes do NOT see role information ("You are a WEREWOLF")
-- ❌ Probes do NOT see private reasoning
-- ❌ Probes do NOT see game context/history in the scored text
+**How Probe Scoring Works**
+The probe scores capture activations during the generation of public utterances:
+- ✅ Probes score activations from newly generated public utterances only
+- ✅ The model HAS access to role information ("You are a WEREWOLF") in its prompt context during generation
+- ❌ Probes do NOT score private reasoning (only public statements are scored)
+- ❌ Probes do NOT score game context/history text directly
 
-This is implemented via the activation hook in `modal_apollo_backend.py:288-304`, which skips the first forward pass (prompt processing) and only captures activations from newly generated tokens.
+**What the probe detects:** The probe detects deception patterns in the model's *generation process* when the model has deception instructions in its context. It's not analyzing the utterance text in isolation, but rather the neural activation patterns when a model that knows it should deceive generates public statements.
+
+This is consistent with how Apollo probes are trained: on scenarios where models are prompted with deception instructions (e.g., "You are a spy, lie about X") vs truthful instructions, then generate responses. The probe learns to detect the activation patterns associated with generating text while under deception instructions.
+
+**Implementation:** The activation hook in `modal_apollo_backend.py:288-304` skips the first forward pass (prompt processing) and only captures activations from newly generated tokens, ensuring we score the generation process rather than the prompt itself.
 
 ## Results
 
