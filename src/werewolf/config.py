@@ -24,7 +24,8 @@ class GameConfig:
                  output_dir: str = "/workspace/werewolf_game",
                  max_turns: int = 5,
                  num_players: int = 12,
-                 num_werewolves: int = 3):
+                 num_werewolves: int = 3,
+                 no_seer: bool = False):
         """
         Args:
             backend_type: "claude", "local", "probe", or "modal_probe"
@@ -41,6 +42,7 @@ class GameConfig:
             max_turns: Maximum number of game turns
             num_players: Total number of players in the game
             num_werewolves: Number of werewolves in the game
+            no_seer: If True, don't include a seer (all non-werewolves are regular villagers)
         """
         self.backend_type = backend_type
         self.model_url = model_url or "http://localhost:8000"
@@ -56,6 +58,7 @@ class GameConfig:
         self.max_turns = max_turns
         self.num_players = num_players
         self.num_werewolves = num_werewolves
+        self.no_seer = no_seer
 
     @classmethod
     def from_file(cls, config_path: str) -> 'GameConfig':
@@ -80,7 +83,8 @@ class GameConfig:
             "output_dir": self.output_dir,
             "max_turns": self.max_turns,
             "num_players": self.num_players,
-            "num_werewolves": self.num_werewolves
+            "num_werewolves": self.num_werewolves,
+            "no_seer": self.no_seer
         }
 
     def save(self, config_path: str):

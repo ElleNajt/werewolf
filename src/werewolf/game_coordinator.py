@@ -45,13 +45,20 @@ class GameCoordinator:
         # Initialize players dynamically based on config
         player_names = [f"Player{i+1}" for i in range(self.config.num_players)]
 
-        # Build role list: werewolves, 1 seer, remaining villagers
-        num_villagers = self.config.num_players - self.config.num_werewolves - 1  # -1 for seer
-        roles = (
-            [Role.WEREWOLF] * self.config.num_werewolves +
-            [Role.SEER] +
-            [Role.VILLAGER] * num_villagers
-        )
+        # Build role list: werewolves, optional seer, remaining villagers
+        if self.config.no_seer:
+            num_villagers = self.config.num_players - self.config.num_werewolves
+            roles = (
+                [Role.WEREWOLF] * self.config.num_werewolves +
+                [Role.VILLAGER] * num_villagers
+            )
+        else:
+            num_villagers = self.config.num_players - self.config.num_werewolves - 1  # -1 for seer
+            roles = (
+                [Role.WEREWOLF] * self.config.num_werewolves +
+                [Role.SEER] +
+                [Role.VILLAGER] * num_villagers
+            )
         random.shuffle(roles)
 
         self.game = GameState(player_names, roles)

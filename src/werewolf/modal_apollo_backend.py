@@ -183,6 +183,62 @@ class ApolloProbeService:
             return {"status": "error", "message": str(e)}
 
     @modal.method()
+    def generate(
+        self,
+        messages: List[Dict[str, str]],
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+    ) -> Dict[str, Any]:
+        """
+        Generate a response without probe scoring (standard vLLM generation).
+
+        Args:
+            messages: Chat messages (e.g., [{"role": "system", "content": "..."}, ...])
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature
+
+        Returns:
+            Dictionary with generated_text
+        """
+        from vllm import SamplingParams, TokensPrompt
+
+        try:
+            # Format the conversation
+            prompt_token_ids = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=True,
+                add_generation_prompt=True
+            )
+
+            # Set up sampling parameters
+            sampling_params = SamplingParams(
+                temperature=temperature,
+                max_tokens=max_tokens,
+                top_p=0.9 if temperature > 0 else 1.0,
+            )
+
+            # Generate with vLLM (no probe hooks)
+            outputs = self.llm.generate(
+                prompts=[TokensPrompt(prompt_token_ids=prompt_token_ids)],
+                sampling_params=sampling_params,
+                use_tqdm=False
+            )
+
+            # Extract generated text
+            generated_text = outputs[0].outputs[0].text
+
+            return {
+                "generated_text": generated_text,
+            }
+
+        except Exception as e:
+            import traceback
+            return {
+                "error": f"Generation failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }
+
+    @modal.method()
     def generate_with_probe(
         self,
         messages: List[Dict[str, str]],
@@ -326,6 +382,9 @@ class ApolloProbeService:
 
             inputs = self.tokenizer(formatted, return_tensors="pt").to("cuda")
 
+            # Extract only input_ids (vLLM model doesn't accept attention_mask directly)
+            input_ids = inputs["input_ids"]
+
             # Get model for activation extraction
             model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
 
@@ -346,7 +405,7 @@ class ApolloProbeService:
                 hook = target_layer.register_forward_hook(hook_fn)
 
                 try:
-                    _ = model(**inputs)
+                    _ = model(input_ids=input_ids)
                 finally:
                     hook.remove()
 

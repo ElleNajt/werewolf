@@ -249,11 +249,6 @@ def format_probe_reading(
     aggregate = score_dict["aggregate_score"]
 
     result = f"\n[LIE DETECTOR] {player_name}: "
-    result += f"Deception probability: {aggregate:.2f}"
-
-    if aggregate > threshold:
-        result += " ⚠️ HIGH"
-    elif aggregate < 0.4:
-        result += " ✓ LOW"
+    result += f"Score: {aggregate:.2f}"
 
     return result
