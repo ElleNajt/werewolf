@@ -464,13 +464,6 @@ Output format: {self.get_output_format("private thoughts", "your 1-2 sentence st
         alive_players = self.game.get_alive_players()
         alive_names = [p.name for p in alive_players]
 
-        # Get recent statements
-        recent_statements = [e for e in self.game.history
-                           if e['turn'] == self.game.turn_number
-                           and e['type'] == 'day_statement']
-        statements_text = "\n".join([f"  {s['data']['player']}: {s['data']['statement']}"
-                                    for s in recent_statements])
-
         # Get lie detector context if available
         lie_detector_context = self.get_lie_detector_context()
 
@@ -497,9 +490,6 @@ Game: Werewolf
 Your character: {player.name} - {role_info}{secret_info}
 
 {public_info}
-
-Statements:
-{statements_text}
 {lie_detector_context}
 {player_context}
 
