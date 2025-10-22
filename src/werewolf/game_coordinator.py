@@ -34,7 +34,12 @@ class GameCoordinator:
             backend_type=self.config.backend_type,
             model_url=self.config.model_url,
             probe_url=self.config.probe_url,
-            provide_scores=self.config.provide_probe_scores
+            provide_scores=self.config.provide_probe_scores,
+            detector_path=self.config.detector_path,
+            modal_app_name=self.config.modal_app_name,
+            score_without_role_context=self.config.score_without_role_context,
+            use_quantized=self.config.use_quantized,
+            quantization_bits=self.config.quantization_bits
         )
 
         # Get next game ID
@@ -207,7 +212,7 @@ class GameCoordinator:
         raise GameAbortException(f"{player_name} exhausted retries")
 
     def get_public_info(self) -> str:
-        """Get public information visible to all players."""
+        """Get public information visible to all players, including full game history."""
         alive = self.game.get_alive_players()
         dead = [p for p in self.game.players if not p.alive]
 
@@ -216,15 +221,42 @@ class GameCoordinator:
         if dead:
             info += f"Dead players: {', '.join(p.name for p in dead)}\n"
 
-        # Add recent events
-        recent_events = [e for e in self.game.history if e['turn'] == self.game.turn_number]
-        if recent_events:
-            info += "\nRecent events:\n"
-            for event in recent_events:
-                if event['type'] == 'night_kill':
-                    info += f"  - {event['data']['victim']} was killed during the night!\n"
-                elif event['type'] == 'day_elimination':
-                    info += f"  - {event['data']['victim']} was eliminated by vote (was {event['data']['role']}).\n"
+        # Add complete game history, organized by turn
+        if self.game.history:
+            info += "\n=== GAME HISTORY ===\n"
+
+            # Group events by turn
+            turns = {}
+            for event in self.game.history:
+                turn = event['turn']
+                if turn not in turns:
+                    turns[turn] = []
+                turns[turn].append(event)
+
+            # Display each turn's events
+            for turn_num in sorted(turns.keys()):
+                info += f"\n--- Turn {turn_num} ---\n"
+
+                # Night kills
+                night_kills = [e for e in turns[turn_num] if e['type'] == 'night_kill']
+                for event in night_kills:
+                    info += f"Night: {event['data']['victim']} was killed.\n"
+
+                # Day statements
+                day_statements = [e for e in turns[turn_num] if e['type'] == 'day_statement']
+                if day_statements:
+                    info += "Discussion:\n"
+                    for event in day_statements:
+                        player = event['data']['player']
+                        statement = event['data']['statement']
+                        info += f"  {player}: {statement}\n"
+
+                # Day eliminations
+                day_elims = [e for e in turns[turn_num] if e['type'] == 'day_elimination']
+                for event in day_elims:
+                    victim = event['data']['victim']
+                    role = event['data']['role']
+                    info += f"Vote: {victim} eliminated (was {role}).\n"
 
         return info
 
