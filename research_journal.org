@@ -128,5 +128,126 @@
    - "Lie detector" framing makes probe scores interpretable to agents
    - Metadata dict allows extensibility (could add token logprobs, etc.)
 
+* [2025-10-22] Probe Signal Investigation: Role Context Dependency
+  :PROPERTIES:
+  :GIT_HASH: 0a29144
+  :RESULTS: results/experiment_ablation_6player/, results/experiment_outlier/, results/experiment_inverted/
+  :VISUALIZATION: results/activation_distributions.png
+  :END:
+
+** What was done
+   Investigated what signal the Apollo deception probe actually detects by testing
+   whether probe scores depend on role information ("You are a WEREWOLF") being
+   present in the prompt during probe scoring.
+
+   Conducted three experiments:
+   1. *Ablation*: score_without_role_context=true (strips role from probe scoring)
+   2. *Outlier framing*: Changed instructions to "look for outliers" (no direction)
+   3. *Inverted instructions*: Changed instructions to "lower scores = deceptive"
+
+   All experiments ran 10 games with 6 players (2 werewolves, 4 villagers).
+
+** Key findings
+   The probe's discriminative signal almost entirely depends on seeing role context
+   in the prompt. When role context is removed:
+
+   1. *Separation Reverses*: Werewolves score LOWER (more negative) than villagers,
+      opposite of the expected pattern
+      - WITH role context: werewolves -1.54, villagers -2.82 (separation +1.28)
+      - WITHOUT role context: werewolves -8.36, villagers -7.65 (separation -0.72)
+
+   2. *Performance Collapses*: Village win rate drops from 100% to 0%
+      - Treatment (with role context): 100% village wins (10/10)
+      - Ablation (without role context): 0% village wins (0/10)
+
+   3. *Alternative framings fail*:
+      - Outlier framing ("look for different scores"): 10% wins (1/10, baseline)
+      - Inverted instructions ("lower = deceptive"): 0% wins (0/10)
+
+   Even when instructions were aligned with reversed separation, performance
+   remained at 0%. The reversed signal appears to be noise or a confound rather
+   than a usable deception indicator.
+
+** Observations
+   The outlier and inverted conditions show *weaker* reversed separation than
+   standard ablation:
+   - Standard ablation: -0.72 separation
+   - Outlier framing: -0.36 separation
+   - Inverted instructions: -0.26 separation
+
+   This suggests the instruction framing may affect how the model generates
+   statements, but this doesn't translate to better game outcomes.
+
+   The probe appears to detect "I have lying instructions in my prompt context"
+   rather than deceptive behavioral patterns in the generated text.
+
+** Technical implementation
+   Created new configuration parameter in config.py:
+   - score_without_role_context: bool (default False)
+
+   Modified modal_apollo_backend.py to strip role information before scoring:
+   #+begin_src python
+   if self.config.score_without_role_context:
+       scoring_prompt = self._strip_role_context(full_prompt)
+   else:
+       scoring_prompt = full_prompt
+   #+end_src
+
+   The _strip_role_context() method removes the role assignment section from
+   the system prompt while preserving all other context.
+
+** Visualization
+   Created plot_activations.py to generate 2x2 grid of activation distributions
+   colored by role (red=werewolf, blue=villager) showing:
+   - Treatment: Clear separation, werewolves higher
+   - Ablation: Reversed separation, werewolves lower
+   - Outlier: Weak reversed separation
+   - Inverted: Weak reversed separation
+
+   Each subplot includes mean lines and win rate statistics.
+
+** Conclusions
+   The Apollo "roleplaying" probe's impressive 100% accuracy in this task comes
+   from detecting the *context* that generates deception (role instructions) rather
+   than patterns in the *deceptive behavior itself*.
+
+   This is a crucial distinction for interpretability research:
+   - ✅ Probe detects: "This model was told to lie"
+   - ❌ Probe does NOT detect: "This generated text is deceptive"
+
+   For multi-agent deception detection scenarios where we want to detect deception
+   without access to role information, this probe is ineffective.
+
+** Next steps
+   Potential directions:
+   1. Test whether this generalizes to other deception probe datasets
+   2. Investigate what the reversed separation without role context represents
+   3. Try training a probe specifically on behavioral patterns (no role context)
+   4. Test whether other layers show different patterns
+   5. Examine individual game transcripts where outlier condition succeeded
+
+** Files created
+   - src/werewolf/config.experiment_ablation_6player.json
+   - src/werewolf/config.experiment_outlier.json
+   - src/werewolf/config.experiment_inverted.json
+   - src/werewolf/run_experiment_ablation_6player.py
+   - src/werewolf/run_experiment_outlier.py
+   - src/werewolf/run_experiment_inverted.py
+   - src/werewolf/plot_activations.py
+   - results/activation_distributions.png
+
+** Files modified
+   - README.md: Added "Probe Signal Investigation" section with full results
+   - config.py: Added score_without_role_context parameter
+   - modal_apollo_backend.py: Implemented _strip_role_context() method
+
+** Lessons learned
+   - Always test ablations that remove obvious confounds from probe inputs
+   - "Impressive performance" on a task doesn't mean the probe detects what you think
+   - Reversed separation is a strong signal that something unexpected is happening
+   - Visualization of activation distributions is crucial for understanding probe behavior
+   - Even when instructions align with probe signal, performance may not recover if
+     the signal is just noise
+
 
 
