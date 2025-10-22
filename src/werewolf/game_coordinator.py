@@ -439,11 +439,14 @@ Output format: {self.get_output_format("strategy", "name")}"""
 
             player_context = self.get_player_context(player.name)
 
+            # Include lie detector scores for all statements made so far this turn
+            lie_detector_context = self.get_lie_detector_context()
+
             prompt = f"""GAME AI QUERY
 Game: Werewolf
 Your character: {player.name} - {role_info}{secret_info}
 
-{public_info}
+{public_info}{lie_detector_context}
 {player_context}
 
 Phase: DAY DISCUSSION
