@@ -35,7 +35,7 @@ The probe scores capture activations during the generation of public utterances:
 
 **What the probe detects:** The probe detects deception patterns in the model's *generation process* when the model has deception instructions in its context. It's not analyzing the utterance text in isolation, but rather the neural activation patterns when a model that knows it should deceive generates public statements.
 
-This is consistent with how Apollo probes are trained: on scenarios where models are prompted with deception instructions (e.g., "You are a spy, lie about X") vs truthful instructions, then generate responses. The probe learns to detect the activation patterns associated with generating text while under deception instructions.
+The Apollo "roleplaying" probe used in this experiment was trained on scenarios where models roleplay characters with incentives to lie ([Apollo Research, 2025](https://www.apolloresearch.ai/research/deception-probes)). The probe learns to distinguish activation patterns when generating deceptive vs. truthful text while having role/incentive information in the prompt context.
 
 **Implementation:** The activation hook in `modal_apollo_backend.py:288-304` skips the first forward pass (prompt processing) and only captures activations from newly generated tokens, ensuring we score the generation process rather than the prompt itself.
 
