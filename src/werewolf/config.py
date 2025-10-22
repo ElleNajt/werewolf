@@ -26,7 +26,8 @@ class GameConfig:
                  max_turns: int = 5,
                  num_players: int = 12,
                  num_werewolves: int = 3,
-                 no_seer: bool = False):
+                 no_seer: bool = False,
+                 num_discussion_rounds: int = 1):
         """
         Args:
             backend_type: "claude", "local", "probe", or "modal_probe"
@@ -45,6 +46,7 @@ class GameConfig:
             num_players: Total number of players in the game
             num_werewolves: Number of werewolves in the game
             no_seer: If True, don't include a seer (all non-werewolves are regular villagers)
+            num_discussion_rounds: Number of discussion rounds before voting each day
         """
         self.backend_type = backend_type
         self.model_url = model_url or "http://localhost:8000"
@@ -62,6 +64,7 @@ class GameConfig:
         self.num_players = num_players
         self.num_werewolves = num_werewolves
         self.no_seer = no_seer
+        self.num_discussion_rounds = num_discussion_rounds
 
     @classmethod
     def from_file(cls, config_path: str) -> 'GameConfig':
@@ -88,7 +91,8 @@ class GameConfig:
             "max_turns": self.max_turns,
             "num_players": self.num_players,
             "num_werewolves": self.num_werewolves,
-            "no_seer": self.no_seer
+            "no_seer": self.no_seer,
+            "num_discussion_rounds": self.num_discussion_rounds
         }
 
     def save(self, config_path: str):

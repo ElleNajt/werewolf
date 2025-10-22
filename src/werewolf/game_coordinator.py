@@ -534,7 +534,13 @@ Output format: {self.get_output_format("vote analysis", "name")}"""
         if winner:
             return winner
 
-        self.day_discussion_phase()
+        # Run multiple discussion rounds before voting
+        num_rounds = self.config.num_discussion_rounds
+        for round_num in range(num_rounds):
+            if num_rounds > 1:
+                self.log(f"\n--- Discussion Round {round_num + 1}/{num_rounds} ---")
+            self.day_discussion_phase()
+
         self.day_vote_phase()
 
         # Check if game over after day elimination
