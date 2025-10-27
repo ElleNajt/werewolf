@@ -491,41 +491,44 @@ class ModalProbeBackend(AgentBackend):
                     print(f"[PROBE] Full JSON generated: {generated_text[:100]}{'...' if len(generated_text) > 100 else ''}")
                     print(f"[PROBE] Action text for lie detector: {action_text}")
 
-                    # For now, use aggregate score from all generation tokens
-                    # TODO: Implement action-only scoring by re-scoring just the action text
-                    lie_detector_score = result.get("aggregate_score", 0.0)
-                    token_scores = result.get("token_scores", [])
+                    # Store full generation scores for reference
+                    full_generation_score = result.get("aggregate_score", 0.0)
+                    full_token_scores = result.get("token_scores", [])
                     
-                    print(f"[PROBE] Lie detector score (full generation): {lie_detector_score:.3f}")
-                    print(f"[PROBE] Number of generation tokens: {len(token_scores)}")
+                    print(f"[PROBE] Full generation score: {full_generation_score:.3f} (reasoning + action)")
+                    print(f"[PROBE] Full generation tokens: {len(full_token_scores)}")
 
-                    # Re-score without role context if ablation study enabled
-                    if self.score_without_role_context:
-                        print(f"[ABLATION] Re-scoring action without role context...")
-                        rescore_result = self.service.score_text.remote(
-                            text=action_text,
-                            system_prompt=""  # No role context
-                        )
-                        if "error" not in rescore_result:
-                            lie_detector_score = rescore_result["aggregate_score"]
-                            print(f"[ABLATION] Context-free action score: {lie_detector_score:.2f}")
-                        else:
-                            print(f"[ABLATION] Re-scoring failed, using token-based score")
+                    # Re-score ONLY the action text (what players see)
+                    # This ensures the lie detector score reflects only the public statement
+                    print(f"[PROBE] Re-scoring action text only...")
+                    system_prompt = "" if self.score_without_role_context else self.system_prompt
+                    rescore_result = self.service.score_text.remote(
+                        text=action_text,
+                        system_prompt=system_prompt
+                    )
+                    
+                    if "error" not in rescore_result:
+                        lie_detector_score = rescore_result["aggregate_score"]
+                        action_token_scores = rescore_result.get("token_scores", [])
+                        print(f"[PROBE] Action-only score: {lie_detector_score:.3f} ({len(action_token_scores)} tokens)")
+                    else:
+                        print(f"[PROBE] Re-scoring failed: {rescore_result.get('error')}, using full generation score")
+                        lie_detector_score = full_generation_score
+                        action_token_scores = full_token_scores
 
                     metadata = {
                         "activations": {
-                            # Lie detector score = mean of all generation tokens
+                            # Lie detector score = score of ONLY the action text (public statement)
                             "aggregate_score": lie_detector_score,
+                            "token_scores": action_token_scores,  # Per-token scores for action only
                             "text": action_text,
-                            "scored_text": generated_text,  # Full JSON was scored
+                            "num_tokens": len(action_token_scores),
                             
                             # Full generation data (for analysis)
                             "full_generated_text": generated_text,
-                            "num_tokens": result.get("num_tokens", 0),
-                            "token_scores": token_scores,
-                            
-                            # Prompt/generation split not available in simple probe mode
-                            # Use generate_with_detailed_probe for per-token data
+                            "full_generation_score": full_generation_score,
+                            "full_generation_token_scores": full_token_scores,
+                            "full_generation_num_tokens": len(full_token_scores),
                         }
                     }
 
