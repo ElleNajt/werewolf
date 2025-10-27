@@ -438,6 +438,9 @@ class ModalProbeBackend(AgentBackend):
     def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
         """
         Generate response using Modal-hosted Llama with probe scoring.
+        
+        Single-step generation: Model outputs {"reasoning": "...", "action": "..."} all at once.
+        Lie detector score is calculated from ONLY the action text tokens.
 
         Returns:
             Tuple of (response_text, metadata_dict)
@@ -452,159 +455,81 @@ class ModalProbeBackend(AgentBackend):
 
         for attempt in range(max_retries):
             try:
-                # Check if prompt requests reasoning by looking for "reasoning" keyword
-                request_reasoning = "reasoning" in prompt.lower()
+                # Single-step: Generate full {"reasoning": "...", "action": "..."} JSON
+                result = self.service.generate_with_probe.remote(
+                    messages=messages,
+                    max_tokens=512,
+                    temperature=0.7
+                )
 
-                if request_reasoning:
-                    # Two-step generation to avoid signal contamination:
-                    # Step 1: Generate reasoning (no probe)
-                    reasoning_messages = messages + [{
-                        "role": "user",
-                        "content": "First, provide your private reasoning about this situation (2-3 sentences):"
-                    }]
+                if "error" in result:
+                    raise ValueError(f"Generation failed: {result['error']}")
 
-                    reasoning_result = self.service.generate.remote(
-                        messages=reasoning_messages,
-                        max_tokens=200,
-                        temperature=0.7
-                    )
+                generated_text = result["generated_text"].strip()
 
-                    if "error" in reasoning_result:
-                        raise ValueError(f"Reasoning generation failed: {reasoning_result['error']}")
+                # Try to extract JSON if wrapped in code blocks
+                if '```json' in generated_text:
+                    json_start = generated_text.find('```json') + 7
+                    json_end = generated_text.find('```', json_start)
+                    generated_text = generated_text[json_start:json_end].strip()
+                elif '```' in generated_text:
+                    json_start = generated_text.find('```') + 3
+                    json_end = generated_text.find('```', json_start)
+                    generated_text = generated_text[json_start:json_end].strip()
 
-                    reasoning_text = reasoning_result["generated_text"].strip()
+                # Parse and validate JSON
+                parsed = json.loads(generated_text)
+                if "action" not in parsed:
+                    raise ValueError("Missing 'action' field in JSON response")
+                
+                response = generated_text
+                action_text = parsed["action"]
 
-                    # Step 2: Generate action WITH probe scoring, in context of public transcript + reasoning
-                    action_messages = messages + [
-                        {"role": "assistant", "content": f"My reasoning: {reasoning_text}"},
-                        {"role": "user", "content": "Now provide your action/statement:"}
-                    ]
+                # Build metadata with probe scores
+                metadata = None
+                if self.provide_scores:
+                    print(f"[PROBE] Full JSON generated: {generated_text[:100]}{'...' if len(generated_text) > 100 else ''}")
+                    print(f"[PROBE] Action text for lie detector: {action_text}")
 
-                    action_result = self.service.generate_with_probe.remote(
-                        messages=action_messages,
-                        max_tokens=256,
-                        temperature=0.7
-                    )
+                    # For now, use aggregate score from all generation tokens
+                    # TODO: Implement action-only scoring by re-scoring just the action text
+                    lie_detector_score = result.get("aggregate_score", 0.0)
+                    token_scores = result.get("token_scores", [])
+                    
+                    print(f"[PROBE] Lie detector score (full generation): {lie_detector_score:.3f}")
+                    print(f"[PROBE] Number of generation tokens: {len(token_scores)}")
 
-                    if "error" in action_result:
-                        raise ValueError(f"Action generation failed: {action_result['error']}")
-
-                    generated_text = action_result["generated_text"].strip()
-
-                    # Extract just the action field if model outputs JSON
-                    action_text = generated_text
-                    if generated_text.startswith('{'):
-                        try:
-                            parsed = json.loads(generated_text)
-                            if "action" in parsed:
-                                action_text = parsed["action"]
-                        except json.JSONDecodeError:
-                            # If parsing fails, try to extract action manually
-                            if '"action"' in generated_text:
-                                # Simple extraction: find "action": "..." pattern
-                                import re
-                                match = re.search(r'"action"\s*:\s*"([^"]+)"', generated_text)
-                                if match:
-                                    action_text = match.group(1)
-
-                    # Combine into JSON format
-                    response = json.dumps({
-                        "reasoning": reasoning_text,
-                        "action": action_text
-                    })
-
-                    # Use probe scores from action generation
-                    metadata = None
-                    if self.provide_scores:
-                        print(f"[PROBE] Scoring action text: {action_text[:100]}{'...' if len(action_text) > 100 else ''}")
-
-                        # Re-score without role context if ablation study enabled
-                        if self.score_without_role_context:
-                            print(f"[ABLATION] Re-scoring text without role context...")
-                            rescore_result = self.service.score_text.remote(
-                                text=action_text,
-                                system_prompt=""  # No role context
-                            )
-                            if "error" not in rescore_result:
-                                aggregate_score = rescore_result["aggregate_score"]
-                                print(f"[ABLATION] Context-free score: {aggregate_score:.2f} (original: {action_result['aggregate_score']:.2f})")
-                            else:
-                                print(f"[ABLATION] Re-scoring failed: {rescore_result.get('error', 'Unknown error')}")
-                                print(f"[ABLATION] Using original score instead")
-                                aggregate_score = action_result["aggregate_score"]
+                    # Re-score without role context if ablation study enabled
+                    if self.score_without_role_context:
+                        print(f"[ABLATION] Re-scoring action without role context...")
+                        rescore_result = self.service.score_text.remote(
+                            text=action_text,
+                            system_prompt=""  # No role context
+                        )
+                        if "error" not in rescore_result:
+                            lie_detector_score = rescore_result["aggregate_score"]
+                            print(f"[ABLATION] Context-free action score: {lie_detector_score:.2f}")
                         else:
-                            aggregate_score = action_result["aggregate_score"]
+                            print(f"[ABLATION] Re-scoring failed, using token-based score")
 
-                        metadata = {
-                            "activations": {
-                                "aggregate_score": aggregate_score,
-                                "text": action_text,
-                                "scored_text": action_text,
-                                "num_tokens": action_result.get("num_tokens", 0),
-                            }
+                    metadata = {
+                        "activations": {
+                            # Lie detector score = mean of all generation tokens
+                            "aggregate_score": lie_detector_score,
+                            "text": action_text,
+                            "scored_text": generated_text,  # Full JSON was scored
+                            
+                            # Full generation data (for analysis)
+                            "full_generated_text": generated_text,
+                            "num_tokens": result.get("num_tokens", 0),
+                            "token_scores": token_scores,
+                            
+                            # Prompt/generation split not available in simple probe mode
+                            # Use generate_with_detailed_probe for per-token data
                         }
+                    }
 
-                    return response, metadata
-
-                else:
-                    # No reasoning requested - just generate action with probe
-                    action_result = self.service.generate_with_probe.remote(
-                        messages=messages,
-                        max_tokens=512,
-                        temperature=0.7
-                    )
-
-                    if "error" in action_result:
-                        raise ValueError(f"Action generation failed: {action_result['error']}")
-
-                    action_text = action_result["generated_text"].strip()
-
-                    # Try to extract JSON if wrapped in code blocks
-                    if '```json' in action_text:
-                        json_start = action_text.find('```json') + 7
-                        json_end = action_text.find('```', json_start)
-                        action_text = action_text[json_start:json_end].strip()
-                    elif '```' in action_text:
-                        json_start = action_text.find('```') + 3
-                        json_end = action_text.find('```', json_start)
-                        action_text = action_text[json_start:json_end].strip()
-
-                    # Parse to validate JSON
-                    parsed = json.loads(action_text)
-                    response = action_text
-
-                    # Use probe scores
-                    metadata = None
-                    if self.provide_scores:
-                        print(f"[PROBE] Scoring action text: {action_text[:100]}{'...' if len(action_text) > 100 else ''}")
-
-                        # Re-score without role context if ablation study enabled
-                        if self.score_without_role_context:
-                            print(f"[ABLATION] Re-scoring text without role context...")
-                            rescore_result = self.service.score_text.remote(
-                                text=action_text,
-                                system_prompt=""  # No role context
-                            )
-                            if "error" not in rescore_result:
-                                aggregate_score = rescore_result["aggregate_score"]
-                                print(f"[ABLATION] Context-free score: {aggregate_score:.2f} (original: {action_result['aggregate_score']:.2f})")
-                            else:
-                                print(f"[ABLATION] Re-scoring failed: {rescore_result.get('error', 'Unknown error')}")
-                                print(f"[ABLATION] Using original score instead")
-                                aggregate_score = action_result["aggregate_score"]
-                        else:
-                            aggregate_score = action_result["aggregate_score"]
-
-                        metadata = {
-                            "activations": {
-                                "aggregate_score": aggregate_score,
-                                "text": action_text,
-                                "scored_text": action_text,
-                                "num_tokens": action_result.get("num_tokens", 0),
-                            }
-                        }
-
-                    return response, metadata
+                return response, metadata
 
             except (json.JSONDecodeError, KeyError, ValueError) as e:
                 if attempt == max_retries - 1:

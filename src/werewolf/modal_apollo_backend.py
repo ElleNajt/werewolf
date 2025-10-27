@@ -9,15 +9,16 @@ from typing import List, Dict, Any, Optional
 from pathlib import Path
 import os
 
-# Import torch and pickle only when running on Modal (not during local deployment)
+# Import torch, numpy, and pickle only when running on Modal (not during local deployment)
 if not modal.is_local():
     import torch
+    import numpy as np
     import pickle
 
-# Model configuration
-DEFAULT_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
-N_GPU = 4  # Use 4x H100 for longer context (320GB total)
-GPU_CONFIG = f"H100:{N_GPU}"
+# Model configuration  
+DEFAULT_MODEL = "meta-llama/Llama-3.1-8B-Instruct"
+N_GPU = 1  # Use 1x A10G for 8B model
+GPU_CONFIG = "A10G"
 SCALEDOWN_WINDOW = 2 * 60  # 2 minutes
 TIMEOUT = 20 * 60  # 20 minutes
 
@@ -64,7 +65,7 @@ app = modal.App("werewolf-apollo-probe", image=image)
     secrets=[LOCAL_HF_TOKEN_SECRET],
 )
 class ApolloProbeService:
-    """Modal service for Apollo deception probe inference with Llama 70B."""
+    """Modal service for Apollo deception probe inference with Llama 8B."""
 
     # Use modal.parameter() for class parameterization (Modal 1.0)
     model_name: str = modal.parameter(default=DEFAULT_MODEL)
@@ -73,7 +74,7 @@ class ApolloProbeService:
     llm: Any = None
     tokenizer: Any = None
     detector: Any = None
-    detector_layer: int = 22  # Default layer for roleplaying detector
+    detector_layer: int = 12  # Layer 12 for Llama 3.1 8B lie detection probe
 
     @modal.enter()
     def load_model(self):
@@ -83,15 +84,15 @@ class ApolloProbeService:
 
         print(f"Loading vLLM model: {self.model_name}")
 
-        # Initialize vLLM with tensor parallelism for 70B model
+        # Initialize vLLM for 8B model on single A10G
         self.llm = LLM(
             model=self.model_name,
-            gpu_memory_utilization=0.90,  # 4x H100 = 320GB total, plenty of room
-            max_model_len=4096,  # Sufficient for multi-turn werewolf games
+            gpu_memory_utilization=0.90,
+            max_model_len=8192,  # 8B can handle longer context
             trust_remote_code=True,
             enforce_eager=True,  # Required for hooks
             download_dir=VOLUME_PATH,
-            tensor_parallel_size=N_GPU,
+            tensor_parallel_size=1,  # Single GPU, no parallelism needed
         )
 
         # Load tokenizer
@@ -115,6 +116,21 @@ class ApolloProbeService:
 
         with open(detector_path, 'rb') as f:
             data = pickle.load(f)
+
+        # Convert any numpy arrays to PyTorch tensors
+        def ensure_tensor(obj):
+            """Recursively convert numpy arrays to PyTorch tensors."""
+            if isinstance(obj, np.ndarray):
+                return torch.from_numpy(obj)
+            elif isinstance(obj, dict):
+                return {k: ensure_tensor(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [ensure_tensor(item) for item in obj]
+            else:
+                return obj
+        
+        # Convert all data to tensors
+        data = ensure_tensor(data)
 
         # Reconstruct detector (simplified version for inference)
         class SimpleDetector:
@@ -302,8 +318,8 @@ class ApolloProbeService:
                 hidden_states, residual = output
                 resid_post = hidden_states + residual
 
-                # Store the last token's activations
-                layer_activations.append(resid_post[-1:].detach().cpu())
+                # Store the last token's activations - keep on GPU
+                layer_activations.append(resid_post[-1:].detach())
 
             # Register hook
             hook_handle = target_layer.register_forward_hook(activation_hook)
@@ -327,8 +343,8 @@ class ApolloProbeService:
 
             # Score the activations
             if layer_activations:
-                # Stack all activations [num_tokens, hidden_dim]
-                all_activations = torch.cat(layer_activations, dim=0).to("cuda")
+                # Stack all activations [num_tokens, hidden_dim] - already on CUDA
+                all_activations = torch.cat(layer_activations, dim=0)
 
                 # Score with detector
                 scores = self.detector.score_activations(all_activations, self.detector_layer)
@@ -405,7 +421,7 @@ class ApolloProbeService:
                 # Subsequent passes: one token at a time during generation
                 all_activations.append({
                     'pass_num': forward_pass_count,
-                    'activations': resid_post.detach().cpu()
+                    'activations': resid_post.detach()  # Keep on GPU
                 })
                 forward_pass_count += 1
             
@@ -443,7 +459,7 @@ class ApolloProbeService:
             # Subsequent passes are generation (one token each)
             if len(all_activations) > 0:
                 # Pass 0: Prompt processing
-                prompt_acts = all_activations[0]['activations'].to("cuda")
+                prompt_acts = all_activations[0]['activations']  # Already on CUDA
                 prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
                 result["prompt_mean_score"] = prompt_scores.mean().item()
                 result["prompt_num_tokens"] = len(prompt_acts)
@@ -451,7 +467,7 @@ class ApolloProbeService:
                 # Passes 1+: Generation (if any)
                 if len(all_activations) > 1:
                     gen_acts_list = [a['activations'] for a in all_activations[1:]]
-                    gen_acts = torch.cat(gen_acts_list, dim=0).to("cuda")
+                    gen_acts = torch.cat(gen_acts_list, dim=0)  # Already on CUDA
                     gen_scores = self.detector.score_activations(gen_acts, self.detector_layer)
                     result["generation_mean_score"] = gen_scores.mean().item()
                     result["generation_num_tokens"] = len(gen_acts)
@@ -511,8 +527,8 @@ class ApolloProbeService:
                 hidden_states, residual = output
                 resid_post = hidden_states + residual
                 
-                # Store all activations from this forward pass
-                prompt_activations.append(resid_post.detach().cpu())
+                # Store all activations from this forward pass - keep on GPU
+                prompt_activations.append(resid_post.detach())
             
             # Register hook
             hook_handle = target_layer.register_forward_hook(activation_hook)
@@ -536,8 +552,8 @@ class ApolloProbeService:
             
             # Score the prompt activations
             if prompt_activations:
-                # First forward pass contains the prompt
-                prompt_acts = prompt_activations[0].to("cuda")
+                # First forward pass contains the prompt - already on CUDA
+                prompt_acts = prompt_activations[0]
                 prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
                 
                 # Convert to list for JSON serialization
