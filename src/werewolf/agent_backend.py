@@ -491,40 +491,31 @@ class ModalProbeBackend(AgentBackend):
                     print(f"[PROBE] Full JSON generated: {generated_text[:100]}{'...' if len(generated_text) > 100 else ''}")
                     print(f"[PROBE] Action text for lie detector: {action_text}")
 
-                    # Store full generation scores for reference
+                    # Store full generation scores
                     full_generation_score = result.get("aggregate_score", 0.0)
                     full_token_scores = result.get("token_scores", [])
                     
                     print(f"[PROBE] Full generation score: {full_generation_score:.3f} (reasoning + action)")
                     print(f"[PROBE] Full generation tokens: {len(full_token_scores)}")
 
-                    # Re-score ONLY the action text (what players see)
-                    # This ensures the lie detector score reflects only the public statement
-                    print(f"[PROBE] Re-scoring action text only...")
-                    # Use empty system prompt when scoring already-generated text
-                    rescore_result = self.service.score_text.remote(
-                        text=action_text,
-                        system_prompt=""
-                    )
+                    # Extract action-only scores by finding where "action" field starts in JSON
+                    # For now, use full generation score (simpler and avoids score_text bug)
+                    # TODO: Parse JSON structure to extract exact action token indices
+                    lie_detector_score = full_generation_score
+                    action_token_scores = full_token_scores
                     
-                    if "error" not in rescore_result:
-                        lie_detector_score = rescore_result["aggregate_score"]
-                        action_token_scores = rescore_result.get("token_scores", [])
-                        print(f"[PROBE] Action-only score: {lie_detector_score:.3f} ({len(action_token_scores)} tokens)")
-                    else:
-                        print(f"[PROBE] Re-scoring failed: {rescore_result.get('error')}, using full generation score")
-                        lie_detector_score = full_generation_score
-                        action_token_scores = full_token_scores
+                    print(f"[PROBE] Using full generation score as lie detector score")
+                    print(f"[PROBE] Note: Score includes both reasoning and action")
 
                     metadata = {
                         "activations": {
-                            # Lie detector score = score of ONLY the action text (public statement)
+                            # Lie detector score (currently full generation, not action-only)
                             "aggregate_score": lie_detector_score,
-                            "token_scores": action_token_scores,  # Per-token scores for action only
+                            "token_scores": action_token_scores,
                             "text": action_text,
                             "num_tokens": len(action_token_scores),
                             
-                            # Full generation data (for analysis)
+                            # Full generation data
                             "full_generated_text": generated_text,
                             "full_generation_score": full_generation_score,
                             "full_generation_token_scores": full_token_scores,
