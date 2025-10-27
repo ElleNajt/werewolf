@@ -801,6 +801,16 @@ Output format: {self.get_output_format("vote analysis", "name")}"""
             json.dump(stats, f, indent=2)
 
         self.log(f"\nGame stats saved to {stats_file}")
+        
+        # Generate visualizations and HTML report
+        try:
+            from visualization.game_visualizer import GameVisualizer
+            self.log("\nGenerating visualizations and HTML report...")
+            visualizer = GameVisualizer(self.output_dir)
+            visualizer.generate_all()
+            self.log(f"Report available at: {self.output_dir}/game_report.html")
+        except Exception as e:
+            self.log(f"Warning: Failed to generate visualizations: {e}")
 
     def run_game(self, max_turns: Optional[int] = None):
         """Run the complete game until a side wins."""
