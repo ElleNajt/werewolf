@@ -498,24 +498,59 @@ class ModalProbeBackend(AgentBackend):
                     print(f"[PROBE] Full generation score: {full_generation_score:.3f} (reasoning + action)")
                     print(f"[PROBE] Full generation tokens: {len(full_token_scores)}")
 
-                    # Extract action-only scores by finding where "action" field starts in JSON
-                    # For now, use full generation score (simpler and avoids score_text bug)
-                    # TODO: Parse JSON structure to extract exact action token indices
-                    lie_detector_score = full_generation_score
-                    action_token_scores = full_token_scores
-                    
-                    print(f"[PROBE] Using full generation score as lie detector score")
-                    print(f"[PROBE] Note: Score includes both reasoning and action")
+                    # Extract action-only scores by finding token indices for the "action" field value
+                    # Tokenize the generated text to find where action_text appears
+                    try:
+                        # Use the Modal service's tokenizer (it's already loaded)
+                        from transformers import AutoTokenizer
+                        import os
+                        
+                        # Get tokenizer for Llama-3.1-8B-Instruct
+                        model_name = "meta-llama/Llama-3.1-8B-Instruct"
+                        hf_token = os.getenv("HF_TOKEN")
+                        tokenizer = AutoTokenizer.from_pretrained(model_name, token=hf_token)
+                        
+                        # Tokenize full generation to find action indices
+                        full_tokens = tokenizer.encode(generated_text, add_special_tokens=False)
+                        action_tokens = tokenizer.encode(action_text, add_special_tokens=False)
+                        
+                        # Find where action tokens appear in full generation
+                        # Search for the action token sequence
+                        action_start_idx = None
+                        for i in range(len(full_tokens) - len(action_tokens) + 1):
+                            if full_tokens[i:i+len(action_tokens)] == action_tokens:
+                                action_start_idx = i
+                                break
+                        
+                        if action_start_idx is not None and len(full_token_scores) == len(full_tokens):
+                            # Extract just the action token scores
+                            action_end_idx = action_start_idx + len(action_tokens)
+                            action_token_scores = full_token_scores[action_start_idx:action_end_idx]
+                            lie_detector_score = sum(action_token_scores) / len(action_token_scores) if action_token_scores else full_generation_score
+                            
+                            print(f"[PROBE] Found action tokens at indices [{action_start_idx}:{action_end_idx}]")
+                            print(f"[PROBE] Action-only score: {lie_detector_score:.3f} (from {len(action_token_scores)} tokens)")
+                        else:
+                            # Fallback to full generation score if we can't find action tokens
+                            print(f"[PROBE] Could not locate action tokens in generation, using full score")
+                            action_token_scores = full_token_scores
+                            lie_detector_score = full_generation_score
+                            
+                    except Exception as e:
+                        # Fallback to full generation score on any error
+                        print(f"[PROBE] Error extracting action tokens: {e}, using full score")
+                        action_token_scores = full_token_scores
+                        lie_detector_score = full_generation_score
 
                     metadata = {
                         "activations": {
-                            # Lie detector score (currently full generation, not action-only)
+                            # Lie detector score from action tokens only
                             "aggregate_score": lie_detector_score,
                             "token_scores": action_token_scores,
                             "text": action_text,
                             "num_tokens": len(action_token_scores),
                             
-                            # Full generation data
+                            # Full generation data for analysis
                             "full_generated_text": generated_text,
                             "full_generation_score": full_generation_score,
                             "full_generation_token_scores": full_token_scores,
