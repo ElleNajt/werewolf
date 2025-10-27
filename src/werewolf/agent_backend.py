@@ -613,6 +613,47 @@ class ModalProbeBackend(AgentBackend):
 
         raise ValueError("Exhausted retries")
 
+    def call_detailed_probe(self, prompt: str, system_prompt: str) -> Tuple[str, Optional[Dict]]:
+        """
+        Call Modal with detailed probe that captures activations separately for:
+        1. Prompt processing (reading the input)
+        2. Generation (outputting response)
+        
+        Returns:
+            Tuple of (response_text, metadata_dict with separate scores)
+        """
+        self._ensure_connected()
+        
+        # Build chat messages
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        
+        try:
+            result = self.service.generate_with_detailed_probe.remote(
+                messages=messages,
+                max_tokens=256,
+                temperature=0.7
+            )
+            
+            if "error" in result:
+                raise ValueError(f"Detailed probe failed: {result['error']}")
+            
+            # Extract response and create metadata with separate scores
+            response = result["generated_text"]
+            metadata = {
+                "prompt_mean_score": result.get("prompt_mean_score"),
+                "prompt_num_tokens": result.get("prompt_num_tokens", 0),
+                "generation_mean_score": result.get("generation_mean_score"),
+                "generation_num_tokens": result.get("generation_num_tokens", 0),
+            }
+            
+            return response, metadata
+            
+        except Exception as e:
+            raise ValueError(f"Detailed probe call failed: {e}")
+
     def format_activations_for_context(self,
                                       player_name: str,
                                       statement: str,

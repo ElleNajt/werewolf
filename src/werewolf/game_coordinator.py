@@ -138,16 +138,35 @@ ROLE ASSIGNMENT: You have been assigned the role of {player.role.value.upper()}.
 Output format: {{"action": "I understand, I am a {player.role.value}"}}"""
             
             try:
-                # Call agent to get activations
-                response, metadata = self.backend.call(prompt, system_prompt, max_retries=1)
-                
-                # Store activations if available
-                if metadata and 'activations' in metadata and metadata['activations']:
-                    self.role_reveal_activations[player.name] = metadata['activations']
-                    score = metadata['activations'].get('aggregate_score', 0.0)
-                    self.log(f"  {player.name} ({player.role.value}): {score:.3f}")
+                # Call detailed probe to get separate prompt and generation activations
+                from agent_backend import ModalProbeBackend
+                if isinstance(self.backend, ModalProbeBackend):
+                    response, metadata = self.backend.call_detailed_probe(prompt, system_prompt)
+                    
+                    # Store detailed activations
+                    if metadata:
+                        self.role_reveal_activations[player.name] = {
+                            'prompt_mean_score': metadata.get('prompt_mean_score'),
+                            'prompt_num_tokens': metadata.get('prompt_num_tokens', 0),
+                            'generation_mean_score': metadata.get('generation_mean_score'),
+                            'generation_num_tokens': metadata.get('generation_num_tokens', 0),
+                        }
+                        
+                        prompt_score = metadata.get('prompt_mean_score', 0.0)
+                        gen_score = metadata.get('generation_mean_score', 0.0)
+                        self.log(f"  {player.name} ({player.role.value}): prompt={prompt_score:.3f}, gen={gen_score:.3f}")
+                    else:
+                        self.log(f"  {player.name} ({player.role.value}): No activations")
+                        self.role_reveal_activations[player.name] = None
                 else:
-                    self.log(f"  {player.name} ({player.role.value}): No activations")
+                    # Fallback to regular call for non-Modal backends
+                    response, metadata = self.backend.call(prompt, system_prompt, max_retries=1)
+                    if metadata and 'activations' in metadata:
+                        self.role_reveal_activations[player.name] = metadata['activations']
+                        score = metadata['activations'].get('aggregate_score', 0.0)
+                        self.log(f"  {player.name} ({player.role.value}): {score:.3f}")
+                    else:
+                        self.log(f"  {player.name} ({player.role.value}): No activations")
                     
             except Exception as e:
                 self.log(f"  {player.name}: Error capturing activations: {e}")

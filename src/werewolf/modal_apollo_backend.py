@@ -4,12 +4,15 @@ Provides inference API for werewolf game with deception detection.
 """
 
 import modal
-import torch
 import json
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 import os
-import pickle
+
+# Import torch and pickle only when running on Modal (not during local deployment)
+if not modal.is_local():
+    import torch
+    import pickle
 
 # Model configuration
 DEFAULT_MODEL = "meta-llama/Llama-3.3-70B-Instruct"
@@ -348,6 +351,120 @@ class ApolloProbeService:
             import traceback
             return {
                 "error": f"Generation failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }
+
+    @modal.method()
+    def generate_with_detailed_probe(
+        self,
+        messages: List[Dict[str, str]],
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+    ) -> Dict[str, Any]:
+        """
+        Generate a response and capture activations at three phases:
+        1. Prompt processing (when reading the input)
+        2. CoT/reasoning generation
+        3. Action/response generation
+        
+        Returns mean activations for each phase separately.
+        """
+        from vllm import SamplingParams, TokensPrompt
+        
+        if self.detector is None:
+            return {"error": "No detector loaded."}
+        
+        try:
+            # Format the conversation
+            prompt_token_ids = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=True,
+                add_generation_prompt=True
+            )
+            
+            # Get the model for hook registration
+            model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+            target_layer = model.model.layers[self.detector_layer]
+            
+            # Storage for activations at each phase
+            all_activations = []
+            num_prompt_tokens = len(prompt_token_ids)
+            forward_pass_count = 0
+            
+            def activation_hook(module, input, output):
+                """Extract activations during both prompt and generation."""
+                nonlocal forward_pass_count, all_activations
+                
+                # Extract hidden states
+                assert len(output) == 2
+                hidden_states, residual = output
+                resid_post = hidden_states + residual
+                
+                # Store all activations
+                # First forward pass: processes all prompt tokens at once
+                # Subsequent passes: one token at a time during generation
+                all_activations.append({
+                    'pass_num': forward_pass_count,
+                    'activations': resid_post.detach().cpu()
+                })
+                forward_pass_count += 1
+            
+            # Register hook
+            hook_handle = target_layer.register_forward_hook(activation_hook)
+            
+            try:
+                # Generate response
+                sampling_params = SamplingParams(
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    top_p=0.9 if temperature > 0 else 1.0,
+                )
+                
+                outputs = self.llm.generate(
+                    prompts=[TokensPrompt(prompt_token_ids=prompt_token_ids)],
+                    sampling_params=sampling_params,
+                    use_tqdm=False
+                )
+                
+                generated_text = outputs[0].outputs[0].text
+                
+            finally:
+                hook_handle.remove()
+            
+            # Separate prompt and generation activations
+            result = {"generated_text": generated_text}
+            
+            if not all_activations:
+                result["prompt_mean_score"] = None
+                result["generation_mean_score"] = None
+                return result
+            
+            # First forward pass contains all prompt tokens
+            # Subsequent passes are generation (one token each)
+            if len(all_activations) > 0:
+                # Pass 0: Prompt processing
+                prompt_acts = all_activations[0]['activations'].to("cuda")
+                prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
+                result["prompt_mean_score"] = prompt_scores.mean().item()
+                result["prompt_num_tokens"] = len(prompt_acts)
+                
+                # Passes 1+: Generation (if any)
+                if len(all_activations) > 1:
+                    gen_acts_list = [a['activations'] for a in all_activations[1:]]
+                    gen_acts = torch.cat(gen_acts_list, dim=0).to("cuda")
+                    gen_scores = self.detector.score_activations(gen_acts, self.detector_layer)
+                    result["generation_mean_score"] = gen_scores.mean().item()
+                    result["generation_num_tokens"] = len(gen_acts)
+                else:
+                    result["generation_mean_score"] = None
+                    result["generation_num_tokens"] = 0
+            
+            return result
+            
+        except Exception as e:
+            import traceback
+            return {
+                "error": f"Detailed probe generation failed: {str(e)}",
                 "traceback": traceback.format_exc()
             }
 
