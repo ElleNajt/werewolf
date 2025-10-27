@@ -578,20 +578,36 @@ Your character: {player.name} - {role_info}{secret_info}
 {player_context}
 
 Phase: PLAYER CALLOUT
-Task: Optionally call on another player to make an additional statement. This is useful if you want to hear more from a suspicious player to get additional lie detector readings.
+Task: Optionally call on another player with a specific question. This is useful if you want to hear more from a suspicious player to get additional lie detector readings.
 
-Options: {', '.join(options)}, or 'PASS' to not call on anyone
+If you want to call on someone, provide both the player name AND a question to ask them.
+If you don't want to call on anyone, respond with "PASS" for both fields.
 
-Output format: {self.get_output_format("private reasoning about who to call on", "player name or PASS", "Player5")}"""
+Available players: {', '.join(options)}
 
-            response = self.call_agent(player.name, prompt, expect_json=True)
+Output format: {self.get_output_format("private reasoning about who to call on and why", '{"target": "Player5", "question": "Where were you last night and do you have any information about who killed Player1?"}', '{"target": "Player5", "question": "Where were you last night and do you have any information about who killed Player1?"}')}"""
 
-            if response and response.upper() != "PASS" and response in options:
-                self.log(f"{player.name} calls on {response} to speak")
-                called_players.add(response)
+            response_data = self.call_agent(player.name, prompt, expect_json=True)
+            
+            # Handle both old format (just player name) and new format (dict with target and question)
+            if isinstance(response_data, str):
+                # Old format compatibility
+                target = response_data
+                question = None
+            else:
+                # New format with question
+                target = response_data.get("target", "PASS") if isinstance(response_data, dict) else "PASS"
+                question = response_data.get("question", None) if isinstance(response_data, dict) else None
+
+            if target and target.upper() != "PASS" and target in options:
+                if question:
+                    self.log(f"{player.name} calls on {target} to speak and asks: \"{question}\"")
+                else:
+                    self.log(f"{player.name} calls on {target} to speak")
+                called_players.add(target)
 
                 # Get the called player to make a statement
-                called_player = next(p for p in alive_players if p.name == response)
+                called_player = next(p for p in alive_players if p.name == target)
                 called_role_info = f"You are a {called_player.role.value.upper()}."
 
                 called_secret_info = ""
@@ -603,6 +619,11 @@ Output format: {self.get_output_format("private reasoning about who to call on",
                 called_context = self.get_player_context(called_player.name)
                 called_lie_detector = self.get_lie_detector_context()
 
+                # Include the question in the prompt if one was asked
+                question_context = ""
+                if question:
+                    question_context = f"\n{player.name} asks you: \"{question}\""
+
                 called_prompt = f"""GAME AI QUERY
 Game: Werewolf
 Your character: {called_player.name} - {called_role_info}{called_secret_info}
@@ -610,13 +631,13 @@ Your character: {called_player.name} - {called_role_info}{called_secret_info}
 {public_info}{called_lie_detector}
 {called_context}
 
-Phase: DAY DISCUSSION (Called Upon by {player.name})
-Task: {player.name} has called on you to make an additional statement. Make a public statement (1-2 sentences)
+Phase: DAY DISCUSSION (Called Upon by {player.name}){question_context}
+Task: {player.name} has called on you to speak. {"Answer their question" if question else "Make a public statement"} (1-2 sentences)
 
-Output format: {self.get_output_format("private thoughts", "your 1-2 sentence statement", "I understand your suspicion, but I'm just a villager trying to help.")}"""
+Output format: {self.get_output_format("private thoughts", "your 1-2 sentence response", "I understand your suspicion, but I'm just a villager trying to help.")}"""
 
                 statement = self.call_agent(called_player.name, called_prompt, expect_json=True)
-                self.game.add_event("day_statement", {"player": called_player.name, "statement": statement, "called_by": player.name})
+                self.game.add_event("day_statement", {"player": called_player.name, "statement": statement, "called_by": player.name, "question": question})
 
     def day_vote_phase(self):
         """Execute day vote phase: players vote to eliminate someone."""
