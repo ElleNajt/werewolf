@@ -620,7 +620,7 @@ class ModalProbeBackend(AgentBackend):
         Perfect for measuring "guilty consciousness" when model learns its role.
         
         Returns:
-            Dict with prompt_mean_score and prompt_num_tokens
+            Dict with prompt_mean_score, token_scores, and tokens
         """
         self._ensure_connected()
         
@@ -639,6 +639,8 @@ class ModalProbeBackend(AgentBackend):
             return {
                 "prompt_mean_score": result.get("prompt_mean_score"),
                 "prompt_num_tokens": result.get("prompt_num_tokens", 0),
+                "token_scores": result.get("token_scores", []),
+                "tokens": result.get("tokens", []),
             }
             
         except Exception as e:

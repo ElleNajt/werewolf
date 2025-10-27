@@ -540,14 +540,24 @@ class ApolloProbeService:
                 prompt_acts = prompt_activations[0].to("cuda")
                 prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
                 
+                # Convert to list for JSON serialization
+                token_scores = prompt_scores.cpu().tolist()
+                
+                # Decode tokens for visualization
+                tokens = [self.tokenizer.decode([tid]) for tid in prompt_token_ids]
+                
                 return {
                     "prompt_mean_score": prompt_scores.mean().item(),
                     "prompt_num_tokens": len(prompt_acts),
+                    "token_scores": token_scores,
+                    "tokens": tokens,
                 }
             else:
                 return {
                     "prompt_mean_score": None,
                     "prompt_num_tokens": 0,
+                    "token_scores": [],
+                    "tokens": [],
                 }
             
         except Exception as e:
