@@ -138,23 +138,20 @@ ROLE ASSIGNMENT: You have been assigned the role of {player.role.value.upper()}.
 Output format: {{"action": "I understand, I am a {player.role.value}"}}"""
             
             try:
-                # Call detailed probe to get separate prompt and generation activations
+                # Score only the prompt (no generation needed)
                 from agent_backend import ModalProbeBackend
                 if isinstance(self.backend, ModalProbeBackend):
-                    response, metadata = self.backend.call_detailed_probe(prompt, system_prompt)
+                    metadata = self.backend.score_prompt_only(prompt, system_prompt)
                     
-                    # Store detailed activations
+                    # Store prompt activations only
                     if metadata:
                         self.role_reveal_activations[player.name] = {
                             'prompt_mean_score': metadata.get('prompt_mean_score'),
                             'prompt_num_tokens': metadata.get('prompt_num_tokens', 0),
-                            'generation_mean_score': metadata.get('generation_mean_score'),
-                            'generation_num_tokens': metadata.get('generation_num_tokens', 0),
                         }
                         
                         prompt_score = metadata.get('prompt_mean_score', 0.0)
-                        gen_score = metadata.get('generation_mean_score', 0.0)
-                        self.log(f"  {player.name} ({player.role.value}): prompt={prompt_score:.3f}, gen={gen_score:.3f}")
+                        self.log(f"  {player.name} ({player.role.value}): {prompt_score:.3f}")
                     else:
                         self.log(f"  {player.name} ({player.role.value}): No activations")
                         self.role_reveal_activations[player.name] = None

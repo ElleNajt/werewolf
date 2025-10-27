@@ -469,6 +469,95 @@ class ApolloProbeService:
             }
 
     @modal.method()
+    def score_prompt_only(
+        self,
+        messages: List[Dict[str, str]],
+    ) -> Dict[str, Any]:
+        """
+        Score a prompt WITHOUT generating any response.
+        Just runs the prompt through the model and captures activations.
+        
+        Perfect for measuring "guilty consciousness" when model learns its role.
+        
+        Returns:
+            Dictionary with prompt_mean_score and prompt_num_tokens
+        """
+        from vllm import SamplingParams, TokensPrompt
+        
+        if self.detector is None:
+            return {"error": "No detector loaded."}
+        
+        try:
+            # Format the conversation
+            prompt_token_ids = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=True,
+                add_generation_prompt=False  # Don't add generation prompt - just score the prompt itself
+            )
+            
+            # Get the model for hook registration
+            model = self.llm.llm_engine.model_executor.driver_worker.model_runner.model
+            target_layer = model.model.layers[self.detector_layer]
+            
+            # Storage for prompt activations
+            prompt_activations = []
+            
+            def activation_hook(module, input, output):
+                """Extract activations during prompt processing."""
+                nonlocal prompt_activations
+                
+                # Extract hidden states
+                assert len(output) == 2
+                hidden_states, residual = output
+                resid_post = hidden_states + residual
+                
+                # Store all activations from this forward pass
+                prompt_activations.append(resid_post.detach().cpu())
+            
+            # Register hook
+            hook_handle = target_layer.register_forward_hook(activation_hook)
+            
+            try:
+                # Just do a forward pass through the prompt (no generation)
+                # Use generate with max_tokens=1 to get one forward pass
+                sampling_params = SamplingParams(
+                    temperature=0.0,
+                    max_tokens=1,  # Only generate 1 token (we'll ignore it)
+                )
+                
+                self.llm.generate(
+                    prompts=[TokensPrompt(prompt_token_ids=prompt_token_ids)],
+                    sampling_params=sampling_params,
+                    use_tqdm=False
+                )
+                
+            finally:
+                hook_handle.remove()
+            
+            # Score the prompt activations
+            if prompt_activations:
+                # First forward pass contains the prompt
+                prompt_acts = prompt_activations[0].to("cuda")
+                prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
+                
+                return {
+                    "prompt_mean_score": prompt_scores.mean().item(),
+                    "prompt_num_tokens": len(prompt_acts),
+                }
+            else:
+                return {
+                    "prompt_mean_score": None,
+                    "prompt_num_tokens": 0,
+                }
+            
+        except Exception as e:
+            import traceback
+            return {
+                "error": f"Prompt scoring failed: {str(e)}",
+                "traceback": traceback.format_exc()
+            }
+
+    @modal.method()
     def score_text(self, text: str, system_prompt: str = "") -> Dict[str, Any]:
         """
         Score existing text for deception (no generation).

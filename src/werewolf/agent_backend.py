@@ -613,14 +613,14 @@ class ModalProbeBackend(AgentBackend):
 
         raise ValueError("Exhausted retries")
 
-    def call_detailed_probe(self, prompt: str, system_prompt: str) -> Tuple[str, Optional[Dict]]:
+    def score_prompt_only(self, prompt: str, system_prompt: str) -> Optional[Dict]:
         """
-        Call Modal with detailed probe that captures activations separately for:
-        1. Prompt processing (reading the input)
-        2. Generation (outputting response)
+        Score only the prompt (no generation).
+        
+        Perfect for measuring "guilty consciousness" when model learns its role.
         
         Returns:
-            Tuple of (response_text, metadata_dict with separate scores)
+            Dict with prompt_mean_score and prompt_num_tokens
         """
         self._ensure_connected()
         
@@ -631,28 +631,18 @@ class ModalProbeBackend(AgentBackend):
         messages.append({"role": "user", "content": prompt})
         
         try:
-            result = self.service.generate_with_detailed_probe.remote(
-                messages=messages,
-                max_tokens=256,
-                temperature=0.7
-            )
+            result = self.service.score_prompt_only.remote(messages=messages)
             
             if "error" in result:
-                raise ValueError(f"Detailed probe failed: {result['error']}")
+                raise ValueError(f"Prompt scoring failed: {result['error']}")
             
-            # Extract response and create metadata with separate scores
-            response = result["generated_text"]
-            metadata = {
+            return {
                 "prompt_mean_score": result.get("prompt_mean_score"),
                 "prompt_num_tokens": result.get("prompt_num_tokens", 0),
-                "generation_mean_score": result.get("generation_mean_score"),
-                "generation_num_tokens": result.get("generation_num_tokens", 0),
             }
             
-            return response, metadata
-            
         except Exception as e:
-            raise ValueError(f"Detailed probe call failed: {e}")
+            raise ValueError(f"Prompt scoring failed: {e}")
 
     def format_activations_for_context(self,
                                       player_name: str,
