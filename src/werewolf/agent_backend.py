@@ -501,10 +501,10 @@ class ModalProbeBackend(AgentBackend):
                     # Re-score ONLY the action text (what players see)
                     # This ensures the lie detector score reflects only the public statement
                     print(f"[PROBE] Re-scoring action text only...")
-                    system_prompt = "" if self.score_without_role_context else self.system_prompt
+                    # Use empty system prompt when scoring already-generated text
                     rescore_result = self.service.score_text.remote(
                         text=action_text,
-                        system_prompt=system_prompt
+                        system_prompt=""
                     )
                     
                     if "error" not in rescore_result:
