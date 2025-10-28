@@ -83,93 +83,92 @@ class GameVisualizer:
     
     def _generate_activation_histograms(self, figures_dir: Path):
         """
-        Generate histograms of probe activations split by:
-        - Player type (werewolf vs villager/seer)
-        - Game phase (role_reveal, reasoning, public_statement, voting)
+        Generate histogram of probe activations split by player role.
         """
-        # Collect activations by category
-        activations_by_phase = {
-            'role_reveal': {'werewolf': [], 'villager': []},
-            'reasoning': {'werewolf': [], 'villager': []},
-            'public_statement': {'werewolf': [], 'villager': []},
-            'voting': {'werewolf': [], 'villager': []}
-        }
+        # Collect all activations by role
+        werewolf_scores = []
+        villager_scores = []
+        role_reveal_werewolf = []
+        role_reveal_villager = []
         
         # Get player roles
         player_roles = {p['name']: p['role'] for p in self.game_stats['players']}
         
-        # Process player activations
+        # Process player activations (statements during game)
         for player_name, activations in self.game_stats.get('player_activations', {}).items():
             role = player_roles[player_name]
-            role_category = 'werewolf' if role == 'werewolf' else 'villager'
             
             for activation in activations:
                 score = activation['activations'].get('aggregate_score')
                 if score is None:
                     continue
                 
-                # Find corresponding event to categorize
-                # For simplicity, categorize based on action content
-                action = str(activation.get('action', ''))
-                
-                # Heuristic categorization
-                if 'vote' in action.lower() or any(e['type'] == 'day_elimination' for e in self.game_stats['history']):
-                    phase = 'voting'
-                elif len(action) > 100:  # Long text = likely public statement
-                    phase = 'public_statement'
+                if role == 'werewolf':
+                    werewolf_scores.append(score)
                 else:
-                    phase = 'reasoning'
-                
-                activations_by_phase[phase][role_category].append(score)
+                    villager_scores.append(score)
         
-        # Also add role reveal activations if they exist
+        # Process role reveal activations separately
         for player_name, activation in self.game_stats.get('role_reveal_activations', {}).items():
             if activation is None:
                 continue
             role = player_roles[player_name]
-            role_category = 'werewolf' if role == 'werewolf' else 'villager'
-            score = activation.get('aggregate_score')
-            if score is not None:
-                activations_by_phase['role_reveal'][role_category].append(score)
-        
-        # Create 2x2 subplot
-        fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-        fig.suptitle(f'Probe Activation Distributions by Game Phase - Game {self.game_stats["game_id"]}', 
-                     fontsize=16, fontweight='bold')
-        
-        phases = ['role_reveal', 'reasoning', 'public_statement', 'voting']
-        titles = ['Role Reveal (Initial)', 'Chain-of-Thought Reasoning', 'Public Statements', 'Voting']
-        
-        for ax, phase, title in zip(axes.flat, phases, titles):
-            werewolf_scores = activations_by_phase[phase]['werewolf']
-            villager_scores = activations_by_phase[phase]['villager']
-            
-            if not werewolf_scores and not villager_scores:
-                ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
-                ax.set_title(title)
-                continue
-            
-            # Determine bins based on combined data
-            all_scores = werewolf_scores + villager_scores
-            if not all_scores:
+            score = activation.get('prompt_mean_score')  # Role reveals use prompt_mean_score
+            if score is None:
                 continue
                 
-            bins = np.linspace(min(all_scores) - 5, max(all_scores) + 5, 25)
+            if role == 'werewolf':
+                role_reveal_werewolf.append(score)
+            else:
+                role_reveal_villager.append(score)
+        
+        # Create 1x2 subplot (gameplay + role reveal)
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+        fig.suptitle(f'Probe Activation Distributions - Game {self.game_stats["game_id"]}', 
+                     fontsize=16, fontweight='bold')
+        
+        # Plot 1: Gameplay activations
+        all_gameplay = werewolf_scores + villager_scores
+        if all_gameplay:
+            bins = np.linspace(min(all_gameplay) - 5, max(all_gameplay) + 5, 30)
             
-            # Plot histograms
             if werewolf_scores:
-                ax.hist(werewolf_scores, bins=bins, alpha=0.6, color='red', 
+                ax1.hist(werewolf_scores, bins=bins, alpha=0.6, color='red', 
                        label=f'Werewolves (n={len(werewolf_scores)})', edgecolor='darkred')
             if villager_scores:
-                ax.hist(villager_scores, bins=bins, alpha=0.6, color='blue',
-                       label=f'Villagers/Seer (n={len(villager_scores)})', edgecolor='darkblue')
+                ax1.hist(villager_scores, bins=bins, alpha=0.6, color='blue',
+                       label=f'Villagers (n={len(villager_scores)})', edgecolor='darkblue')
             
-            ax.set_xlabel('Aggregate Probe Score')
-            ax.set_ylabel('Count')
-            ax.set_title(title)
-            ax.legend()
-            ax.grid(alpha=0.3)
-            ax.axvline(0, color='black', linestyle='--', linewidth=1, alpha=0.5, label='0 (neutral)')
+            ax1.set_xlabel('Probe Score (lower = more deceptive)')
+            ax1.set_ylabel('Count')
+            ax1.set_title('Gameplay Statements')
+            ax1.legend()
+            ax1.grid(alpha=0.3)
+            ax1.axvline(0, color='black', linestyle='--', linewidth=1, alpha=0.5)
+        else:
+            ax1.text(0.5, 0.5, 'No gameplay data', ha='center', va='center', transform=ax1.transAxes)
+            ax1.set_title('Gameplay Statements')
+        
+        # Plot 2: Role reveal activations  
+        all_role_reveal = role_reveal_werewolf + role_reveal_villager
+        if all_role_reveal:
+            bins = np.linspace(min(all_role_reveal) - 2, max(all_role_reveal) + 2, 20)
+            
+            if role_reveal_werewolf:
+                ax2.hist(role_reveal_werewolf, bins=bins, alpha=0.6, color='red',
+                       label=f'Werewolves (n={len(role_reveal_werewolf)})', edgecolor='darkred')
+            if role_reveal_villager:
+                ax2.hist(role_reveal_villager, bins=bins, alpha=0.6, color='blue',
+                       label=f'Villagers (n={len(role_reveal_villager)})', edgecolor='darkblue')
+            
+            ax2.set_xlabel('Probe Score (initial role reveal)')
+            ax2.set_ylabel('Count')
+            ax2.set_title('Role Reveal Activations')
+            ax2.legend()
+            ax2.grid(alpha=0.3)
+        else:
+            ax2.text(0.5, 0.5, 'No role reveal data', ha='center', va='center', transform=ax2.transAxes)
+            ax2.set_title('Role Reveal Activations')
         
         plt.tight_layout()
         plt.savefig(figures_dir / 'activation_histograms.png', dpi=150, bbox_inches='tight')
