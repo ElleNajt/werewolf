@@ -251,6 +251,10 @@ Output format: {{"action": "I understand, I am a {player.role.value}"}}"""
                                 'action': action,
                                 'activations': metadata['activations']
                             })
+                            
+                            # Update cumulative score
+                            if 'aggregate_score' in metadata['activations']:
+                                self.cumulative_scores[player_name] += metadata['activations']['aggregate_score']
 
                         if self.config.request_reasoning:
                             self.log(f"{player_name} thinks (private): {reasoning}")
@@ -375,6 +379,21 @@ Output format: {{"action": "I understand, I am a {player.role.value}"}}"""
                                     break
                         
                         info += f"  {player}: {statement}{score_str}\n"
+                
+                # Add cumulative suspicion summary after discussion
+                if self.config.provide_probe_scores and day_statements:
+                    alive_players = [p.name for p in self.game.players if p.alive]
+                    # Get cumulative scores for alive players only
+                    cumulative_data = [(name, self.cumulative_scores[name]) for name in alive_players 
+                                      if name in self.cumulative_scores]
+                    
+                    if cumulative_data:
+                        # Sort by cumulative score (higher = more suspicious, closer to 0)
+                        cumulative_data.sort(key=lambda x: x[1], reverse=True)
+                        
+                        info += "\nCumulative Suspicion Rankings:\n"
+                        for rank, (name, cum_score) in enumerate(cumulative_data, 1):
+                            info += f"  {rank}. {name}: {cum_score:+.1f}\n"
 
                 # Day eliminations
                 day_elims = [e for e in turns[turn_num] if e['type'] == 'day_elimination']
