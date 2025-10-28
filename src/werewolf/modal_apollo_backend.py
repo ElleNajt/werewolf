@@ -469,53 +469,67 @@ class ApolloProbeService:
                 gen_scores = self.detector.score_activations(gen_acts, self.detector_layer)
                 gen_scores_list = gen_scores.cpu().tolist()  # Per-token scores
                 
-                # Try to parse JSON and split reasoning vs action
+                # Try to parse JSON and split reasoning vs action using character positions
                 try:
-                    parsed = json.loads(generated_text)
-                    reasoning_text = parsed.get("reasoning", "")
-                    action_text = parsed.get("action", "")
+                    # Find where "reasoning" and "action" field values appear in the generated text
+                    # by looking for the JSON structure
+                    reasoning_start = generated_text.find('"reasoning"')
+                    action_start = generated_text.find('"action"')
                     
-                    # Tokenize the reasoning and action parts to find token boundaries
-                    reasoning_tokens = self.tokenizer.encode(reasoning_text, add_special_tokens=False)
-                    action_tokens = self.tokenizer.encode(action_text, add_special_tokens=False)
-                    
-                    # Find where reasoning and action appear in the generated tokens
-                    # This is approximate - we look for the token sequences in generated_token_ids
-                    reasoning_token_indices = []
-                    action_token_indices = []
-                    
-                    # Simple heuristic: find first occurrence of reasoning tokens, then action tokens
-                    i = 0
-                    while i < len(generated_token_ids):
-                        # Check if reasoning tokens start here
-                        if generated_token_ids[i:i+len(reasoning_tokens)] == reasoning_tokens:
-                            reasoning_token_indices = list(range(i, i + len(reasoning_tokens)))
-                            i += len(reasoning_tokens)
-                        # Check if action tokens start here
-                        elif generated_token_ids[i:i+len(action_tokens)] == action_tokens:
-                            action_token_indices = list(range(i, i + len(action_tokens)))
-                            i += len(action_tokens)
+                    if reasoning_start != -1 and action_start != -1:
+                        # Find the actual content (after the colon and quote)
+                        reasoning_value_start = generated_text.find(':', reasoning_start) + 1
+                        reasoning_value_start = generated_text.find('"', reasoning_value_start) + 1
+                        
+                        # reasoning ends where action starts (approximately)
+                        reasoning_value_end = action_start - 1
+                        
+                        action_value_start = generated_text.find(':', action_start) + 1
+                        action_value_start = generated_text.find('"', action_value_start) + 1
+                        
+                        # Now decode each token to find which tokens fall in which range
+                        current_pos = 0
+                        reasoning_token_indices = []
+                        action_token_indices = []
+                        
+                        for i, token_id in enumerate(generated_token_ids):
+                            token_text = self.tokenizer.decode([token_id])
+                            token_len = len(token_text)
+                            token_end = current_pos + token_len
+                            
+                            # Check if this token overlaps with reasoning field
+                            if current_pos >= reasoning_value_start and current_pos < reasoning_value_end:
+                                reasoning_token_indices.append(i)
+                            # Check if this token overlaps with action field  
+                            elif current_pos >= action_value_start:
+                                action_token_indices.append(i)
+                            
+                            current_pos = token_end
+                        
+                        # Extract scores for reasoning and action phases
+                        if reasoning_token_indices:
+                            reasoning_scores = [gen_scores_list[i] for i in reasoning_token_indices if i < len(gen_scores_list)]
+                            result["cot_mean_score"] = sum(reasoning_scores) / len(reasoning_scores) if reasoning_scores else None
+                            result["cot_num_tokens"] = len(reasoning_scores)
                         else:
-                            i += 1
-                    
-                    # Extract scores for reasoning and action phases
-                    if reasoning_token_indices:
-                        reasoning_scores = [gen_scores_list[i] for i in reasoning_token_indices if i < len(gen_scores_list)]
-                        result["cot_mean_score"] = sum(reasoning_scores) / len(reasoning_scores) if reasoning_scores else None
-                        result["cot_num_tokens"] = len(reasoning_scores)
+                            result["cot_mean_score"] = None
+                            result["cot_num_tokens"] = 0
+                        
+                        if action_token_indices:
+                            action_scores = [gen_scores_list[i] for i in action_token_indices if i < len(gen_scores_list)]
+                            result["action_mean_score"] = sum(action_scores) / len(action_scores) if action_scores else None
+                            result["action_num_tokens"] = len(action_scores)
+                        else:
+                            result["action_mean_score"] = None
+                            result["action_num_tokens"] = 0
                     else:
+                        # Couldn't find reasoning/action fields
                         result["cot_mean_score"] = None
-                        result["cot_num_tokens"] = 0
-                    
-                    if action_token_indices:
-                        action_scores = [gen_scores_list[i] for i in action_token_indices if i < len(gen_scores_list)]
-                        result["action_mean_score"] = sum(action_scores) / len(action_scores) if action_scores else None
-                        result["action_num_tokens"] = len(action_scores)
-                    else:
                         result["action_mean_score"] = None
+                        result["cot_num_tokens"] = 0
                         result["action_num_tokens"] = 0
                         
-                except (json.JSONDecodeError, KeyError):
+                except Exception as e:
                     # Fallback: treat all generation as one phase
                     result["cot_mean_score"] = None
                     result["action_mean_score"] = None

@@ -497,10 +497,15 @@ class ModalProbeBackend(AgentBackend):
                     action_score = result.get("action_mean_score")
                     generation_score = result.get("generation_mean_score")
                     
-                    print(f"[PROBE] Prompt score: {prompt_score:.3f if prompt_score is not None else 'N/A'}")
-                    print(f"[PROBE] CoT score: {cot_score:.3f if cot_score is not None else 'N/A'}")
-                    print(f"[PROBE] Action score: {action_score:.3f if action_score is not None else 'N/A'}")
-                    print(f"[PROBE] Overall generation score: {generation_score:.3f if generation_score is not None else 'N/A'}")
+                    prompt_str = f"{prompt_score:.3f}" if prompt_score is not None else "N/A"
+                    cot_str = f"{cot_score:.3f}" if cot_score is not None else "N/A"
+                    action_str = f"{action_score:.3f}" if action_score is not None else "N/A"
+                    gen_str = f"{generation_score:.3f}" if generation_score is not None else "N/A"
+                    
+                    print(f"[PROBE] Prompt score: {prompt_str}")
+                    print(f"[PROBE] CoT score: {cot_str}")
+                    print(f"[PROBE] Action score: {action_str}")
+                    print(f"[PROBE] Overall generation score: {gen_str}")
 
                     metadata = {
                         "activations": {
