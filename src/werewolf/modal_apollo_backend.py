@@ -379,13 +379,14 @@ class ApolloProbeService:
     ) -> Dict[str, Any]:
         """
         Generate a response and capture activations at three phases:
-        1. Prompt processing (when reading the input)
-        2. CoT/reasoning generation
-        3. Action/response generation
+        1. Prompt processing (after reading the full input context)
+        2. CoT/reasoning generation (the "reasoning" field in JSON)
+        3. Action generation (the "action" field in JSON)
         
-        Returns mean activations for each phase separately.
+        Returns mean probe scores for each phase separately, plus per-token scores.
         """
         from vllm import SamplingParams, TokensPrompt
+        import json
         
         if self.detector is None:
             return {"error": "No detector loaded."}
@@ -404,7 +405,6 @@ class ApolloProbeService:
             
             # Storage for activations at each phase
             all_activations = []
-            num_prompt_tokens = len(prompt_token_ids)
             forward_pass_count = 0
             
             def activation_hook(module, input, output):
@@ -443,37 +443,94 @@ class ApolloProbeService:
                 )
                 
                 generated_text = outputs[0].outputs[0].text
+                generated_token_ids = list(outputs[0].outputs[0].token_ids)
                 
             finally:
                 hook_handle.remove()
             
-            # Separate prompt and generation activations
+            # Initialize result
             result = {"generated_text": generated_text}
             
             if not all_activations:
-                result["prompt_mean_score"] = None
-                result["generation_mean_score"] = None
-                return result
+                return {**result, "error": "No activations captured"}
             
-            # First forward pass contains all prompt tokens
-            # Subsequent passes are generation (one token each)
-            if len(all_activations) > 0:
-                # Pass 0: Prompt processing
-                prompt_acts = all_activations[0]['activations']  # Already on CUDA
-                prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
-                result["prompt_mean_score"] = prompt_scores.mean().item()
-                result["prompt_num_tokens"] = len(prompt_acts)
+            # Pass 0: Prompt processing activations
+            prompt_acts = all_activations[0]['activations']  # Already on CUDA
+            prompt_scores = self.detector.score_activations(prompt_acts, self.detector_layer)
+            prompt_mean = prompt_scores.mean().item()
+            
+            result["prompt_mean_score"] = prompt_mean
+            result["prompt_num_tokens"] = len(prompt_acts)
+            
+            # Passes 1+: Generation token activations
+            if len(all_activations) > 1:
+                gen_acts_list = [a['activations'][-1:] for a in all_activations[1:]]  # Last token from each pass
+                gen_acts = torch.cat(gen_acts_list, dim=0)  # [num_gen_tokens, hidden_dim]
+                gen_scores = self.detector.score_activations(gen_acts, self.detector_layer)
+                gen_scores_list = gen_scores.cpu().tolist()  # Per-token scores
                 
-                # Passes 1+: Generation (if any)
-                if len(all_activations) > 1:
-                    gen_acts_list = [a['activations'] for a in all_activations[1:]]
-                    gen_acts = torch.cat(gen_acts_list, dim=0)  # Already on CUDA
-                    gen_scores = self.detector.score_activations(gen_acts, self.detector_layer)
-                    result["generation_mean_score"] = gen_scores.mean().item()
-                    result["generation_num_tokens"] = len(gen_acts)
-                else:
-                    result["generation_mean_score"] = None
-                    result["generation_num_tokens"] = 0
+                # Try to parse JSON and split reasoning vs action
+                try:
+                    parsed = json.loads(generated_text)
+                    reasoning_text = parsed.get("reasoning", "")
+                    action_text = parsed.get("action", "")
+                    
+                    # Tokenize the reasoning and action parts to find token boundaries
+                    reasoning_tokens = self.tokenizer.encode(reasoning_text, add_special_tokens=False)
+                    action_tokens = self.tokenizer.encode(action_text, add_special_tokens=False)
+                    
+                    # Find where reasoning and action appear in the generated tokens
+                    # This is approximate - we look for the token sequences in generated_token_ids
+                    reasoning_token_indices = []
+                    action_token_indices = []
+                    
+                    # Simple heuristic: find first occurrence of reasoning tokens, then action tokens
+                    i = 0
+                    while i < len(generated_token_ids):
+                        # Check if reasoning tokens start here
+                        if generated_token_ids[i:i+len(reasoning_tokens)] == reasoning_tokens:
+                            reasoning_token_indices = list(range(i, i + len(reasoning_tokens)))
+                            i += len(reasoning_tokens)
+                        # Check if action tokens start here
+                        elif generated_token_ids[i:i+len(action_tokens)] == action_tokens:
+                            action_token_indices = list(range(i, i + len(action_tokens)))
+                            i += len(action_tokens)
+                        else:
+                            i += 1
+                    
+                    # Extract scores for reasoning and action phases
+                    if reasoning_token_indices:
+                        reasoning_scores = [gen_scores_list[i] for i in reasoning_token_indices if i < len(gen_scores_list)]
+                        result["cot_mean_score"] = sum(reasoning_scores) / len(reasoning_scores) if reasoning_scores else None
+                        result["cot_num_tokens"] = len(reasoning_scores)
+                    else:
+                        result["cot_mean_score"] = None
+                        result["cot_num_tokens"] = 0
+                    
+                    if action_token_indices:
+                        action_scores = [gen_scores_list[i] for i in action_token_indices if i < len(gen_scores_list)]
+                        result["action_mean_score"] = sum(action_scores) / len(action_scores) if action_scores else None
+                        result["action_num_tokens"] = len(action_scores)
+                    else:
+                        result["action_mean_score"] = None
+                        result["action_num_tokens"] = 0
+                        
+                except (json.JSONDecodeError, KeyError):
+                    # Fallback: treat all generation as one phase
+                    result["cot_mean_score"] = None
+                    result["action_mean_score"] = None
+                    result["cot_num_tokens"] = 0
+                    result["action_num_tokens"] = 0
+                
+                # Also include overall generation stats
+                result["generation_mean_score"] = sum(gen_scores_list) / len(gen_scores_list)
+                result["generation_num_tokens"] = len(gen_scores_list)
+                result["generation_token_scores"] = gen_scores_list
+            else:
+                result["generation_mean_score"] = None
+                result["generation_num_tokens"] = 0
+                result["cot_mean_score"] = None
+                result["action_mean_score"] = None
             
             return result
             

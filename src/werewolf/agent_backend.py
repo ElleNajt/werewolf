@@ -455,8 +455,8 @@ class ModalProbeBackend(AgentBackend):
 
         for attempt in range(max_retries):
             try:
-                # Single-step: Generate full {"reasoning": "...", "action": "..."} JSON
-                result = self.service.generate_with_probe.remote(
+                # Use detailed probe to capture prompt, CoT, and action activations separately
+                result = self.service.generate_with_detailed_probe.remote(
                     messages=messages,
                     max_tokens=512,
                     temperature=0.7
@@ -485,38 +485,46 @@ class ModalProbeBackend(AgentBackend):
                 response = generated_text
                 action_text = parsed["action"]
 
-                # Build metadata with probe scores
+                # Build metadata with three-phase probe scores
                 metadata = None
                 if self.provide_scores:
                     print(f"[PROBE] Full JSON generated: {generated_text[:100]}{'...' if len(generated_text) > 100 else ''}")
-                    print(f"[PROBE] Action text for lie detector: {action_text}")
+                    print(f"[PROBE] Action text: {action_text}")
 
-                    # Store full generation scores
-                    full_generation_score = result.get("aggregate_score", 0.0)
-                    full_token_scores = result.get("token_scores", [])
+                    # Extract three-phase scores from detailed probe
+                    prompt_score = result.get("prompt_mean_score")
+                    cot_score = result.get("cot_mean_score")
+                    action_score = result.get("action_mean_score")
+                    generation_score = result.get("generation_mean_score")
                     
-                    print(f"[PROBE] Full generation score: {full_generation_score:.3f} (reasoning + action)")
-                    print(f"[PROBE] Full generation tokens: {len(full_token_scores)}")
-
-                    # For now, use full generation score
-                    # TODO: Add Modal method to extract action token indices on the server side
-                    action_token_scores = full_token_scores
-                    lie_detector_score = full_generation_score
-                    print(f"[PROBE] Using full generation score (includes reasoning + action)")
+                    print(f"[PROBE] Prompt score: {prompt_score:.3f if prompt_score is not None else 'N/A'}")
+                    print(f"[PROBE] CoT score: {cot_score:.3f if cot_score is not None else 'N/A'}")
+                    print(f"[PROBE] Action score: {action_score:.3f if action_score is not None else 'N/A'}")
+                    print(f"[PROBE] Overall generation score: {generation_score:.3f if generation_score is not None else 'N/A'}")
 
                     metadata = {
                         "activations": {
-                            # Lie detector score from action tokens only
-                            "aggregate_score": lie_detector_score,
-                            "token_scores": action_token_scores,
-                            "text": action_text,
-                            "num_tokens": len(action_token_scores),
+                            # Phase-based scores
+                            "prompt_score": prompt_score,
+                            "prompt_num_tokens": result.get("prompt_num_tokens", 0),
                             
-                            # Full generation data for analysis
+                            "cot_score": cot_score,
+                            "cot_num_tokens": result.get("cot_num_tokens", 0),
+                            
+                            "action_score": action_score,
+                            "action_num_tokens": result.get("action_num_tokens", 0),
+                            
+                            # Overall generation
+                            "generation_score": generation_score,
+                            "generation_num_tokens": result.get("generation_num_tokens", 0),
+                            "generation_token_scores": result.get("generation_token_scores", []),
+                            
+                            # Text content
+                            "text": action_text,
                             "full_generated_text": generated_text,
-                            "full_generation_score": full_generation_score,
-                            "full_generation_token_scores": full_token_scores,
-                            "full_generation_num_tokens": len(full_token_scores),
+                            
+                            # For backward compatibility with visualization
+                            "aggregate_score": action_score if action_score is not None else generation_score,
                         }
                     }
 
