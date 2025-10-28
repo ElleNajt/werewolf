@@ -79,6 +79,9 @@ class GameCoordinator:
         
         # Track role-reveal activations (captured right after role assignment)
         self.role_reveal_activations: Dict[str, Optional[Dict]] = {name: None for name in player_names}
+        
+        # Track cumulative probe scores for each player
+        self.cumulative_scores: Dict[str, float] = {name: 0.0 for name in player_names}
 
         self.log(f"=== WEREWOLF GAME {self.game_id} STARTED ===")
         self.log(f"Backend: {self.config.backend_type}")
