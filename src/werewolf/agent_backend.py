@@ -14,7 +14,7 @@ class AgentBackend(ABC):
     """Base class for agent backends."""
 
     @abstractmethod
-    def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
+    def call(self, prompt: str, system_prompt: str, max_retries: int = 10) -> Tuple[str, Optional[Dict]]:
         """
         Call the agent backend.
 
@@ -28,7 +28,7 @@ class AgentBackend(ABC):
 class ClaudeBackend(AgentBackend):
     """Backend using claude CLI via subprocess."""
 
-    def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
+    def call(self, prompt: str, system_prompt: str, max_retries: int = 10) -> Tuple[str, Optional[Dict]]:
         """Call claude -p with retry logic."""
         for attempt in range(max_retries):
             result = subprocess.run(
@@ -76,7 +76,7 @@ class LocalModelBackend(AgentBackend):
         """
         self.base_url = base_url.rstrip('/')
 
-    def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
+    def call(self, prompt: str, system_prompt: str, max_retries: int = 10) -> Tuple[str, Optional[Dict]]:
         """Call local model API (OpenAI-compatible format)."""
         url = f"{self.base_url}/v1/chat/completions"
 
@@ -207,7 +207,7 @@ class ProbeBackend(AgentBackend):
             self.detector.reg_coeff = data.get("reg_coeff", 10.0)
             print("Detector loaded successfully")
 
-    def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
+    def call(self, prompt: str, system_prompt: str, max_retries: int = 10) -> Tuple[str, Optional[Dict]]:
         """
         Generate response using Llama and score with probe.
 
@@ -435,7 +435,7 @@ class ModalProbeBackend(AgentBackend):
 
             print("Connected to Modal service!")
 
-    def call(self, prompt: str, system_prompt: str, max_retries: int = 5) -> Tuple[str, Optional[Dict]]:
+    def call(self, prompt: str, system_prompt: str, max_retries: int = 10) -> Tuple[str, Optional[Dict]]:
         """
         Generate response using Modal-hosted Llama with probe scoring.
         
