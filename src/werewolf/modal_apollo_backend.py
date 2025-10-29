@@ -103,12 +103,14 @@ class ApolloProbeService:
 
         print("Model loaded successfully!")
 
-        # Load default detector if available
-        default_detector_path = DETECTOR_DIR / "detector.pt"
+        # Load the 8B detector by default (lie_detector_8b_layer12.pt)
+        # The 70B backend loads a different detector
+        default_detector_path = DETECTOR_DIR / "lie_detector_8b_layer12.pt"
         if default_detector_path.exists():
             self._load_detector(str(default_detector_path))
         else:
-            print("No default detector found. Use load_detector() to load one.")
+            print(f"WARNING: 8B detector not found at {default_detector_path}")
+            print("Use load_detector_from_path() to load a detector.")
 
     def _load_detector(self, detector_path: str):
         """Load Apollo detector from pickle file."""
@@ -190,7 +192,24 @@ class ApolloProbeService:
         # Set the layer to use (use first layer from detector)
         self.detector_layer = data["layers"][0]
 
+        # Sanity check: verify detector hidden dimension matches model hidden dimension
+        detector_hidden_dim = self.detector.directions[self.detector_layer].shape[-1]
+        model_config = self.llm.llm_engine.model_config
+        model_hidden_dim = model_config.hf_config.hidden_size
+        
+        if detector_hidden_dim != model_hidden_dim:
+            error_msg = (
+                f"SANITY CHECK FAILED: Detector hidden dimension ({detector_hidden_dim}) "
+                f"does not match model hidden dimension ({model_hidden_dim}). "
+                f"You are likely using a {'70B' if detector_hidden_dim == 8192 else '8B'} detector "
+                f"with a {'70B' if model_hidden_dim == 8192 else '8B'} model. "
+                f"Please use the correct detector for your model size."
+            )
+            print(f"ERROR: {error_msg}")
+            raise ValueError(error_msg)
+
         print(f"Detector loaded successfully! Using layer {self.detector_layer}")
+        print(f"✓ Sanity check passed: detector hidden_dim={detector_hidden_dim} matches model hidden_dim={model_hidden_dim}")
 
     @modal.method()
     def load_detector_from_path(self, detector_path: str) -> Dict[str, Any]:
@@ -477,6 +496,7 @@ class ApolloProbeService:
                     action_start = generated_text.find('"action"')
                     
                     if reasoning_start != -1 and action_start != -1:
+                        # CoT mode: both reasoning and action fields present
                         # Find the actual content (after the colon and quote)
                         reasoning_value_start = generated_text.find(':', reasoning_start) + 1
                         reasoning_value_start = generated_text.find('"', reasoning_value_start) + 1
@@ -522,8 +542,14 @@ class ApolloProbeService:
                         else:
                             result["action_mean_score"] = None
                             result["action_num_tokens"] = 0
+                    elif reasoning_start == -1 and action_start != -1:
+                        # No-CoT mode: only action field present, all generation is action
+                        result["cot_mean_score"] = None
+                        result["cot_num_tokens"] = 0
+                        result["action_mean_score"] = sum(gen_scores_list) / len(gen_scores_list) if gen_scores_list else None
+                        result["action_num_tokens"] = len(gen_scores_list)
                     else:
-                        # Couldn't find reasoning/action fields
+                        # Couldn't find expected fields
                         result["cot_mean_score"] = None
                         result["action_mean_score"] = None
                         result["cot_num_tokens"] = 0

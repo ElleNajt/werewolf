@@ -27,6 +27,12 @@ class GameVisualizer:
         self.game_dir = Path(game_dir)
         self.game_stats = self._load_game_stats()
         self.game_log = self._load_game_log()
+        self.config = self._load_config()
+        
+        # Extract model size and probe name from config
+        self.model_info = self._extract_model_info()
+        self.probe_info = self._extract_probe_info()
+        self.config_info = self._extract_config_info()
         
     def _load_game_stats(self) -> Dict:
         """Load game_stats.json file."""
@@ -40,6 +46,53 @@ class GameVisualizer:
         with open(log_file, 'r') as f:
             return f.read()
     
+    def _load_config(self) -> Dict:
+        """Load config file (tries multiple common names)."""
+        # Try common config file names
+        for config_name in ['config.70b.json', 'config.8b.json', 'config.modal_probe.json', 'config.json']:
+            config_file = self.game_dir / config_name
+            if config_file.exists():
+                with open(config_file, 'r') as f:
+                    return json.load(f)
+        return {}
+    
+    def _extract_model_info(self) -> str:
+        """Extract model size from config (e.g., '70B' or '8B')."""
+        modal_app_name = self.config.get('modal_app_name', '')
+        if '70b' in modal_app_name.lower():
+            return '70B'
+        elif '8b' in modal_app_name.lower():
+            return '8B'
+        return 'Unknown'
+    
+    def _extract_probe_info(self) -> str:
+        """Extract probe name from detector path."""
+        detector_path = self.config.get('detector_path', '')
+        if 'instructed_pairs' in detector_path:
+            return 'instructed_pairs'
+        elif 'roleplaying' in detector_path:
+            return 'roleplaying'
+        elif 'descriptive' in detector_path:
+            return 'descriptive'
+        elif 'followup' in detector_path:
+            return 'followup'
+        elif 'sae_rp' in detector_path:
+            return 'sae_rp'
+        return 'Unknown'
+    
+    def _extract_config_info(self) -> str:
+        """Extract config name and key settings."""
+        parts = []
+        
+        # Add CoT/No-CoT indicator
+        if 'request_reasoning' in self.config:
+            if self.config['request_reasoning']:
+                parts.append('CoT')
+            else:
+                parts.append('No-CoT')
+        
+        return ', '.join(parts) if parts else 'Unknown Config'
+    
     def generate_all(self):
         """Generate all visualizations and HTML report."""
         print(f"Generating visualizations for {self.game_dir.name}...")
@@ -52,6 +105,7 @@ class GameVisualizer:
         if self.game_stats.get('probe_enabled', False):
             self._generate_activation_histograms(figures_dir)
             self._generate_player_timeseries(figures_dir)
+            self._generate_cumulative_distrust_plot(figures_dir)
         
         # Generate HTML report
         self._generate_html_report()
@@ -142,14 +196,26 @@ class GameVisualizer:
         
         # Create 2x2 subplot for four phases
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 10))
-        fig.suptitle(f'Probe Activation Distributions by Phase - Game {self.game_stats["game_id"]}', 
-                     fontsize=16, fontweight='bold')
+        title = f'Probe Activation Distributions by Phase - Game {self.game_stats["game_id"]}'
+        info_parts = []
+        if self.model_info != 'Unknown':
+            info_parts.append(self.model_info)
+        if self.probe_info != 'Unknown':
+            info_parts.append(self.probe_info)
+        if self.config_info != 'Unknown Config':
+            info_parts.append(self.config_info)
+        if info_parts:
+            title += f' ({", ".join(info_parts)})'
+        fig.suptitle(title, fontsize=16, fontweight='bold')
         
         # Helper function to plot histogram
         def plot_phase(ax, werewolf_data, villager_data, title, xlabel):
             all_data = werewolf_data + villager_data
             if all_data:
-                bins = np.linspace(min(all_data) - 5, max(all_data) + 5, 25)
+                # Use tighter bins that match the actual data range
+                data_range = max(all_data) - min(all_data)
+                padding = max(data_range * 0.1, 0.5)  # 10% padding or 0.5 minimum
+                bins = np.linspace(min(all_data) - padding, max(all_data) + padding, 25)
                 
                 if werewolf_data:
                     ax.hist(werewolf_data, bins=bins, alpha=0.6, color='red', 
@@ -163,7 +229,13 @@ class GameVisualizer:
                 ax.set_title(title)
                 ax.legend()
                 ax.grid(alpha=0.3)
-                ax.axvline(0, color='black', linestyle='--', linewidth=1, alpha=0.5)
+                
+                # Set x-axis limits to match data range with padding
+                ax.set_xlim(min(all_data) - padding, max(all_data) + padding)
+                
+                # Only show 0 line if it's within the data range
+                if min(all_data) <= 0 <= max(all_data):
+                    ax.axvline(0, color='black', linestyle='--', linewidth=1, alpha=0.5)
             else:
                 ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
                 ax.set_title(title)
@@ -181,7 +253,10 @@ class GameVisualizer:
         # Role reveal (special case - different scale)
         all_role_reveal = role_reveal_werewolf + role_reveal_villager
         if all_role_reveal:
-            bins = np.linspace(min(all_role_reveal) - 2, max(all_role_reveal) + 2, 20)
+            # Use tighter bins for role reveal data
+            data_range = max(all_role_reveal) - min(all_role_reveal)
+            padding = max(data_range * 0.1, 0.5)  # 10% padding or 0.5 minimum
+            bins = np.linspace(min(all_role_reveal) - padding, max(all_role_reveal) + padding, 20)
             
             if role_reveal_werewolf:
                 ax4.hist(role_reveal_werewolf, bins=bins, alpha=0.6, color='red',
@@ -195,6 +270,13 @@ class GameVisualizer:
             ax4.set_title('Role Reveal Activations')
             ax4.legend()
             ax4.grid(alpha=0.3)
+            
+            # Set x-axis limits to match data range with padding
+            ax4.set_xlim(min(all_role_reveal) - padding, max(all_role_reveal) + padding)
+            
+            # Only show 0 line if it's within the data range
+            if min(all_role_reveal) <= 0 <= max(all_role_reveal):
+                ax4.axvline(0, color='black', linestyle='--', linewidth=1, alpha=0.5)
         else:
             ax2.text(0.5, 0.5, 'No role reveal data', ha='center', va='center', transform=ax2.transAxes)
             ax2.set_title('Role Reveal Activations')
@@ -215,8 +297,10 @@ class GameVisualizer:
         # Create subplots - 2 columns, enough rows for all players
         nrows = (num_players + 1) // 2
         fig, axes = plt.subplots(nrows, 2, figsize=(16, 4 * nrows))
-        fig.suptitle(f'Player Activation Scores Over Time - Game {self.game_stats["game_id"]}',
-                     fontsize=16, fontweight='bold')
+        title = f'Player Activation Scores Over Time - Game {self.game_stats["game_id"]}'
+        if self.model_info != 'Unknown' or self.probe_info != 'Unknown':
+            title += f' ({self.model_info}, {self.probe_info})'
+        fig.suptitle(title, fontsize=16, fontweight='bold')
         
         if num_players == 1:
             axes = [axes]
@@ -263,6 +347,78 @@ class GameVisualizer:
         plt.close()
         
         print(f"  ✓ Generated player time-series plots")
+    
+    def _generate_cumulative_distrust_plot(self, figures_dir: Path):
+        """
+        Generate average distrust/suspicion score over time for each player.
+        Shows rolling average suspicion level rather than cumulative total.
+        """
+        player_roles = {p['name']: p['role'] for p in self.game_stats['players']}
+        
+        # Build average scores over time for each player
+        average_data = {}
+        
+        for player_name, activations in self.game_stats.get('player_activations', {}).items():
+            average_scores = []
+            running_total = 0.0
+            count = 0
+            
+            for activation in activations:
+                score = activation['activations'].get('aggregate_score')
+                if score is not None:
+                    running_total += score
+                    count += 1
+                    average_scores.append(running_total / count)
+            
+            if average_scores:
+                average_data[player_name] = average_scores
+        
+        if not average_data:
+            print(f"  ⚠ No data to plot")
+            return
+        
+        # Create plot
+        fig, ax = plt.subplots(figsize=(14, 8))
+        
+        # Plot each player's average score
+        for player_name in sorted(average_data.keys()):
+            scores = average_data[player_name]
+            role = player_roles[player_name]
+            color = 'red' if role == 'werewolf' else 'blue'
+            linestyle = '-' if role == 'werewolf' else '--'
+            linewidth = 2.5 if role == 'werewolf' else 1.5
+            
+            ax.plot(range(len(scores)), scores, 
+                   marker='o', color=color, linestyle=linestyle,
+                   linewidth=linewidth, markersize=5, alpha=0.7,
+                   label=f'{player_name} ({role})')
+        
+        ax.set_xlabel('Action Number', fontsize=12)
+        ax.set_ylabel('Average Suspicion Score', fontsize=12)
+        title = f'Average Distrust Over Time - Game {self.game_stats["game_id"]}'
+        if self.model_info != 'Unknown' or self.probe_info != 'Unknown':
+            title += f' ({self.model_info}, {self.probe_info})'
+        ax.set_title(title, fontsize=14, fontweight='bold')
+        ax.legend(loc='best', fontsize=10)
+        ax.grid(alpha=0.3)
+        
+        # Set y-axis limits to fit the data range with padding
+        all_scores = [score for scores in average_data.values() for score in scores]
+        if all_scores:
+            y_min, y_max = min(all_scores), max(all_scores)
+            y_range = y_max - y_min
+            y_padding = max(y_range * 0.1, 0.5)  # 10% padding or 0.5 minimum
+            ax.set_ylim(y_min - y_padding, y_max + y_padding)
+            
+            # Only show 0 line if it's within the data range
+            if y_min <= 0 <= y_max:
+                ax.axhline(0, color='black', linestyle='--', linewidth=1, alpha=0.5)
+        
+        plt.tight_layout()
+        plt.savefig(figures_dir / 'cumulative_distrust.png', dpi=150, bbox_inches='tight')
+        plt.close()
+        
+        print(f"  ✓ Generated average distrust plot")
     
     def _generate_html_report(self):
         """Generate comprehensive HTML report with chronological game log."""
@@ -586,6 +742,13 @@ class GameVisualizer:
             <img src="figures/player_timeseries.png" alt="Player Time Series">
             <p>Time-series view of each player's probe activation scores throughout the game. 
             Red indicates werewolves, blue indicates villagers/seer.</p>
+        </div>
+        
+        <div class="figure">
+            <h3>Average Distrust Over Time</h3>
+            <img src="figures/cumulative_distrust.png" alt="Average Distrust">
+            <p>Rolling average suspicion scores for each player throughout the game.
+            Higher scores indicate greater average suspicion. Solid lines are werewolves, dashed lines are villagers.</p>
         </div>
     </div>
     
