@@ -404,5 +404,110 @@
    - Scaffolding (how information is presented) matters as much as the information itself
    - Instruction sensitivity suggests reasoning chain fragility rather than pure attention issues
 
+* [2025-10-29] Prompt Reordering Experiment: Instruction Placement Effects
+  :PROPERTIES:
+  :GIT_HASH: f186140
+  :RESULTS: results/experiment_8b_public_cot_2v4_f186140_*/
+  :CONFIG: src/werewolf/config.8b_public_cot.json
+  :END:
+
+** What was done
+   Tested whether moving the CoT instruction before the discussion history
+   (rather than after) would improve villagers' ability to detect werewolf
+   confessions in the thinking field.
+
+   Hypothesis: The model might process the instruction better if it sees
+   "check whose thoughts revealed they are a werewolf" BEFORE seeing all
+   the thoughts, rather than after.
+
+   Modified game_coordinator.py to reorder prompt sections:
+   - Old: character info → discussion history → lie detector → CoT instruction → task
+   - New: character info → CoT instruction → discussion history → lie detector → task
+
+** Results: Instruction placement had minimal effect
+   Three conditions tested (10 games each):
+
+   1. "IMPORTANT" framing, CoT AFTER history: 70% village wins (7/10)
+   2. "VOTING INSTRUCTIONS" procedural, CoT after: 30% village wins (3/10)
+   3. "IMPORTANT" framing, CoT BEFORE history: 60% village wins (6/10)
+
+   Moving the instruction earlier actually decreased performance slightly
+   (70% → 60%), though this could be variance with small sample size.
+
+** Key finding: Framing matters more than positioning
+   The 40-point swing between instruction framings (70% vs 30%) is much
+   larger than the 10-point effect of reordering (70% → 60%).
+
+   This suggests:
+   - **Instruction wording** is the dominant factor
+   - **Instruction position** has minimal or negative effect
+   - The model may process instructions better when they're closer to the
+     task prompt rather than at the very top of the context
+
+** Why reordering might have hurt
+   Speculation: Moving the instruction to the very top may have:
+   1. Created too much distance between instruction and task execution
+   2. Made the instruction feel less relevant/actionable when encountered
+   3. Reduced attention weight on the instruction vs when it's near the task
+   4. Been interpreted as "general advice" rather than "immediate action"
+
+   The original placement (instruction right before the task) may create
+   better temporal/logical proximity for the model to connect instruction
+   to execution.
+
+** Comparison across all conditions
+   - Probe-based lie detection (with role context): 100% village wins
+   - Public CoT, "IMPORTANT" framing, after history: 70% village wins
+   - Public CoT, "IMPORTANT" framing, before history: 60% village wins
+   - Public CoT, "VOTING INSTRUCTIONS", after history: 30% village wins
+   - Baseline (no information): ~10% village wins
+
+   Even the best public CoT condition (70%) remains well below probe-based
+   detection (100%), confirming that raw CoT is harder to use than processed
+   summaries, regardless of instruction placement.
+
+** Implications
+   1. **Instruction-task proximity matters** - placing instructions immediately
+      before the task may work better than placing them at the very top
+
+   2. **Semantic framing > procedural steps** - "this IS important evidence"
+      outperforms "first check, then do"
+
+   3. **Scaffolding is multi-dimensional** - both content (what you say) and
+      position (where you say it) affect performance, but content dominates
+
+   4. **Small sample variance** - with only 10 games per condition, true
+      effect sizes are uncertain. The 60-70% range may be the model's
+      ceiling for this task.
+
+** Technical changes
+   Modified three prompt construction sites in game_coordinator.py:
+   - day_discussion_phase() (line 619)
+   - player_callout_phase() (line 681)
+   - day_vote_phase() (line 796)
+
+   Changed from: {public_info}{lie_detector_context}{cot_context}
+   To: {cot_context}{public_info}{lie_detector_context}
+
+** Next steps
+   Potential directions:
+   1. Run larger batches (50+ games) to get better statistical power
+   2. Test intermediate positions (e.g., after public_info but before player_context)
+   3. Try combining best framing with other scaffolding improvements
+   4. Test whether providing explicit examples helps (few-shot prompting)
+   5. Consider whether simplifying the discussion history format helps
+
+** Files modified
+   - src/werewolf/game_coordinator.py: Reordered prompt sections
+   - src/werewolf/config.8b_public_cot.json: Reverted to "IMPORTANT" framing
+   - src/werewolf/config.test_public_cot.json: Reverted to "IMPORTANT" framing
+
+** Lessons learned
+   - Instruction placement is less important than instruction content
+   - Proximity to task execution may matter more than being "first"
+   - Small sample sizes (n=10) make it hard to distinguish signal from noise
+   - The model may have a performance ceiling around 60-70% for this task
+   - Reordering alone is unlikely to solve the scaffolding problem
+
 
 
