@@ -608,14 +608,27 @@ Output format: {{"action": "I understand, I am a {player.role.value}"}}"""
 
         return f"\n\nChain-of-Thought Note:\n{self.config.cot_explanation}\n"
 
-    def get_additional_instructions(self) -> str:
+    def get_additional_instructions(self, role: Role) -> str:
         """
         Get additional instructions (if provided in config).
+        Can provide role-specific instructions for werewolves or villagers.
         """
-        if not self.config.additional_instructions:
+        instructions = []
+
+        # Add general additional instructions (applies to all players)
+        if self.config.additional_instructions:
+            instructions.append(self.config.additional_instructions)
+
+        # Add role-specific instructions
+        if role == Role.WEREWOLF and self.config.werewolf_instructions:
+            instructions.append(self.config.werewolf_instructions)
+        elif role in (Role.VILLAGER, Role.SEER) and self.config.villager_instructions:
+            instructions.append(self.config.villager_instructions)
+
+        if not instructions:
             return ""
 
-        return f"\n\nADDITIONAL INSTRUCTIONS:\n{self.config.additional_instructions}\n"
+        return f"\n\nADDITIONAL INSTRUCTIONS:\n" + "\n".join(instructions) + "\n"
 
     def night_phase(self):
         """Execute night phase: werewolves kill, seer investigates."""
@@ -761,7 +774,7 @@ Output format: {self.get_output_format("strategy", "name", player_name=seer.name
             # Include lie detector scores for all statements made so far this turn
             lie_detector_context = self.get_lie_detector_context()
             cot_context = self.get_cot_context()
-            additional_instructions = self.get_additional_instructions()
+            additional_instructions = self.get_additional_instructions(player.role)
 
             prompt = f"""GAME AI QUERY
 Game: Werewolf
@@ -820,7 +833,7 @@ Output format: {self.get_output_format("private thoughts", "your 1-2 sentence st
             player_context = self.get_player_context(player.name)
             lie_detector_context = self.get_lie_detector_context()
             cot_context = self.get_cot_context()
-            additional_instructions = self.get_additional_instructions()
+            additional_instructions = self.get_additional_instructions(player.role)
 
             # Options are other alive players who haven't been called yet
             options = [
@@ -894,7 +907,9 @@ Output format: {self.get_output_format("private reasoning about who to call on a
                 called_context = self.get_player_context(called_player.name)
                 called_lie_detector = self.get_lie_detector_context()
                 called_cot_context = self.get_cot_context()
-                called_additional_instructions = self.get_additional_instructions()
+                called_additional_instructions = self.get_additional_instructions(
+                    called_player.role
+                )
 
                 # Include the question in the prompt if one was asked
                 question_context = ""
@@ -950,7 +965,6 @@ Output format: {self.get_output_format("private thoughts", "your 1-2 sentence re
         # Get lie detector context if available
         lie_detector_context = self.get_lie_detector_context()
         cot_context = self.get_cot_context()
-        additional_instructions = self.get_additional_instructions()
 
         votes = {}
         for player in alive_players:
@@ -973,6 +987,7 @@ Output format: {self.get_output_format("private thoughts", "your 1-2 sentence re
                     secret_info = f"\nYour fellow werewolf is: {ww_names[0]}"
 
             player_context = self.get_player_context(player.name)
+            additional_instructions = self.get_additional_instructions(player.role)
 
             prompt = f"""GAME AI QUERY
 Game: Werewolf
