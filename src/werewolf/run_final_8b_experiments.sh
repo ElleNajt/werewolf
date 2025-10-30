@@ -1,11 +1,11 @@
 #!/bin/bash
 # Final systematic experiments for Llama 8B
-# 7 conditions x 10 games each = 70 games total
+# 7 conditions x 30 games each = 210 games total
 
 set -e  # Exit on error
 
 VENV="../../venv/bin/python"
-NUM_GAMES=10
+NUM_GAMES=30
 
 echo "=========================================="
 echo "FINAL 8B EXPERIMENTS"
