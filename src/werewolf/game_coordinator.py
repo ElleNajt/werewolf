@@ -59,10 +59,10 @@ class GameCoordinator:
             except:
                 git_hash = "nogit"
 
-            # Check if src/ directory is dirty
+            # Check if there are uncommitted changes in tracked files
             try:
                 subprocess.check_output(
-                    ["git", "diff", "--quiet", "src/"],
+                    ["git", "diff", "--quiet"],
                     stderr=subprocess.DEVNULL,
                 )
                 dirty_flag = ""
