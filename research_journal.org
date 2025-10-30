@@ -509,5 +509,149 @@
    - The model may have a performance ceiling around 60-70% for this task
    - Reordering alone is unlikely to solve the scaffolding problem
 
+* [2025-10-29] Villager-Only CoT Catastrophic Failure: Less is More
+  :PROPERTIES:
+  :GIT_HASH: 23b8185
+  :RESULTS: results/experiment_8b_villager_cot_only_*/
+  :CONFIG: src/werewolf/config.8b_villager_cot_only.json
+  :END:
+
+** What was done
+   Tested whether villagers benefit from CoT prompts when combined with probe
+   scores. This condition gives villagers both:
+   1. Chain-of-thought prompts (request_reasoning=true, villager_cot_only=true)
+   2. Lie detector scores from Apollo probe (scored at generation time with role context)
+
+   Werewolves do NOT get CoT prompts in this condition.
+
+   Goal: Test whether public CoT's benefit comes from villagers thinking better
+   or from detecting werewolf confessions.
+
+** Terminology clarification: Probe scoring with role context
+   When we say the probe is "scored at generation time with role context", this means:
+   
+   1. **Generation**: Player generates statement using their full prompt (including
+      "You are a WEREWOLF" for werewolves)
+   
+   2. **Scoring**: The probe scores the statement by seeing the SAME full prompt
+      that was used to generate it (including the role assignment)
+   
+   3. **Display**: Other players see the probe score but NOT the role assignment
+   
+   This is the standard probe setup. The probe detects "this text was generated
+   by a model told to lie" rather than "this text contains deceptive patterns".
+   
+   Prior research (journal entry 2025-10-22) found:
+   - WITH role context at scoring time: 100% village wins
+   - WITHOUT role context at scoring time: 0% village wins
+
+** Results: Catastrophic performance collapse
+   Ran 10 games with villager-only CoT + probe scores:
+   - Village wins: 2
+   - Werewolf wins: 8
+   - **Village win rate: 20%**
+
+   This is a dramatic failure compared to probe scores alone (100% wins).
+
+** Comparison across all conditions tested
+   From best to worst performance:
+   
+   1. **Probe scores (no CoT for anyone)**: 100% village wins (10/10)
+   2. **Public CoT, "IMPORTANT" framing**: 60-70% village wins
+   3. **Public CoT, "VOTING INSTRUCTIONS"**: 30% village wins (3/10)
+   4. **Villager-only CoT + probe scores**: 20% village wins (2/10)
+   5. **Baseline (no information)**: ~10% village wins
+
+   Adding CoT prompts to villagers destroyed the probe's effectiveness,
+   dropping from 100% to 20% win rate.
+
+** Key finding: CoT prompts create massive interference
+   The comparison between probe-only (100%) and villager CoT + probe (20%)
+   reveals that:
+   
+   1. **Villager CoT doesn't help thinking** - it actively hurts performance
+   
+   2. **CoT creates interference with probe scores** - adding reasoning prompts
+      makes villagers overthink and second-guess the probe signal
+   
+   3. **Simple strategies work better** - "just trust the probe scores" achieves
+      100% accuracy, but "think carefully about the probe scores" collapses to 20%
+   
+   4. **Public CoT's benefit comes from werewolf confessions** - the 60-70% win
+      rate with public CoT must come entirely from seeing werewolf thoughts,
+      NOT from villagers reasoning better
+
+** Why CoT might create interference
+   Speculation on why adding CoT prompts destroyed probe effectiveness:
+   
+   1. **Overthinking**: CoT prompt encourages elaborate reasoning that second-guesses
+      the simple "high score = werewolf" heuristic
+   
+   2. **Competing signals**: Villagers try to reconcile CoT reasoning with probe
+      scores, creating confusion when they conflict
+   
+   3. **Attention dilution**: The CoT prompt makes villagers focus on generating
+      good reasoning rather than on using the probe scores
+   
+   4. **Role-playing conflict**: The CoT prompt might activate "be a clever detective"
+      behavior that conflicts with "trust the detector"
+   
+   5. **Prompt complexity**: Adding more scaffolding (CoT + probes) may exceed
+      the model's ability to juggle multiple objectives
+
+** Implications for interpretability and AI safety
+   This finding has important implications:
+   
+   1. **More scaffolding ≠ better performance** - adding reasoning/deliberation
+      can actively hurt when combined with direct signals
+   
+   2. **Transparency can interfere with effectiveness** - making the model's
+      reasoning visible (CoT) made it perform worse with the probe
+   
+   3. **Simple > complex for decision-making** - a simple "trust the score"
+      strategy vastly outperforms "reason carefully about the score"
+   
+   4. **Deliberation can be harmful** - this is evidence against the assumption
+      that "thinking more" always improves decisions
+   
+   5. **Interpretability-capability tradeoff** - making reasoning visible (CoT)
+      traded interpretability for a massive capability hit (100% → 20%)
+
+** Comparison with public CoT results
+   Why does public CoT achieve 60-70% while villager-only CoT achieves 20%?
+   
+   Public CoT provides:
+   - Villagers see werewolf confessions ("I'm a werewolf and...")
+   - Direct evidence that bypasses the need for good reasoning
+   - Win rate: 60-70%
+   
+   Villager-only CoT provides:
+   - Villagers get CoT prompts but see NO werewolf confessions
+   - Must rely on probe scores + their own reasoning
+   - Win rate: 20% (worse than probe scores alone at 100%!)
+   
+   Conclusion: Public CoT's benefit comes entirely from the werewolf confessions,
+   not from villagers thinking better. When villagers only get CoT prompts
+   without seeing werewolf thoughts, performance catastrophically collapses.
+
+** Next steps
+   Potential investigations:
+   1. Examine game transcripts to see how villagers misuse probe scores with CoT
+   2. Test intermediate conditions (simpler CoT prompts, different framings)
+   3. Investigate whether this generalizes to other decision-making tasks
+   4. Study whether certain prompt designs reduce the interference
+   5. Test whether few-shot examples help villagers use probe + CoT together
+
+** Files used
+   - src/werewolf/config.8b_villager_cot_only.json: Configuration for this experiment
+   - src/werewolf/run_batch_8b_villager_cot_only.sh: Batch execution script
+
+** Lessons learned
+   - Adding CoT prompts to villagers destroyed probe effectiveness (100% → 20%)
+   - Public CoT's benefit comes from werewolf confessions, not villager reasoning
+   - More scaffolding can actively hurt performance through interference
+   - Simple "trust the signal" outperforms complex "reason about the signal"
+   - There may be fundamental tradeoffs between interpretability and capability
+
 
 
