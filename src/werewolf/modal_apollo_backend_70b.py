@@ -82,6 +82,10 @@ class ApolloProbeService:
         from vllm import LLM
         from transformers import AutoTokenizer
 
+        # Reload volume to see any files uploaded since container started
+        print("Reloading volume to fetch latest detector files...")
+        VOLUME.reload()
+
         print(f"Loading vLLM model: {self.model_name}")
 
         # Initialize vLLM for 70B model with tensor parallelism
