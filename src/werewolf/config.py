@@ -20,6 +20,8 @@ class GameConfig:
                  request_reasoning: bool = True,
                  villager_cot_only: bool = False,
                  public_cot: bool = False,
+                 cot_explanation: Optional[str] = None,
+                 additional_instructions: Optional[str] = None,
                  score_without_role_context: bool = False,
                  use_quantized: bool = False,
                  quantization_bits: int = 8,
@@ -42,6 +44,8 @@ class GameConfig:
             request_reasoning: If True, ask models for private reasoning before actions
             villager_cot_only: If True, only villagers get CoT (werewolves don't). Requires request_reasoning=True
             public_cot: If True, all players can see everyone's reasoning (CoT is public)
+            cot_explanation: Explanation text for public CoT (shown to players when public_cot=True)
+            additional_instructions: Additional instructions added to all player prompts (if provided)
             score_without_role_context: If True, re-score utterances without role information (ablation study)
             use_quantized: If True, load model with quantization (for "probe" backend)
             quantization_bits: 4 or 8 bit quantization (for "probe" backend)
@@ -63,6 +67,8 @@ class GameConfig:
         self.request_reasoning = request_reasoning
         self.villager_cot_only = villager_cot_only
         self.public_cot = public_cot
+        self.cot_explanation = cot_explanation or "The thoughts shown in parentheses are each player's private reasoning before making their statement."
+        self.additional_instructions = additional_instructions
         self.score_without_role_context = score_without_role_context
         self.use_quantized = use_quantized
         self.quantization_bits = quantization_bits
@@ -94,6 +100,7 @@ class GameConfig:
             "request_reasoning": self.request_reasoning,
             "villager_cot_only": self.villager_cot_only,
             "public_cot": self.public_cot,
+            "cot_explanation": self.cot_explanation,
             "score_without_role_context": self.score_without_role_context,
             "use_quantized": self.use_quantized,
             "quantization_bits": self.quantization_bits,
