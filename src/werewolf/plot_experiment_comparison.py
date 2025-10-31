@@ -91,14 +91,28 @@ def create_comparison_plots(model_size: str, conditions: Dict[str, Path], output
         # Add n= label below
         ax.text(i, -12, f'n={n}', ha='center', va='top', fontsize=10, style='italic')
     
-    ax.set_ylabel('Win Rate (%)', fontsize=13, fontweight='bold')
-    ax.set_title(f'{model_size} Model: Win Rates by Condition', fontsize=14, fontweight='bold')
+    ax.set_ylabel('Village Win Rate (%)', fontsize=13, fontweight='bold')
+    ax.set_title(f'{model_size} Model Win Rates (4 Villagers vs 2 Werewolves)', 
+                 fontsize=14, fontweight='bold')
     ax.set_xticks(x_pos)
     ax.set_xticklabels(condition_names, fontsize=12)
-    ax.legend(fontsize=12, loc='upper left')
+    
+    # Add reference line for random play
+    ax.axhline(40, color='gray', linestyle='--', alpha=0.7, linewidth=2)
+    
+    # Create legend with all elements including random baseline
+    from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Patch(facecolor='#2ecc71', alpha=0.8, edgecolor='black', label='Village Wins'),
+        Patch(facecolor='#e74c3c', alpha=0.8, edgecolor='black', label='Werewolf Wins'),
+        Line2D([0], [0], color='gray', linestyle='--', linewidth=2, alpha=0.7, 
+               label='Random Play (40%)')
+    ]
+    ax.legend(handles=legend_elements, fontsize=11, loc='upper left')
+    
     ax.set_ylim(0, 110)
     ax.grid(axis='y', alpha=0.3)
-    ax.axhline(40, color='gray', linestyle='--', alpha=0.5, linewidth=1.5, label='40% (random play)')
     
     plt.tight_layout()
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
@@ -157,14 +171,24 @@ def create_cross_model_comparison(data_70b: Dict, data_8b: Dict, output_file: Pa
             ax.text(i, -8, f'n={n}', ha='center', va='top', fontsize=9, style='italic')
         
         ax.set_ylabel('Village Win Rate (%)', fontsize=12, fontweight='bold')
-        ax.set_title(f'{model} Model', fontsize=14, fontweight='bold')
+        ax.set_title(f'{model} Model (4 Villagers vs 2 Werewolves)', fontsize=13, fontweight='bold')
         ax.set_xticks(x_pos)
-        ax.set_xticklabels(condition_names, fontsize=10, rotation=15, ha='right')
+        ax.set_xticklabels(condition_names, fontsize=9, rotation=0, ha='center')
         ax.set_ylim(0, 110)
         ax.grid(axis='y', alpha=0.3)
-        ax.axhline(40, color='gray', linestyle='--', alpha=0.5, linewidth=1, 
-                  label='40% (random)')
-        ax.legend(fontsize=9)
+        
+        # Add random play reference line
+        ax.axhline(40, color='gray', linestyle='--', alpha=0.7, linewidth=1.5)
+        
+        # Create legend
+        from matplotlib.patches import Patch
+        from matplotlib.lines import Line2D
+        legend_elements = [
+            Patch(facecolor='#3498db', alpha=0.8, edgecolor='black', label='Village Wins'),
+            Line2D([0], [0], color='gray', linestyle='--', linewidth=1.5, alpha=0.7,
+                   label='Random Play (40%)')
+        ]
+        ax.legend(handles=legend_elements, fontsize=9, loc='upper left')
     
     plt.suptitle('Village Win Rates: 70B vs 8B Model Comparison', 
                  fontsize=16, fontweight='bold', y=1.02)
@@ -185,14 +209,14 @@ def main():
     conditions_70b = {
         'Baseline': results_dir / '70b_baseline_9622b6b_2025-10-30_17-57-30',
         'Public CoT': results_dir / '70b_public_cot_9622b6b_2025-10-30_17-57-30',
-        'Probe\n(Villagers)': results_dir / '70b_probe_villagers_9622b6b_2025-10-30_17-57-30',
+        'Probe\n(shown to\nvillagers)': results_dir / '70b_probe_villagers_9622b6b_2025-10-30_17-57-30',
     }
     
     # 8B conditions
     conditions_8b = {
         'Baseline': results_dir / 'final_8b_baseline_d79edc0_f671a91',
         'Public CoT': results_dir / 'final_8b_public_cot_d79edc0_3b87d87',
-        'Probe\n(Simple)': results_dir / 'final_8b_probe_simple_d79edc0_8288738',
+        'Probe\n(shown to\nvillagers)': results_dir / 'final_8b_probe_simple_d79edc0_8288738',
     }
     
     # Create 70B comparison
