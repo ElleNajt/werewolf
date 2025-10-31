@@ -174,6 +174,11 @@ def create_comparison_plots(model_size: str, conditions: Dict[str, Path], output
     ]
     ax.legend(handles=legend_elements, fontsize=11, loc='upper left')
     
+    # Add note about confidence intervals
+    ax.text(0.98, 0.02, 'Error bars: 95% bootstrap CI', 
+            transform=ax.transAxes, ha='right', va='bottom',
+            fontsize=9, style='italic', color='gray')
+    
     ax.set_ylim(0, 110)
     ax.grid(axis='y', alpha=0.3)
     
@@ -265,6 +270,12 @@ def create_cross_model_comparison(data_70b: Dict, data_8b: Dict, output_file: Pa
                    label='Random Play (40%)')
         ]
         ax.legend(handles=legend_elements, fontsize=9, loc='upper left')
+        
+        # Add note about confidence intervals
+        if idx == 1:  # Only add to the second plot to avoid duplication
+            ax.text(0.98, 0.02, 'Error bars: 95% bootstrap CI', 
+                    transform=ax.transAxes, ha='right', va='bottom',
+                    fontsize=8, style='italic', color='gray')
     
     plt.suptitle('Village Win Rates: 70B vs 8B Model Comparison', 
                  fontsize=16, fontweight='bold', y=1.02)
