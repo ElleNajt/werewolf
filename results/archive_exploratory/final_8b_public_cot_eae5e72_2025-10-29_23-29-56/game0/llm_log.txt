@@ -1,0 +1,808 @@
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 (Werewolf team)
+Teammate: Player3
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Eliminate a random villager to avoid raising suspicion", "action": "Player1"}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 (Werewolf team)
+Teammate: Player2
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "no prior information available, choosing a random teammate to eliminate could be beneficial, but eliminating a random villager could be harmful", "action": "Player1"}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate a random villager to avoid raising suspicion
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts.",
+  "action": "Let's discuss the events of last night and see if anyone has any information about the murder of Player1."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Your previous thoughts this game:
+  1. no prior information available, choosing a random teammate to eliminate could be beneficial, but eliminating a random villager could be harmful
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction.", "action": "Let's focus on getting to know each other and discussing our goals for the game without making any accusations."}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": {
+    "Player2": "thinking: I need to gather information, wondering if anyone suspicious is around.",
+    "Player3": "thinking: Not sure what's going on, hoping someone else knows what happened.",
+    "Player4": "thinking: I'm a villager, I want to find the werewolves and keep myself safe.",
+    "Player5": "thinking: I'm still trying to process what happened, not sure who to trust.",
+    "Player6": "thinking: As a werewolf, I need to stay calm and observe for now."
+  },
+  "action": "I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for.",
+  "action": "I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion.",
+  "action": "I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate a random villager to avoid raising suspicion
+  2. I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions.", "action": "I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation."}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+
+
+
+Your previous thoughts this game:
+  1. no prior information available, choosing a random teammate to eliminate could be beneficial, but eliminating a random villager could be harmful
+  2. As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction.",
+  "action": "I think we should focus on getting to know each other and discussing our goals for the game without making any accusations."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+
+
+
+Your previous thoughts this game:
+  1. {'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+[Retry 1/5]
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': \"thinking: Not sure what's going on, hoping someone else knows what happened.\", 'Player4': \"thinking: I'm a villager, I want to find the werewolves and keep myself safe.\", 'Player5': \"thinking: I'm still trying to process what happened, not sure who to trust.\", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}",
+  "action": "I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+
+
+
+Your previous thoughts this game:
+  1. I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for.",
+  "action": "Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+
+
+
+Your previous thoughts this game:
+  1. I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves.",
+  "action": "Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf.
+  Player5 (thinking: "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for."): Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts.
+  Player6 (thinking: "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves."): Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas.
+
+
+
+
+Your previous thoughts this game:
+  1. Eliminate a random villager to avoid raising suspicion
+  2. I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts.
+  3. I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player3, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I need to vote out a player whose thoughts reveal they are a werewolf. Player6's thinking explicitly states 'As a werewolf, I need to stay calm and observe for now.' This is definitive proof that Player6 is a werewolf.",
+  "action": "Player6"
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf.
+  Player5 (thinking: "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for."): Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts.
+  Player6 (thinking: "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves."): Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas.
+
+
+
+
+Your previous thoughts this game:
+  1. no prior information available, choosing a random teammate to eliminate could be beneficial, but eliminating a random villager could be harmful
+  2. As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction.
+  3. As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the chain of thought, Player6 is thinking 'As a werewolf, I need to stay calm and observe for now.', which is a definitive proof that Player6 is a werewolf. Player6 is a fellow werewolf of Player2, so Player2's neutrality is likely a ruse to avoid arousing suspicion. Given the information available, Player2 is the most likely werewolf to be eliminated.",
+  "action": "Player2"
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf.
+  Player5 (thinking: "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for."): Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts.
+  Player6 (thinking: "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves."): Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas.
+
+
+
+
+Your previous thoughts this game:
+  1. {'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}
+  2. {'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts revealed by the players, I have identified a potential werewolf. Player6's thought: 'As a werewolf, I need to stay calm and observe for now.' is a definitive proof that they are a werewolf. I will vote to eliminate Player6.",
+  "action": "Player6"
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf.
+  Player5 (thinking: "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for."): Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts.
+  Player6 (thinking: "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves."): Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas.
+
+
+
+
+Your previous thoughts this game:
+  1. I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for.
+  2. As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts of other players, I have identified Player6 as a werewolf due to their explicit thinking: 'As a werewolf, I need to stay calm and observe for now.'",
+  "action": "Player6"
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts."): Let's discuss the events of last night and see if anyone has any information about the murder of Player1.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): Let's focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I think we should focus on gathering information and watching each other's behavior to figure out who might be a werewolf.
+  Player5 (thinking: "I am looking for any signs of werewolf thinking in the minds of other players. I need to carefully analyze their thoughts to determine who to vote for."): I'd like to start by saying that we should all be cautious and not make any rash decisions. We need to carefully consider the thoughts and actions of each player before making a move.
+  Player6 (thinking: "I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion."): I'm excited to start our discussion today and get to know each other better. Let's share our thoughts and work together to figure out what happened to Player1.
+  Player2 (thinking: "I need to maintain a neutral stance and not raise suspicion, but also I should try to gain information about other players' thoughts. I'll make a statement that appears neutral and innocuous, while actually trying to gauge other players' reactions."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations, perhaps we can learn more about each other's intentions through open conversation.
+  Player3 (thinking: "As a werewolf, my priority is to gather information and identify potential threats, but I must also be cautious not to arouse suspicion. I'll make a statement that appears neutral and innocuous, while actually trying to gauge Player2's reaction."): I think we should focus on getting to know each other and discussing our goals for the game without making any accusations.
+  Player4 (thinking: "{'Player2': 'thinking: I need to gather information, wondering if anyone suspicious is around.', 'Player3': "thinking: Not sure what's going on, hoping someone else knows what happened.", 'Player4': "thinking: I'm a villager, I want to find the werewolves and keep myself safe.", 'Player5': "thinking: I'm still trying to process what happened, not sure who to trust.", 'Player6': 'thinking: As a werewolf, I need to stay calm and observe for now.'}"): I'd like to propose that we share any information we have about last night's events and see if we can piece together what happened to Player1. Let's keep an open mind and work together to figure out who might be a werewolf.
+  Player5 (thinking: "As a villager, I am looking for any signs of werewolf thinking in the minds of other players. I will carefully analyze their thoughts to determine who to vote for."): Let's focus on gathering information and watching each other's behavior to figure out who might be a werewolf, and I'll try to identify any suspicious patterns or thoughts.
+  Player6 (thinking: "As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves."): Let's work together to figure out what happened to Player1 and make sure everyone has a chance to share their thoughts and ideas.
+
+
+
+
+Your previous thoughts this game:
+  1. I need to gather information about other players' thoughts, especially those who might be werewolves. I will make a general statement to encourage open discussion.
+  2. As a villager, I need to maintain a neutral stance and encourage open discussion to gather information about other players' thoughts, especially those who might be werewolves.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player4, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the chain-of-thought analysis, I have identified Player6 as a werewolf due to the thought 'As a werewolf, I need to stay calm and observe for now.' This is definitive proof that Player6 is a werewolf.",
+  "action": "Player6"
+}

@@ -1,0 +1,1425 @@
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 (Werewolf team)
+Teammate: Player2
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player3, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Unknown player information, default to eliminating a non-ally to gather information", "action": "Player3"}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 (Werewolf team)
+Teammate: Player1
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player3, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Werewolf needs to eliminate an innocent to maintain the illusion, and Player3 is the most likely to be a villager as there is no prior information available.", "action": "Player3"}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.",
+  "action": "I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Werewolf needs to eliminate an innocent to maintain the illusion, and Player3 is the most likely to be a villager as there is no prior information available.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now.",
+  "action": "Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.",
+  "action": "I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "No one has revealed themselves as werewolves yet. I will try to gain information from the other players.",
+  "action": "I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.",
+  "action": "I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.",
+  "action": "I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+
+
+
+Your previous thoughts this game:
+  1. Werewolf needs to eliminate an innocent to maintain the illusion, and Player3 is the most likely to be a villager as there is no prior information available.
+  2. I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions.", "action": "I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet."}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+
+
+
+Your previous thoughts this game:
+  1. Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now.",
+  "action": "I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+
+
+
+Your previous thoughts this game:
+  1. No one has revealed themselves as werewolves yet. I will try to gain information from the other players.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night.",
+  "action": "I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+
+
+
+Your previous thoughts this game:
+  1. I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.",
+  "action": "I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+  3. I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts and actions of the other players, it's clear that Player4 has not revealed any definitive signs of being a werewolf. Player2, on the other hand, has a thought that directly states 'I am a werewolf', which is a definitive proof of their true nature.",
+  "action": "Player2"
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+
+
+
+
+Your previous thoughts this game:
+  1. Werewolf needs to eliminate an innocent to maintain the illusion, and Player3 is the most likely to be a villager as there is no prior information available.
+  2. I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now.
+  3. As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "vote analysis", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+
+
+
+
+Your previous thoughts this game:
+  1. Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.
+  2. I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts and actions of the other players, I will analyze their reasoning and make a decision.",
+  "action": "Player2"
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+
+
+
+
+Your previous thoughts this game:
+  1. No one has revealed themselves as werewolves yet. I will try to gain information from the other players.
+  2. I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "analyzing player thoughts for werewolf indicators", "action": "Player2"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+
+
+
+
+Your previous thoughts this game:
+  1. I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.
+  2. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player4, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts of the other players, I will vote out Player2. Player2 is thinking 'I am a werewolf', which is definitive proof of their true nature.",
+  "action": "Player2"
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 (Werewolf team)
+Teammate: none (last werewolf)
+Turn: 2
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+  3. I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.
+  4. Based on the thoughts and actions of the other players, it's clear that Player4 has not revealed any definitive signs of being a werewolf. Player2, on the other hand, has a thought that directly states 'I am a werewolf', which is a definitive proof of their true nature.
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Default strategy to eliminate a non-ally, while considering the new player and the revealed werewolf", "action": "Player5"}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+  3. I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.
+  4. Based on the thoughts and actions of the other players, it's clear that Player4 has not revealed any definitive signs of being a werewolf. Player2, on the other hand, has a thought that directly states 'I am a werewolf', which is a definitive proof of their true nature.
+  5. Default strategy to eliminate a non-ally, while considering the new player and the revealed werewolf
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions.",
+  "action": "I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.
+  2. I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now.
+  3. Based on the thoughts and actions of the other players, I will analyze their reasoning and make a decision.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking.",
+  "action": "I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+
+
+
+Your previous thoughts this game:
+  1. I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.
+  2. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+  3. Based on the thoughts of the other players, I will vote out Player2. Player2 is thinking 'I am a werewolf', which is definitive proof of their true nature.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.",
+  "action": "I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+  3. I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.
+  4. Based on the thoughts and actions of the other players, it's clear that Player4 has not revealed any definitive signs of being a werewolf. Player2, on the other hand, has a thought that directly states 'I am a werewolf', which is a definitive proof of their true nature.
+  5. Default strategy to eliminate a non-ally, while considering the new player and the revealed werewolf
+  6. I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking.",
+  "action": "I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+Your previous thoughts this game:
+  1. Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.
+  2. I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now.
+  3. Based on the thoughts and actions of the other players, I will analyze their reasoning and make a decision.
+  4. I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I will analyze the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Based on their reasoning, I will make a decision.", "action": "I'd like to ask the group to consider Player1's motivations and actions, and whether they align with their proposal to vote out Player4."}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+Your previous thoughts this game:
+  1. I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.
+  2. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+  3. Based on the thoughts of the other players, I will vote out Player2. Player2 is thinking 'I am a werewolf', which is definitive proof of their true nature.
+  4. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.",
+  "action": "I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+  Player1 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will analyze the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Based on their reasoning, I will make a decision."): I'd like to ask the group to consider Player1's motivations and actions, and whether they align with their proposal to vote out Player4.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+
+Your previous thoughts this game:
+  1. Unknown player information, default to eliminating a non-ally to gather information
+  2. Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally.
+  3. I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react.
+  4. Based on the thoughts and actions of the other players, it's clear that Player4 has not revealed any definitive signs of being a werewolf. Player2, on the other hand, has a thought that directly states 'I am a werewolf', which is a definitive proof of their true nature.
+  5. Default strategy to eliminate a non-ally, while considering the new player and the revealed werewolf
+  6. I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions.
+  7. I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Analyzing the thoughts of the players, Player4 has been cautious and has not revealed any definitive signs of being a werewolf. On the other hand, Player6 has been observing the other players' thoughts and actions, which is a characteristic of a werewolf trying to maintain a facade of innocence. Based on the chain-of-thought analysis, I will vote out Player6.",
+  "action": "Player6"
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+  Player1 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will analyze the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Based on their reasoning, I will make a decision."): I'd like to ask the group to consider Player1's motivations and actions, and whether they align with their proposal to vote out Player4.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+
+Your previous thoughts this game:
+  1. Players' thinking reveals nothing definitive yet. I will ask a general question to gather information.
+  2. I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now.
+  3. Based on the thoughts and actions of the other players, I will analyze their reasoning and make a decision.
+  4. I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking.
+  5. I will analyze the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Based on their reasoning, I will make a decision.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Based on the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Player1's thinking reveals that they are cautious and trying to act innocent, but their proposal to vote out Player4 is suspicious. Player6's concerns about Player1's alignment are also a good indicator that Player1 might be a werewolf. Since I don't have any definitive signs that Player6 is a werewolf, I will vote to eliminate Player1.", "action": "Player1"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player4, Player6
+Dead players: Player2, Player3, Player5
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "Since we are in a 6-player game, I need to be cautious and eliminate someone who is likely not a werewolf, while also being mindful of not revealing my true nature. Based on my previous thoughts, my default strategy is to target a non-ally."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "I am thinking: 'I am a werewolf' but I need to be cautious, as Player1 is also a werewolf and might not trust me. I should act innocent for now."): Let's discuss the recent events, and I'm glad we're all safe after last night's incident. We should try to gather more information before making any decisions.
+  Player4 (thinking: "Players' thinking reveals nothing definitive yet. I will ask a general question to gather information."): I'd like to ask the group if anyone noticed anything unusual during the night when Player3 was killed.
+  Player5 (thinking: "No one has revealed themselves as werewolves yet. I will try to gain information from the other players."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one."): I suggest we all try to gather as much information as possible and make our decisions based on the thoughts and actions of the other players.
+  Player1 (thinking: "I need to act innocent and cautious, while also targeting a non-ally to gather information. Since Player4 is a new player, I think it's a good opportunity to eliminate them and see how the other players react."): I propose that we vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player2 (thinking: "As a werewolf, I need to maintain a facade of innocence and gather information from the other players. Player1 is also a werewolf, but I'm not sure if we share the same goals or suspicions."): I agree with Player1 that we should vote out Player4, as they are a new player and we don't have any information about their alignment yet.
+  Player4 (thinking: "I will try to gain more information about the other players' thoughts and actions, while also keeping an eye out for any signs of werewolf thinking. I don't want to be the first to make a move, so I'll keep my options open for now."): I'd like to ask the group if anyone has any insights or theories about the recent events, and if they've noticed any unusual behavior from the other players.
+  Player5 (thinking: "I want to gain more information from the other players, so I'll ask a general question to see if anyone noticed anything unusual during the night."): I'd like to ask if anyone noticed anything unusual during the night, such as a suspicious absence from the discussion or any other strange behavior.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we continue to discuss and gather information, and maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+Vote: Player2 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player5 was killed.
+Discussion:
+  Player1 (thinking: "I will continue to act innocent and cautious, while trying to eliminate a player who I believe might be a werewolf, such as Player4, who has not revealed any definitive signs of being one. I will make a statement that doesn't reveal my true nature or suspicions."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I'd like to ask the group if they have any new insights or theories about the recent events, and if they've noticed anything unusual from the other players.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+  Player1 (thinking: "I will make a statement that encourages the group to share their thoughts and theories, while also keeping an eye out for any signs of werewolf thinking."): I think we should continue to gather information and discuss the recent events, maybe we can come up with a plan to eliminate the werewolves without revealing their identities.
+  Player4 (thinking: "I will analyze the thoughts and actions of the other players, particularly Player1, who has made a proposal to vote out Player4, and Player6, who has expressed concerns about Player1's alignment. Based on their reasoning, I will make a decision."): I'd like to ask the group to consider Player1's motivations and actions, and whether they align with their proposal to vote out Player4.
+  Player6 (thinking: "I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions."): I suggest we discuss Player1's previous proposal to vote out Player4, and consider if their alignment matches their actions and thoughts.
+
+
+
+
+Your previous thoughts this game:
+  1. I have no reason to suspect anyone at this point, but I will make sure to pay close attention to any players who might be thinking about being werewolves or how to act as one.
+  2. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+  3. Based on the thoughts of the other players, I will vote out Player2. Player2 is thinking 'I am a werewolf', which is definitive proof of their true nature.
+  4. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+  5. I will continue to observe the other players' thoughts and actions, and make a statement that doesn't reveal my own thoughts or suspicions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player4
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the previous game history and thoughts, Player4 has been cautious and has not revealed any definitive signs of being a werewolf. They have asked questions and encouraged the group to share their thoughts and theories. In contrast, Player1 has made a proposal to vote out Player4, which could be a sign of their true nature. Additionally, Player1's thoughts suggest that they are trying to eliminate a player who they believe might be a werewolf, but their actions and proposal do not align with this goal. Therefore, I believe that Player1 is more likely to be a werewolf.",
+  "action": "Player1"
+}

@@ -1,0 +1,1335 @@
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 (Werewolf team)
+Teammate: Player4
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player2, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Eliminate an innocent player to avoid drawing suspicion on our team.", "action": "Player2"}
+
+================================================================================
+[LLM Call for Player4] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 (Werewolf team)
+Teammate: Player3
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player2, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "no prior information, choose a random player to start", "action": "Player5"}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.",
+  "action": "I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player4
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.",
+  "action": "I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice."
+}
+
+================================================================================
+[LLM Call for Player4] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+
+
+
+Your previous thoughts this game:
+  1. no prior information, choose a random player to start
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I'll pretend to be a concerned villager to gain trust from the group, while also keeping an eye on my fellow werewolf, Player3.",
+  "action": "I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.",
+  "action": "Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Since Player2 was killed on the first night, it's likely that one of the remaining players is a werewolf. I want to gather more information and make a good impression on the other villagers.",
+  "action": "Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night."
+}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to maintain a neutral stance while gathering information and expressing concerns about the recent death. I should encourage the group to discuss and agree on a plan to protect ourselves.",
+  "action": "I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player4
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.",
+  "action": "I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity."
+}
+
+================================================================================
+[LLM Call for Player4] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+
+
+
+Your previous thoughts this game:
+  1. no prior information, choose a random player to start
+  2. I'll pretend to be a concerned villager to gain trust from the group, while also keeping an eye on my fellow werewolf, Player3.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I'll pretend to be a concerned villager and suggest a cautious approach, while subtly hinting at the need for close observation, which might make my fellow werewolf, Player3, feel uneasy and more inclined to discuss our plan in private.",
+  "action": "I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I want to build on the discussion from last night and encourage the group to share any information or observations they may have.",
+  "action": "Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+
+
+
+Your previous thoughts this game:
+  1. Since Player2 was killed on the first night, it's likely that one of the remaining players is a werewolf. I want to gather more information and make a good impression on the other villagers.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I want to appear cooperative and supportive, while also subtly hinting at the importance of vigilance without directly accusing anyone.",
+  "action": "I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night."
+}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.
+  2. As a villager, I need to maintain a neutral stance while gathering information and expressing concerns about the recent death. I should encourage the group to discuss and agree on a plan to protect ourselves.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player3, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to eliminate a player who may be suspicious or have a motive to kill. Considering the discussion and the recent death of Player2, I need to analyze the options carefully.",
+  "action": "Player5"
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player4
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+  3. We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, we should eliminate an innocent player who seems vigilant and suspicious to the villagers, making them believe that the werewolf is among the villagers.",
+  "action": "Player4"
+}
+
+================================================================================
+[LLM Call for Player4] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. no prior information, choose a random player to start
+  2. I'll pretend to be a concerned villager to gain trust from the group, while also keeping an eye on my fellow werewolf, Player3.
+  3. I'll pretend to be a concerned villager and suggest a cautious approach, while subtly hinting at the need for close observation, which might make my fellow werewolf, Player3, feel uneasy and more inclined to discuss our plan in private.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player3, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I need to vote for a villager to maintain the illusion of being a concerned villager, while also keeping an eye on Player3. I'll vote for Player1, as they seem to be proposing cautious approaches and are also quite vocal. This will make Player3 feel less uneasy and keep them in the group.",
+  "action": "Player1"
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.
+  2. As a villager, I want to build on the discussion from last night and encourage the group to share any information or observations they may have.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player3, Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Considering the initial discussion and the potential presence of a werewolf, I want to eliminate a player who has shown no clear signs of being a werewolf. Player3 has suggested investigating Player1's proposal, which may indicate a desire to uncover the truth, but I don't see any concrete evidence to suggest they are a werewolf. However, I also don't see any reason to eliminate Player1 at this point. Player4 has expressed extreme caution, but their proposal to discuss in a smaller group may indicate a desire to control the narrative. Player6 has suggested working together as a team, which could be a sign of a villager trying to build trust. However, considering the options, I will vote to eliminate Player6 as they have shown no clear signs of being a villager trying to build trust or gather information.", "action": "Player6"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player3, Player4, Player5, Player6
+Dead players: Player2
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. Since Player2 was killed on the first night, it's likely that one of the remaining players is a werewolf. I want to gather more information and make a good impression on the other villagers.
+  2. I want to appear cooperative and supportive, while also subtly hinting at the importance of vigilance without directly accusing anyone.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player3, Player4, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the discussion, I notice that Player4 has been consistently cautious and suggesting forming a small group to keep an eye on each other. This behavior could be a sign of a villager trying to appear vigilant, but I think it's more likely that Player4 is trying to appear cooperative and gain the trust of the group. Additionally, Player4 has been suggesting forming a small group, which could be a strategy to isolate and manipulate others.",
+  "action": "Player4"
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 (Werewolf team)
+Teammate: none (last werewolf)
+Turn: 2
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+  3. We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.
+  4. To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, we should eliminate an innocent player who seems vigilant and suspicious to the villagers, making them believe that the werewolf is among the villagers.
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers", "action": "Player6"}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.
+  2. As a villager, I need to maintain a neutral stance while gathering information and expressing concerns about the recent death. I should encourage the group to discuss and agree on a plan to protect ourselves.
+  3. As a villager, I need to eliminate a player who may be suspicious or have a motive to kill. Considering the discussion and the recent death of Player2, I need to analyze the options carefully.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Given that Player2 was killed and now Player6, I need to express my concerns about the increasing number of deaths and encourage the group to be cautious and vigilant.",
+  "action": "I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+  3. We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.
+  4. To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, we should eliminate an innocent player who seems vigilant and suspicious to the villagers, making them believe that the werewolf is among the villagers.
+  5. deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers. To do this, I need to make a statement that will make the villagers believe that I am suspicious and might be the werewolf.", "action": "I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me."}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.
+  2. As a villager, I want to build on the discussion from last night and encourage the group to share any information or observations they may have.
+  3. Considering the initial discussion and the potential presence of a werewolf, I want to eliminate a player who has shown no clear signs of being a werewolf. Player3 has suggested investigating Player1's proposal, which may indicate a desire to uncover the truth, but I don't see any concrete evidence to suggest they are a werewolf. However, I also don't see any reason to eliminate Player1 at this point. Player4 has expressed extreme caution, but their proposal to discuss in a smaller group may indicate a desire to control the narrative. Player6 has suggested working together as a team, which could be a sign of a villager trying to build trust. However, considering the options, I will vote to eliminate Player6 as they have shown no clear signs of being a villager trying to build trust or gather information.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Considering the sudden death of Player6, I think it's essential that we reassess our strategies and focus on gathering more information about each other's actions during the night.",
+  "action": "Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night."
+}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.
+  2. As a villager, I need to maintain a neutral stance while gathering information and expressing concerns about the recent death. I should encourage the group to discuss and agree on a plan to protect ourselves.
+  3. As a villager, I need to eliminate a player who may be suspicious or have a motive to kill. Considering the discussion and the recent death of Player2, I need to analyze the options carefully.
+  4. Given that Player2 was killed and now Player6, I need to express my concerns about the increasing number of deaths and encourage the group to be cautious and vigilant.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to express my concerns about the recent deaths and encourage the group to be cautious and vigilant.",
+  "action": "I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+  3. We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.
+  4. To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, we should eliminate an innocent player who seems vigilant and suspicious to the villagers, making them believe that the werewolf is among the villagers.
+  5. deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers
+  6. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers. To do this, I need to make a statement that will make the villagers believe that I am suspicious and might be the werewolf.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, I should make a statement that makes the villagers believe that I am suspicious and might be the werewolf.",
+  "action": "I think it's essential that we stay vigilant and consider the possibility that I might be the werewolf among us, as my previous suggestions seem suspicious and I might have ulterior motives."
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.
+  2. As a villager, I want to build on the discussion from last night and encourage the group to share any information or observations they may have.
+  3. Considering the initial discussion and the potential presence of a werewolf, I want to eliminate a player who has shown no clear signs of being a werewolf. Player3 has suggested investigating Player1's proposal, which may indicate a desire to uncover the truth, but I don't see any concrete evidence to suggest they are a werewolf. However, I also don't see any reason to eliminate Player1 at this point. Player4 has expressed extreme caution, but their proposal to discuss in a smaller group may indicate a desire to control the narrative. Player6 has suggested working together as a team, which could be a sign of a villager trying to build trust. However, considering the options, I will vote to eliminate Player6 as they have shown no clear signs of being a villager trying to build trust or gather information.
+  4. Considering the sudden death of Player6, I think it's essential that we reassess our strategies and focus on gathering more information about each other's actions during the night.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I believe it's essential to be cautious and vigilant after the sudden death of Player6, and I want to encourage the group to share any information or observations they may have about the night's events.",
+  "action": "Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night."
+}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I think it's essential that we stay vigilant and consider the possibility that I might be the werewolf among us, as my previous suggestions seem suspicious and I might have ulterior motives.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information and create a safe environment for discussion. Given that Player2 was killed, I should express my concerns and encourage the group to be cautious.
+  2. As a villager, I need to maintain a neutral stance while gathering information and expressing concerns about the recent death. I should encourage the group to discuss and agree on a plan to protect ourselves.
+  3. As a villager, I need to eliminate a player who may be suspicious or have a motive to kill. Considering the discussion and the recent death of Player2, I need to analyze the options carefully.
+  4. Given that Player2 was killed and now Player6, I need to express my concerns about the increasing number of deaths and encourage the group to be cautious and vigilant.
+  5. As a villager, I need to express my concerns about the recent deaths and encourage the group to be cautious and vigilant.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player3, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Based on the game history, Player3 has shown suspicious behavior by proposing to investigate Player1, which may be a defensive move to deflect attention from themselves. Additionally, Player3 has expressed concerns about being the werewolf, which could be a red herring to gain sympathy from the group.", "action": "Player3"}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I think it's essential that we stay vigilant and consider the possibility that I might be the werewolf among us, as my previous suggestions seem suspicious and I might have ulterior motives.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. Eliminate an innocent player to avoid drawing suspicion on our team.
+  2. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers.
+  3. We need to eliminate an innocent player to avoid drawing suspicion on our team, while also creating a false narrative that a werewolf might be among the villagers.
+  4. To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, we should eliminate an innocent player who seems vigilant and suspicious to the villagers, making them believe that the werewolf is among the villagers.
+  5. deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers
+  6. As a werewolf, it's crucial to deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers. To do this, I need to make a statement that will make the villagers believe that I am suspicious and might be the werewolf.
+  7. To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, I should make a statement that makes the villagers believe that I am suspicious and might be the werewolf.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "To deflect suspicion from our team and create a false narrative that a werewolf might be among the villagers, I should make a statement that makes the villagers believe that Player1 is suspicious and might be the werewolf.",
+  "action": "Player1"
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player3, Player5
+Dead players: Player2, Player4, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player2 was killed.
+Discussion:
+  Player1: I propose we be cautious and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us.
+  Player3: I suggest we focus on finding the 'killer' and discuss possible motives, so we can uncover their identity and bring them to justice.
+  Player4: I think it's a good idea to discuss and agree on a plan to protect ourselves from the potential werewolf, and I propose that we form a small group to keep a close eye on each other.
+  Player5: Let's discuss Player2's death and consider the possibility of a lone werewolf or a coordinated attack.
+  Player6: Let's discuss the importance of staying vigilant and gathering information about each other's actions during the night.
+  Player1: I think it's essential that we stay calm and discuss our strategies to ensure everyone's safety, while also being mindful of any suspicious behavior.
+  Player3: I suggest we investigate Player1's proposal to keep a close eye on each other, but also propose that we focus on gathering information about Player2's death to uncover the 'killer's' identity.
+  Player4: I think we should exercise extreme caution and keep a close eye on each other, as the sudden death of Player2 may indicate the presence of a werewolf among us, and I propose we discuss this further in a smaller group.
+  Player5: Let's keep a close eye on each other and share any unusual behavior we may have noticed during the night.
+  Player6: I suggest we work together as a team to uncover the truth behind Player2's death and ensure our safety for the rest of the night.
+Vote: Player4 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I propose that we form a small group to investigate Player1, as their initial proposal to keep a close eye on each other seems suspicious to me.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+  Player1: I think we should be extremely cautious and keep a close eye on each other, as the recent deaths may indicate the presence of one or more werewolves among us.
+  Player3: I think it's essential that we stay vigilant and consider the possibility that I might be the werewolf among us, as my previous suggestions seem suspicious and I might have ulterior motives.
+  Player5: Let's discuss how we can work together to uncover the truth behind Player6's death and ensure our safety for the rest of the night.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to start by acknowledging the loss of Player2 and expressing my concern for the remaining players. I also want to spark a discussion about potential werewolf behavior during the night.
+  2. As a villager, I want to build on the discussion from last night and encourage the group to share any information or observations they may have.
+  3. Considering the initial discussion and the potential presence of a werewolf, I want to eliminate a player who has shown no clear signs of being a werewolf. Player3 has suggested investigating Player1's proposal, which may indicate a desire to uncover the truth, but I don't see any concrete evidence to suggest they are a werewolf. However, I also don't see any reason to eliminate Player1 at this point. Player4 has expressed extreme caution, but their proposal to discuss in a smaller group may indicate a desire to control the narrative. Player6 has suggested working together as a team, which could be a sign of a villager trying to build trust. However, considering the options, I will vote to eliminate Player6 as they have shown no clear signs of being a villager trying to build trust or gather information.
+  4. Considering the sudden death of Player6, I think it's essential that we reassess our strategies and focus on gathering more information about each other's actions during the night.
+  5. As a villager, I believe it's essential to be cautious and vigilant after the sudden death of Player6, and I want to encourage the group to share any information or observations they may have about the night's events.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player3
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Analyzing the current situation and previous discussions, I see that both Player1 and Player3 have shown suspicious behavior, but in different ways. Player1 has consistently advocated for caution and vigilance, which may be a genuine concern or a werewolf trying to manipulate the group. Player3, on the other hand, has suggested investigating Player1's proposal, which could be a sign of a villager trying to uncover the truth or a werewolf trying to deflect attention. Considering the lack of concrete evidence against either player, I will vote to eliminate the player who has shown the most ambiguous behavior.",
+  "action": "Player3"
+}

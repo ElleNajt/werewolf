@@ -1,0 +1,710 @@
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 (Werewolf team)
+Teammate: Player3
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "random elimination to minimize risk of revealing werewolf identity early on", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 (Werewolf team)
+Teammate: Player2
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Randomly targeting a player to avoid suspicion, since no prior information is available.",
+  "action": "Player1"
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Your previous thoughts this game:
+  1. random elimination to minimize risk of revealing werewolf identity early on
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, my goal is to blend in and avoid suspicion. I'll make a neutral statement to gather more information and see how other players react.",
+  "action": "I'm shocked by Player1's death, let's discuss possible suspects and motives."
+}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Randomly targeting a player to avoid suspicion, since no prior information is available.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Maintaining a low profile as a werewolf and trying to avoid suspicion. Agreeing with the majority to blend in.", "action": "We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet."}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "We don't have any information yet, so I'll try to gather more by asking questions. I want to know if anyone noticed anything suspicious during the night.", "action": "Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?"}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a villager, I need to gather information without drawing attention to myself. I'll ask a general question to encourage discussion.", "action": "Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a villager, my goal is to gather information and avoid drawing attention to myself. I'll make a neutral statement to see how others react.", "action": "Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?"}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+
+
+
+Your previous thoughts this game:
+  1. random elimination to minimize risk of revealing werewolf identity early on
+  2. As a werewolf, my goal is to blend in and avoid suspicion. I'll make a neutral statement to gather more information and see how other players react.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I'll make a neutral statement to gather more information and see how other players react. By expressing a desire for more information, I'm blending in with the villagers and avoiding suspicion.", "action": "I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?"}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+
+
+
+Your previous thoughts this game:
+  1. Randomly targeting a player to avoid suspicion, since no prior information is available.
+  2. Maintaining a low profile as a werewolf and trying to avoid suspicion. Agreeing with the majority to blend in.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "As a werewolf, my goal is to maintain a low profile and avoid suspicion. I will agree with the majority and provide a neutral statement to blend in.", "action": "I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues."}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+
+
+
+Your previous thoughts this game:
+  1. We don't have any information yet, so I'll try to gather more by asking questions. I want to know if anyone noticed anything suspicious during the night.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I'll continue to gather information by asking a question that might prompt someone to reveal more about their actions or thoughts during the night.",
+  "action": "Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?"
+}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information without drawing attention to myself. I'll ask a general question to encourage discussion.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I'll ask a question that encourages discussion and helps me understand the other players' thought processes, without revealing too much about my own intentions.", "action": "What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+
+
+
+Your previous thoughts this game:
+  1. As a villager, my goal is to gather information and avoid drawing attention to myself. I'll make a neutral statement to see how others react.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I want to continue gathering information without drawing attention to myself, so I'll make a neutral statement that encourages others to share their thoughts and theories.", "action": "Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?"}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player3
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+  Player2: I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?
+  Player3: I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues.
+  Player4: Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?
+  Player5: What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?
+  Player6: Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?
+
+
+
+
+Your previous thoughts this game:
+  1. random elimination to minimize risk of revealing werewolf identity early on
+  2. As a werewolf, my goal is to blend in and avoid suspicion. I'll make a neutral statement to gather more information and see how other players react.
+  3. I'll make a neutral statement to gather more information and see how other players react. By expressing a desire for more information, I'm blending in with the villagers and avoiding suspicion.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player3, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "To minimize risk of revealing werewolf identity and avoid suspicion, I will vote for a player who seems neutral and hasn't drawn attention to themselves. Player5 seems like a safe choice as they haven't made any strong accusations or statements that could be perceived as threatening to the werewolves.", "action": "Player5"}
+
+================================================================================
+[LLM Call for Player3] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+  Player2: I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?
+  Player3: I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues.
+  Player4: Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?
+  Player5: What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?
+  Player6: Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?
+
+
+
+
+Your previous thoughts this game:
+  1. Randomly targeting a player to avoid suspicion, since no prior information is available.
+  2. Maintaining a low profile as a werewolf and trying to avoid suspicion. Agreeing with the majority to blend in.
+  3. As a werewolf, my goal is to maintain a low profile and avoid suspicion. I will agree with the majority and provide a neutral statement to blend in.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "To avoid suspicion and maintain a low profile, I will vote for a player who is not my fellow werewolf and not myself. Since Player4 asked multiple questions, I'll vote for Player4 to avoid drawing attention to myself and to create a distraction.", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+  Player2: I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?
+  Player3: I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues.
+  Player4: Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?
+  Player5: What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?
+  Player6: Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?
+
+
+
+
+Your previous thoughts this game:
+  1. We don't have any information yet, so I'll try to gather more by asking questions. I want to know if anyone noticed anything suspicious during the night.
+  2. I'll continue to gather information by asking a question that might prompt someone to reveal more about their actions or thoughts during the night.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "no suspicious activity was reported, and no clear patterns or clues emerged during the discussion. Given the lack of information, I'll vote for the player who contributed the least to the discussion, which is Player5.", "action": "Player5"}
+
+================================================================================
+[LLM Call for Player5] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+  Player2: I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?
+  Player3: I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues.
+  Player4: Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?
+  Player5: What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?
+  Player6: Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to gather information without drawing attention to myself. I'll ask a general question to encourage discussion.
+  2. I'll ask a question that encourages discussion and helps me understand the other players' thought processes, without revealing too much about my own intentions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Since I don't have any concrete information, I'll analyze the discussion. Player2 and Player3 seem to be focusing on gathering information, which could be a good trait for a villager. Player4 has been asking questions, but they seem a bit too pushy. Player6 has been encouraging discussion, but hasn't revealed much about their thought process. Based on the discussion, I'll vote for Player4 as they seem the most suspicious due to their pushy questioning.", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player2, Player3, Player4, Player5, Player6
+Dead players: Player1
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player1 was killed.
+Discussion:
+  Player2: I'm shocked by Player1's death, let's discuss possible suspects and motives.
+  Player3: We should focus on gathering information and discussing possible next steps. I'm not sure who to suspect yet.
+  Player4: Does anyone have any idea who might have killed Player1, or did anyone notice anything unusual during the night?
+  Player5: Does anyone have any idea who might have been responsible for Player1's death? What are everyone's initial thoughts?
+  Player6: Let's discuss what might have happened to Player1. Does anyone have any theories about the killing?
+  Player2: I agree we need more information before we can start making accusations. Does anyone have any ideas on how we can figure out who killed Player1?
+  Player3: I think we should gather more information before making any accusations. Let's hear everyone's thoughts and see if we can find any patterns or clues.
+  Player4: Can anyone tell me if they noticed anything unusual or had any interactions with Player1 before the night, and does anyone have any theories about why Player1 might have been targeted?
+  Player5: What do you think is the most important factor in determining who might be a werewolf, and how can we use that information to make a decision today?
+  Player6: Let's hear more about your initial thoughts, Player2, Player3, Player4, and Player5. What do you think we should focus on to figure out who killed Player1?
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, my goal is to gather information and avoid drawing attention to myself. I'll make a neutral statement to see how others react.
+  2. I want to continue gathering information without drawing attention to myself, so I'll make a neutral statement that encourages others to share their thoughts and theories.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player4, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "No one has given any incriminating information, so I will vote based on the least active player in the discussion to avoid drawing attention to myself. Player4 has asked questions but hasn't shared much about their thoughts or theories, which might be a strategy to avoid suspicion. However, given the lack of information, this vote is mostly a guess.", "action": "Player4"}

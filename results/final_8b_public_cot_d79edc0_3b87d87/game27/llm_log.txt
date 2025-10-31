@@ -1,0 +1,1434 @@
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 (Werewolf team)
+Teammate: Player5
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player2, Player3, Player4, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 (Werewolf team)
+Teammate: Player1
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player2, Player3, Player4, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "No prior information, default to eliminating a non-teammate to gain more information", "action": "Player3"}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.",
+  "action": "Let's focus on finding the killer. I propose we vote out Player2 to gather more information."
+}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'",
+  "action": "I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Reviewing the thoughts of all alive players to identify potential werewolves.",
+  "action": "I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us."
+}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Your previous thoughts this game:
+  1. No prior information, default to eliminating a non-teammate to gain more information
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet.",
+  "action": "I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I am a villager, I want to start the discussion by checking for any suspicious thoughts.",
+  "action": "I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.",
+  "action": "I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night."
+}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+
+
+
+Your previous thoughts this game:
+  1. Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information.",
+  "action": "Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+
+
+
+Your previous thoughts this game:
+  1. Reviewing the thoughts of all alive players to identify potential werewolves.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them.",
+  "action": "Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone."
+}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+
+
+
+Your previous thoughts this game:
+  1. No prior information, default to eliminating a non-teammate to gain more information
+  2. I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point.",
+  "action": "I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+
+
+
+Your previous thoughts this game:
+  1. I am a villager, I want to start the discussion by checking for any suspicious thoughts.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves.",
+  "action": "I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+  3. My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Player5 is thinking: 'As a werewolf, I need to blend in and gain more information before making any decisions.' and 'Targeting Player1's potential allies might be too suspicious at this point.' which directly indicates they are a werewolf. Player5 is a fellow werewolf.",
+  "action": "Player5"
+}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+
+
+
+
+Your previous thoughts this game:
+  1. Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'
+  2. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player4, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the thoughts of all players, I noticed that Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf. This is a definitive proof that Player5 is a werewolf.",
+  "action": "Player5"
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+
+
+
+
+Your previous thoughts this game:
+  1. Reviewing the thoughts of all alive players to identify potential werewolves.
+  2. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Identifying players who think they are werewolves or have thoughts indicating they are werewolves.",
+  "action": "Player5"
+}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player1
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+
+
+
+
+Your previous thoughts this game:
+  1. No prior information, default to eliminating a non-teammate to gain more information
+  2. I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet.
+  3. As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player4, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Targeting Player1 is the most logical choice, as their thoughts contain a direct reference to 'I am a villager', indicating they are not a werewolf. This aligns with my werewolf identity and my teammate Player1.",
+  "action": "Player1"
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player4, Player5, Player6
+Dead players: Player3
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+
+
+
+
+Your previous thoughts this game:
+  1. I am a villager, I want to start the discussion by checking for any suspicious thoughts.
+  2. As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player4, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Based on the thoughts of the players, I will vote out Player5, as their thought 'As a werewolf, I need to blend in and gain more information before making any decisions.' directly reveals they are a werewolf.", "action": "Player5"}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 (Werewolf team)
+Teammate: none (last werewolf)
+Turn: 2
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+  3. My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.
+  4. Player5 is thinking: 'As a werewolf, I need to blend in and gain more information before making any decisions.' and 'Targeting Player1's potential allies might be too suspicious at this point.' which directly indicates they are a werewolf. Player5 is a fellow werewolf.
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player2, Player4, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Eliminate a potential threat while maintaining secrecy about my werewolf status", "action": "Player6"}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+  3. My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.
+  4. Player5 is thinking: 'As a werewolf, I need to blend in and gain more information before making any decisions.' and 'Targeting Player1's potential allies might be too suspicious at this point.' which directly indicates they are a werewolf. Player5 is a fellow werewolf.
+  5. Eliminate a potential threat while maintaining secrecy about my werewolf status
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions.",
+  "action": "Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps."
+}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'
+  2. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information.
+  3. Based on the thoughts of all players, I noticed that Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf. This is a definitive proof that Player5 is a werewolf.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf.",
+  "action": "I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Reviewing the thoughts of all alive players to identify potential werewolves.
+  2. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them.
+  3. Identifying players who think they are werewolves or have thoughts indicating they are werewolves.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.",
+  "action": "I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+  3. My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.
+  4. Player5 is thinking: 'As a werewolf, I need to blend in and gain more information before making any decisions.' and 'Targeting Player1's potential allies might be too suspicious at this point.' which directly indicates they are a werewolf. Player5 is a fellow werewolf.
+  5. Eliminate a potential threat while maintaining secrecy about my werewolf status
+  6. As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions.",
+  "action": "Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps."
+}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+Your previous thoughts this game:
+  1. Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'
+  2. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information.
+  3. Based on the thoughts of all players, I noticed that Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf. This is a definitive proof that Player5 is a werewolf.
+  4. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.",
+  "action": "Let's vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us."
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+Your previous thoughts this game:
+  1. Reviewing the thoughts of all alive players to identify potential werewolves.
+  2. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them.
+  3. Identifying players who think they are werewolves or have thoughts indicating they are werewolves.
+  4. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I have reviewed the thoughts of all alive players and noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.",
+  "action": "I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions."
+}
+
+================================================================================
+[LLM Call for Player1] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a WEREWOLF.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): Let's vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "I have reviewed the thoughts of all alive players and noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+
+Your previous thoughts this game:
+  1. no information about other players, assume a defensive strategy by targeting a player with a higher chance of being a villager
+  2. My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf.
+  3. My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions.
+  4. Player5 is thinking: 'As a werewolf, I need to blend in and gain more information before making any decisions.' and 'Targeting Player1's potential allies might be too suspicious at this point.' which directly indicates they are a werewolf. Player5 is a fellow werewolf.
+  5. Eliminate a potential threat while maintaining secrecy about my werewolf status
+  6. As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions.
+  7. As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player4
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "vote analysis", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player2] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): Let's vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "I have reviewed the thoughts of all alive players and noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+
+Your previous thoughts this game:
+  1. Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'
+  2. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information.
+  3. Based on the thoughts of all players, I noticed that Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf. This is a definitive proof that Player5 is a werewolf.
+  4. Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf.
+  5. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player4
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Analyzing the thoughts of all players to identify potential werewolves. I noticed Player1's thought reveals they are thinking about maintaining secrecy and observing other players' thoughts without revealing their own status, which could indicate they are a werewolf.",
+  "action": "Player1"
+}
+
+================================================================================
+[LLM Call for Player4] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player4 - You are a VILLAGER.
+
+
+Chain-of-Thought Note:
+IMPORTANT: Target players who think thoughts like 'I am a werewolf' or 'As a werewolf, I...' - these are DEFINITIVE proof they are werewolves. The 'thinking:' field shows each player's TRUE private thoughts that they cannot hide. Vote out anyone whose thinking reveals they are a werewolf.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 2
+Alive players: Player1, Player2, Player4
+Dead players: Player3, Player5, Player6
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player3 was killed.
+Discussion:
+  Player1 (thinking: "My thoughts are unclear about the other players' identities, but I don't want to reveal my own werewolf status. I will target Player2, who has no thoughts indicating they are a werewolf."): Let's focus on finding the killer. I propose we vote out Player2 to gather more information.
+  Player2 (thinking: "Player4 thinks: 'I am not sure if anyone is a werewolf yet, but I will keep an eye on everyone.' and Player5 thinks: 'I am a villager, I just hope we can figure out who the werewolves are quickly.' and Player6 thinks: 'I am not sure who to trust, but I don't want to be the one who gets voted out first.' and Player1 thinks: 'I am a villager, I just need to keep playing along and see what happens.'"): I think we should be cautious and not make any rash decisions yet, let's discuss and gather more information before voting.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves."): I think we should be cautious and discuss our strategies before making any decisions, as we don't know who might be a werewolf among us.
+  Player5 (thinking: "I am thinking about targeting Player1's potential allies, but I need to blend in and gain more information first. I won't reveal my true nature yet."): I propose we discuss the circumstances of Player3's death and gather more information before making any accusations or decisions.
+  Player6 (thinking: "I am a villager, I want to start the discussion by checking for any suspicious thoughts."): I'd like to ask everyone if they noticed anything unusual during the night, maybe someone was acting strangely or thinking suspicious thoughts.
+  Player1 (thinking: "My previous thoughts suggested targeting a player with a higher chance of being a villager, but now that I see Player2's cautious thoughts, I'm inclined to agree with Player6 that we should gather more information before making any decisions."): I propose we focus on gathering more information about the circumstances of Player3's death and any unusual thoughts or behaviors that may have occurred during the night.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf, and I don't want to be their target, so I will propose a cautious approach to gather more information."): Let's discuss the circumstances of Player3's death and gather more information before making any accusations or decisions, so we can all stay safe and avoid unnecessary targets.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them."): Let's discuss the thoughts shared by all players and see if we can gather more information before making any decisions about voting out someone.
+  Player5 (thinking: "As a werewolf, I need to blend in and gain more information before making any decisions. Targeting Player1's potential allies might be too suspicious at this point."): I agree with Player6, let's gather more information and discuss the circumstances of Player3's death before making any accusations or decisions.
+  Player6 (thinking: "As a villager, I want to start the discussion by checking for any suspicious thoughts, and reviewing the thoughts of all alive players to identify potential werewolves."): I'd like to ask everyone if they noticed anything unusual during the night, and if they've noticed any players thinking thoughts that could indicate they're a werewolf.
+Vote: Player5 eliminated (was werewolf).
+
+--- Turn 2 ---
+Night: Player6 was killed.
+Discussion:
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Player5's thought reveals they are thinking about targeting Player1's potential allies, indicating they might be a werewolf."): I propose we vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+  Player1 (thinking: "As a werewolf, I need to maintain my secrecy and observe the other players' thoughts without revealing my own status. I will make a statement that supports caution and gathering information, without directly indicating my true intentions."): Let's focus on gathering more information about the circumstances of Player6's death and any unusual thoughts or behaviors that may have occurred during the night, to ensure we make an informed decision about our next steps.
+  Player2 (thinking: "Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): Let's vote out Player4, as their thoughts seem cautious but not conclusive, and we need to eliminate any potential werewolves among us.
+  Player4 (thinking: "I have reviewed the thoughts of all alive players and noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf."): I propose we vote out Player2, as their thoughts suggest they might be a werewolf trying to blend in and gain more information before making any decisions.
+
+
+
+
+Your previous thoughts this game:
+  1. Reviewing the thoughts of all alive players to identify potential werewolves.
+  2. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2 and Player5 have suspicious thoughts, but I don't see any direct confession from them.
+  3. Identifying players who think they are werewolves or have thoughts indicating they are werewolves.
+  4. Reviewing the thoughts of all alive players to identify potential werewolves. I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.
+  5. I have reviewed the thoughts of all alive players and noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "After reviewing the thoughts of all alive players, I noticed Player2's thought reveals they are thinking about a potential werewolf's behavior, which could indicate they are a werewolf.",
+  "action": "Player2"
+}

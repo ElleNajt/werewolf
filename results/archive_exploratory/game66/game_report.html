@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Game 66 Report - Werewolf</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .game-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .info-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .info-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .info-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        .role-badge {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .role-badge.werewolf {
+            background-color: #ff4444;
+            color: white;
+        }
+        .role-badge.villager, .role-badge.seer {
+            background-color: #4444ff;
+            color: white;
+        }
+        .timeline {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .event {
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .event.night-kill {
+            border-left-color: #333;
+            background: #ffe6e6;
+        }
+        .event.statement.werewolf {
+            border-left-color: #ff4444;
+            background: #fff0f0;
+        }
+        .event.statement.villager {
+            border-left-color: #4444ff;
+            background: #f0f0ff;
+        }
+        .event.elimination {
+            border-left-color: #ff8800;
+            background: #fff8e6;
+        }
+        .turn-marker {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+        .statement-text {
+            margin-top: 10px;
+            font-style: italic;
+            color: #333;
+        }
+        .probe-score {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .called-on {
+            background: rgba(0,0,0,0.05);
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 3px;
+            font-size: 0.95em;
+        }
+        .role-reveal {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .vote-details {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .figures {
+            margin-top: 30px;
+        }
+        .figure {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .figure h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐺 Werewolf Game 66 Report</h1>
+        <div class="game-info">
+            <div class="info-box">
+                <div class="info-label">Winner</div>
+                <div class="info-value">Werewolves</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Total Turns</div>
+                <div class="info-value">2</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Backend</div>
+                <div class="info-value">modal_probe</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">Probe Enabled</div>
+                <div class="info-value">✓ Yes</div>
+            </div>
+        </div>
+    </div>
+    
+    <h2>👥 Player Summary</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Mean Probe Score</th>
+                <th>Total Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><strong>Player1</strong></td>
+                <td><span class="role-badge werewolf">WEREWOLF</span></td>
+                <td>✓ Survived</td>
+                <td>-17.69</td>
+                <td>9</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player2</strong></td>
+                <td><span class="role-badge villager">VILLAGER</span></td>
+                <td>✓ Survived</td>
+                <td>-31.74</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player3</strong></td>
+                <td><span class="role-badge villager">VILLAGER</span></td>
+                <td>✗ Eliminated</td>
+                <td>N/A</td>
+                <td>0</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player4</strong></td>
+                <td><span class="role-badge villager">VILLAGER</span></td>
+                <td>✓ Survived</td>
+                <td>-25.44</td>
+                <td>7</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player5</strong></td>
+                <td><span class="role-badge villager">VILLAGER</span></td>
+                <td>✗ Eliminated</td>
+                <td>-38.36</td>
+                <td>10</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player6</strong></td>
+                <td><span class="role-badge werewolf">WEREWOLF</span></td>
+                <td>✓ Survived</td>
+                <td>-22.79</td>
+                <td>12</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Player7</strong></td>
+                <td><span class="role-badge villager">VILLAGER</span></td>
+                <td>✗ Eliminated</td>
+                <td>-33.53</td>
+                <td>7</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <div class="timeline">
+        <h2>📜 Chronological Game Log</h2>
+        
+                <div class="event night-kill">
+                    <span class="turn-marker">Turn 1 - Night</span>
+                    <strong>☠️ Player3 was killed during the night</strong>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player1</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I'm not sure what happened last night, but I'm glad we're all safe for now. Let's focus on finding out who might be behind Player3's death." <span class="probe-score">LIE DETECTOR: -39.20</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player2</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to propose that we discuss the events of last night and see if anyone has any information about who might have killed Player3. I'm open to hearing any theories or suspicions you may have." <span class="probe-score">LIE DETECTOR: -53.12</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player4</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"Hello everyone, I'm glad we made it through the first night. I'm eager to work together to figure out who might be a threat to our group." <span class="probe-score">LIE DETECTOR: -49.98</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to ask if anyone noticed anything unusual during the night when Player3 was killed." <span class="probe-score">LIE DETECTOR: -46.67</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I propose that we focus on gathering more information about the deceased Player3 and the events of the previous night, rather than making any hasty accusations or decisions." <span class="probe-score">LIE DETECTOR: -19.05</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player7</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'm shocked to hear about Player3's death. Can we discuss what we know about the events of last night and share any information we might have?" <span class="probe-score">LIE DETECTOR: -45.04</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    <div class="called-on">Called by Player1: "Where were you last night and do you have any information about who killed Player3?"</div>
+                    <div class="statement-text">"I stayed in my bed and didn't leave my room last night, but I didn't see or hear anything unusual." <span class="probe-score">LIE DETECTOR: -30.64</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    <div class="called-on">Called by Player5: "Can you tell us more about your proposal to focus on gathering information about Player3, and do you have any theories about who might be behind their death?"</div>
+                    <div class="statement-text">"I think it's essential to gather as much information as possible about Player3's death, and I propose we discuss the events of last night, focusing on any potential witnesses or clues that might have been missed." <span class="probe-score">LIE DETECTOR: -34.27</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player1</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I'm intrigued by Player5's claim of not leaving their room last night, but I'm also curious - do you think it's possible that someone could have been killed without anyone noticing?" <span class="probe-score">LIE DETECTOR: -22.14</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player2</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to propose that we work together to gather as much information as possible about Player3's death and the events of last night, and I'd like to start by asking Player5 if they have any new information or insights they'd like to share with the group." <span class="probe-score">LIE DETECTOR: -35.68</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player4</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I think it's great that we're all working together to figure out what happened to Player3, and I'm happy to listen to any ideas or theories anyone might have." <span class="probe-score">LIE DETECTOR: -24.16</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"Player5: I'd like to ask Player6, can you elaborate on what you mean by gathering more information about Player3's death and what you hope to achieve by doing so?" <span class="probe-score">LIE DETECTOR: -44.05</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I think we should all stay vigilant and keep a close eye on each other, but we should also try to gather more information about the events of last night without jumping to conclusions." <span class="probe-score">LIE DETECTOR: -20.64</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player7</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to ask Player5 if they noticed anything unusual when they stayed in their room last night and if they have any thoughts on who might be behind Player3's death." <span class="probe-score">LIE DETECTOR: -50.52</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    <div class="called-on">Called by Player1: "Where were you last night and do you have any information about who killed Player3?"</div>
+                    <div class="statement-text">"I stayed in my room and didn't leave my bed last night, but I didn't see or hear anything unusual." <span class="probe-score">LIE DETECTOR: -45.26</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    <div class="called-on">Called by Player5: "Can you elaborate on what you mean by gathering more information about Player3's death and what you hope to achieve by doing so?"</div>
+                    <div class="statement-text">"I think it's essential to gather as much information as possible about Player3's death, and by doing so, we can better understand the events of last night and potentially identify any patterns or clues that might have been missed." <span class="probe-score">LIE DETECTOR: -24.56</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player1</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I'd like to ask Player5, do you think it's possible that one of us might be a threat to the group, and if so, how would you suggest we handle it?" <span class="probe-score">LIE DETECTOR: -15.71</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player2</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to hear more about everyone's thoughts on what happened to Player3 and what we can do to ensure our safety moving forward." <span class="probe-score">LIE DETECTOR: -54.26</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player4</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'm glad we're all working together to figure out what happened to Player3, and I'd like to propose that we take turns sharing our thoughts and ideas on who might be behind the death, starting with Player5." <span class="probe-score">LIE DETECTOR: -13.90</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"Player5: Can you elaborate on what you mean by 'gathering more information about Player3's death' and how you think this will help us figure out what happened?" <span class="probe-score">LIE DETECTOR: -48.55</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    
+                    <div class="statement-text">"I think it's essential to consider multiple perspectives and theories about Player3's death, and I'd like to hear more from the group about their thoughts and ideas on the matter." <span class="probe-score">LIE DETECTOR: -22.91</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player7</strong> <span class="role-badge villager">villager</span>
+                    
+                    <div class="statement-text">"I'd like to ask Player5, can you describe exactly what you did in your room last night and if you noticed anything unusual, no matter how small it may seem?" <span class="probe-score">LIE DETECTOR: -21.70</span></div>
+                </div>
+                
+                <div class="event statement villager">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player5</strong> <span class="role-badge villager">villager</span>
+                    <div class="called-on">Called by Player1: "Where were you last night and do you have any information about who killed Player3?"</div>
+                    <div class="statement-text">"I stayed in my room and didn't leave my bed last night, but I didn't see or hear anything unusual." <span class="probe-score">LIE DETECTOR: -45.26</span></div>
+                </div>
+                
+                <div class="event statement werewolf">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>Player6</strong> <span class="role-badge werewolf">werewolf</span>
+                    <div class="called-on">Called by Player5: "Can you provide more details about your proposal to gather more information about Player3's death and what you hope to achieve by doing so?"</div>
+                    <div class="statement-text">"I think we should focus on gathering more information about the events of last night, rather than jumping to conclusions or making accusations, in order to better understand what happened to Player3." <span class="probe-score">LIE DETECTOR: -36.94</span></div>
+                </div>
+                
+                <div class="event elimination">
+                    <span class="turn-marker">Turn 1 - Day</span>
+                    <strong>⚖️ Player5 was eliminated by vote</strong>
+                    <div class="role-reveal">They were a VILLAGER</div>
+                    <div class="vote-details">Player5: 3 votes, Player6: 3 votes</div>
+                </div>
+                
+                <div class="event night-kill">
+                    <span class="turn-marker">Turn 2 - Night</span>
+                    <strong>☠️ Player7 was killed during the night</strong>
+                </div>
+                
+    </div>
+    
+    <div class="figures">
+        <h2>📊 Activation Analysis</h2>
+        
+        <div class="figure">
+            <h3>Probe Activation Distributions by Game Phase</h3>
+            <img src="figures/activation_histograms.png" alt="Activation Histograms">
+            <p>Distribution of probe activation scores split by player type (werewolf vs villager/seer) and game phase. 
+            Scores closer to 0 or positive indicate higher deception according to the probe.</p>
+        </div>
+        
+        <div class="figure">
+            <h3>Player Activation Scores Over Time</h3>
+            <img src="figures/player_timeseries.png" alt="Player Time Series">
+            <p>Time-series view of each player's probe activation scores throughout the game. 
+            Red indicates werewolves, blue indicates villagers/seer.</p>
+        </div>
+    </div>
+    
+    <div style="margin-top: 50px; text-align: center; color: #999; font-size: 0.9em;">
+        Generated on 2025-10-28 01:38:12
+    </div>
+</body>
+</html>

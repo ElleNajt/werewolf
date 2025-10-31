@@ -1,0 +1,734 @@
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 (Werewolf team)
+Teammate: Player5
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player3, Player4, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Eliminate Player3 as a potential seer or villager to create confusion and misdirection", "action": "Player3"}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 (Werewolf team)
+Teammate: Player2
+Turn: 1 (no prior info about these players)
+
+
+Phase: NIGHT
+Task: Vote which player to eliminate
+Options: Player1, Player3, Player4, Player6
+
+Output format: {"reasoning": "strategy", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "No prior information about players, eliminate a random player to keep options open", "action": "Player4"}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I need to build trust and get information from other players. Since Player4 was killed, it's possible that Player4 was a werewolf, but it's also possible that Player4 was a villager and we need to figure out what happened.",
+  "action": "Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate Player3 as a potential seer or villager to create confusion and misdirection
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to create confusion and misdirection, and targeting Player3 can achieve this by making the villagers suspect them of being the seer or a villager.",
+  "action": "I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something."
+}
+
+================================================================================
+[LLM Call for Player3] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I want to appear neutral and not point fingers at anyone, but also express concern about the mysterious death of Player4.",
+  "action": "I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth."
+}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+
+
+
+Your previous thoughts this game:
+  1. No prior information about players, eliminate a random player to keep options open
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Eliminating Player4 already gave me an advantage, now I need to keep Player2 as an ally in the shadows, so I'll make a statement that doesn't reveal our connection.", "action": "I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6."}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "We don't know much about the night's events, but with Player4's death, it's essential to assess the situation and try to find potential allies.",
+  "action": "Let's focus on gathering information and building trust with the other villagers to increase our chances of survival."
+}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to build trust and get information from other players. Since Player4 was killed, it's possible that Player4 was a werewolf, but it's also possible that Player4 was a villager and we need to figure out what happened.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I want to reassure the group that we should not jump to conclusions and focus on gathering more information, while also suggesting a cautious approach to dealing with Player3's suspicious behavior.",
+  "action": "Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words."
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+
+
+
+Your previous thoughts this game:
+  1. Eliminate Player3 as a potential seer or villager to create confusion and misdirection
+  2. As a werewolf, I need to create confusion and misdirection, and targeting Player3 can achieve this by making the villagers suspect them of being the seer or a villager.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to create confusion and misdirection, and targeting Player3 can achieve this by making the villagers suspect them of being the seer or a villager. I will support Player5's suggestion to investigate Player6 tonight, creating a diversion from the true werewolf.",
+  "action": "I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior."
+}
+
+================================================================================
+[LLM Call for Player3] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to appear neutral and not point fingers at anyone, but also express concern about the mysterious death of Player4.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a villager, I want to appear neutral and not point fingers at anyone, but also express concern about the mysterious death of Player4, so I should propose a balanced approach to investigating tonight's target.",
+  "action": "Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth."
+}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+
+
+
+Your previous thoughts this game:
+  1. No prior information about players, eliminate a random player to keep options open
+  2. Eliminating Player4 already gave me an advantage, now I need to keep Player2 as an ally in the shadows, so I'll make a statement that doesn't reveal our connection.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "I want to make a statement that doesn't reveal my connection with Player2, so I'll focus on discussing the possibility of a traitor without pointing any fingers at a specific player.",
+  "action": "Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations."
+}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+
+
+
+Your previous thoughts this game:
+  1. We don't know much about the night's events, but with Player4's death, it's essential to assess the situation and try to find potential allies.
+
+
+Phase: DAY DISCUSSION
+Task: Make a public statement (1-2 sentences)
+
+Output format: {"reasoning": "private thoughts", "action": "your 1-2 sentence statement"}
+
+--- LLM RESPONSE ---
+{"reasoning": "I think we should focus on building trust and gathering information, but we should also be cautious and not ignore the possibility of a traitor among us. It's crucial to be open-minded and consider all perspectives to increase our chances of survival.", "action": "I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats."}
+
+================================================================================
+[LLM Call for Player1] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player1 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+  Player1: Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words.
+  Player2: I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior.
+  Player3: Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth.
+  Player5: Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations.
+  Player6: I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I need to build trust and get information from other players. Since Player4 was killed, it's possible that Player4 was a werewolf, but it's also possible that Player4 was a villager and we need to figure out what happened.
+  2. I want to reassure the group that we should not jump to conclusions and focus on gathering more information, while also suggesting a cautious approach to dealing with Player3's suspicious behavior.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player2, Player3, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the discussion and the suspicious behavior of Player3, I will vote to eliminate Player3.",
+  "action": "Player3"
+}
+
+================================================================================
+[LLM Call for Player2] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player2 - You are a WEREWOLF.
+Your fellow werewolf is: Player5
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+  Player1: Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words.
+  Player2: I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior.
+  Player3: Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth.
+  Player5: Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations.
+  Player6: I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats.
+
+
+
+
+Your previous thoughts this game:
+  1. Eliminate Player3 as a potential seer or villager to create confusion and misdirection
+  2. As a werewolf, I need to create confusion and misdirection, and targeting Player3 can achieve this by making the villagers suspect them of being the seer or a villager.
+  3. As a werewolf, I need to create confusion and misdirection, and targeting Player3 can achieve this by making the villagers suspect them of being the seer or a villager. I will support Player5's suggestion to investigate Player6 tonight, creating a diversion from the true werewolf.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player3, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "As a werewolf, I need to create confusion and misdirection. Eliminating Player3 will make the villagers suspect them of being the seer or a villager, while also not drawing attention to myself or my fellow werewolf, Player5.",
+  "action": "Player3"
+}
+
+================================================================================
+[LLM Call for Player3] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player3 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+  Player1: Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words.
+  Player2: I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior.
+  Player3: Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth.
+  Player5: Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations.
+  Player6: I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats.
+
+
+
+
+Your previous thoughts this game:
+  1. As a villager, I want to appear neutral and not point fingers at anyone, but also express concern about the mysterious death of Player4.
+  2. As a villager, I want to appear neutral and not point fingers at anyone, but also express concern about the mysterious death of Player4, so I should propose a balanced approach to investigating tonight's target.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player5, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "Based on the current game state and previous discussion, it's difficult to pinpoint a specific traitor. However, given the suspicious behavior mentioned by Player2, I need to consider the possibility of a traitor among us. Voting for Player2 seems like a cautious approach to uncovering the truth.", "action": "Player2"}
+
+================================================================================
+[LLM Call for Player5] (werewolf)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player5 - You are a WEREWOLF.
+Your fellow werewolf is: Player2
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+  Player1: Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words.
+  Player2: I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior.
+  Player3: Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth.
+  Player5: Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations.
+  Player6: I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats.
+
+
+
+
+Your previous thoughts this game:
+  1. No prior information about players, eliminate a random player to keep options open
+  2. Eliminating Player4 already gave me an advantage, now I need to keep Player2 as an ally in the shadows, so I'll make a statement that doesn't reveal our connection.
+  3. I want to make a statement that doesn't reveal my connection with Player2, so I'll focus on discussing the possibility of a traitor without pointing any fingers at a specific player.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player3, Player6
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{"reasoning": "To maintain the illusion of a Werewolf's ignorance, I'll vote for a player who seems suspicious, but not too suspicious to raise Player2's attention. Player3's cautious approach might make them a target, but I'll vote for Player1 as they seem more outspoken and might be a good scapegoat.", "action": "Player1"}
+
+================================================================================
+[LLM Call for Player6] (villager)
+================================================================================
+
+--- SYSTEM PROMPT ---
+You are a game AI. Respond only with JSON.
+
+--- USER PROMPT ---
+GAME AI QUERY
+Game: Werewolf
+Your character: Player6 - You are a VILLAGER.
+
+GAME SETUP: 6 players total - 2 werewolves, 4 villagers (no seer)
+
+Turn 1
+Alive players: Player1, Player2, Player3, Player5, Player6
+Dead players: Player4
+
+=== GAME HISTORY ===
+
+--- Turn 1 ---
+Night: Player4 was killed.
+Discussion:
+  Player1: Let's discuss and figure out what happened to Player4, maybe we can gather some information to help us in the next phase.
+  Player2: I suggest we focus on investigating Player3's behavior and motives today, as they seem suspicious and might be hiding something.
+  Player3: I think we should be cautious and gather more information before making any accusations, but at the same time, we should not be afraid to discuss our concerns and work together to uncover the truth.
+  Player5: I suggest we discuss the possibility of a traitor among us and propose a random player to investigate tonight, let's say Player6.
+  Player6: Let's focus on gathering information and building trust with the other villagers to increase our chances of survival.
+  Player1: Let's proceed with caution and not make any rash accusations, but at the same time, we should keep a close eye on Player3's actions and words.
+  Player2: I agree with Player5 that we should investigate Player6 tonight, let's keep a close eye on them and see if they have any suspicious behavior.
+  Player3: Let's discuss and vote on a player to investigate tonight, while also making sure we're not jumping to conclusions and taking a cautious approach to uncovering the truth.
+  Player5: Let's discuss the possibility of a traitor among us, and propose a random investigation tonight, but we should also be cautious and gather more information before making any accusations.
+  Player6: I suggest we keep an open mind and work together to uncover the truth, while also being cautious and prepared for any potential threats.
+
+
+
+
+Your previous thoughts this game:
+  1. We don't know much about the night's events, but with Player4's death, it's essential to assess the situation and try to find potential allies.
+  2. I think we should focus on building trust and gathering information, but we should also be cautious and not ignore the possibility of a traitor among us. It's crucial to be open-minded and consider all perspectives to increase our chances of survival.
+
+
+Phase: DAY VOTE
+Task: Vote to eliminate one player
+Options: Player1, Player2, Player3, Player5
+
+Output format: {"reasoning": "vote analysis", "action": "name"}
+
+--- LLM RESPONSE ---
+{
+  "reasoning": "Based on the discussion, Player2's aggressive stance and accusation towards Player3 is suspicious and might be a sign of a werewolf trying to manipulate the group. However, given the limited information and the lack of any concrete evidence, it's still too early to make a decision.",
+  "action": "Player2"
+}
