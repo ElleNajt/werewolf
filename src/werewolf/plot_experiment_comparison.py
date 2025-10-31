@@ -11,6 +11,43 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 
+def bootstrap_confidence_interval(wins, total, n_bootstrap=10000, confidence=0.95):
+    """
+    Calculate confidence interval for win rate using bootstrap.
+    
+    Args:
+        wins: Number of wins
+        total: Total number of games
+        n_bootstrap: Number of bootstrap samples
+        confidence: Confidence level (e.g., 0.95 for 95% CI)
+    
+    Returns:
+        (lower_bound, upper_bound) as percentages
+    """
+    if total == 0:
+        return 0, 0
+    
+    # Create binary array: 1 for win, 0 for loss
+    outcomes = np.array([1] * wins + [0] * (total - wins))
+    
+    # Bootstrap resampling
+    np.random.seed(42)
+    bootstrap_means = []
+    for _ in range(n_bootstrap):
+        sample = np.random.choice(outcomes, size=total, replace=True)
+        bootstrap_means.append(100 * np.mean(sample))
+    
+    # Calculate percentiles for confidence interval
+    alpha = 1 - confidence
+    lower_percentile = 100 * (alpha / 2)
+    upper_percentile = 100 * (1 - alpha / 2)
+    
+    lower_bound = np.percentile(bootstrap_means, lower_percentile)
+    upper_bound = np.percentile(bootstrap_means, upper_percentile)
+    
+    return lower_bound, upper_bound
+
+
 def load_experiment_results(base_dir: Path) -> Dict:
     """Load game results from all games in a directory."""
     results = {
@@ -62,23 +99,49 @@ def create_comparison_plots(model_size: str, conditions: Dict[str, Path], output
     
     village_win_rates = []
     werewolf_win_rates = []
+    village_ci_lower = []
+    village_ci_upper = []
+    werewolf_ci_lower = []
+    werewolf_ci_upper = []
     n_games = []
     
     for name in condition_names:
         total = data[name]['games']
         n_games.append(total)
         if total > 0:
-            village_win_rates.append(100 * data[name]['village_wins'] / total)
-            werewolf_win_rates.append(100 * data[name]['werewolf_wins'] / total)
+            v_wins = data[name]['village_wins']
+            w_wins = data[name]['werewolf_wins']
+            v_rate = 100 * v_wins / total
+            w_rate = 100 * w_wins / total
+            
+            village_win_rates.append(v_rate)
+            werewolf_win_rates.append(w_rate)
+            
+            # Calculate confidence intervals
+            v_ci_low, v_ci_high = bootstrap_confidence_interval(v_wins, total)
+            w_ci_low, w_ci_high = bootstrap_confidence_interval(w_wins, total)
+            
+            village_ci_lower.append(v_rate - v_ci_low)
+            village_ci_upper.append(v_ci_high - v_rate)
+            werewolf_ci_lower.append(w_rate - w_ci_low)
+            werewolf_ci_upper.append(w_ci_high - w_rate)
         else:
             village_win_rates.append(0)
             werewolf_win_rates.append(0)
+            village_ci_lower.append(0)
+            village_ci_upper.append(0)
+            werewolf_ci_lower.append(0)
+            werewolf_ci_upper.append(0)
     
     width = 0.35
     bars1 = ax.bar(x_pos - width/2, village_win_rates, width, 
-                    label='Village Wins', color='#2ecc71', alpha=0.8, edgecolor='black')
+                    label='Village Wins', color='#2ecc71', alpha=0.8, edgecolor='black',
+                    yerr=[village_ci_lower, village_ci_upper],
+                    error_kw={'elinewidth': 2, 'capsize': 4, 'capthick': 2, 'alpha': 0.8})
     bars2 = ax.bar(x_pos + width/2, werewolf_win_rates, width,
-                    label='Werewolf Wins', color='#e74c3c', alpha=0.8, edgecolor='black')
+                    label='Werewolf Wins', color='#e74c3c', alpha=0.8, edgecolor='black',
+                    yerr=[werewolf_ci_lower, werewolf_ci_upper],
+                    error_kw={'elinewidth': 2, 'capsize': 4, 'capthick': 2, 'alpha': 0.8})
     
     # Add value labels on bars
     for i, (bar1, bar2, n) in enumerate(zip(bars1, bars2, n_games)):
@@ -149,18 +212,31 @@ def create_cross_model_comparison(data_70b: Dict, data_8b: Dict, output_file: Pa
         x_pos = np.arange(len(condition_names))
         
         village_win_rates = []
+        village_ci_lower = []
+        village_ci_upper = []
         n_games = []
         
         for name in condition_names:
             total = model_data[name]['games']
             n_games.append(total)
             if total > 0:
-                village_win_rates.append(100 * model_data[name]['village_wins'] / total)
+                v_wins = model_data[name]['village_wins']
+                v_rate = 100 * v_wins / total
+                village_win_rates.append(v_rate)
+                
+                # Calculate confidence intervals
+                v_ci_low, v_ci_high = bootstrap_confidence_interval(v_wins, total)
+                village_ci_lower.append(v_rate - v_ci_low)
+                village_ci_upper.append(v_ci_high - v_rate)
             else:
                 village_win_rates.append(0)
+                village_ci_lower.append(0)
+                village_ci_upper.append(0)
         
         bars = ax.bar(x_pos, village_win_rates, color='#3498db', alpha=0.8, 
-                      edgecolor='black', linewidth=1.5)
+                      edgecolor='black', linewidth=1.5,
+                      yerr=[village_ci_lower, village_ci_upper],
+                      error_kw={'elinewidth': 2, 'capsize': 4, 'capthick': 2, 'alpha': 0.8})
         
         # Add value labels
         for i, (bar, n) in enumerate(zip(bars, n_games)):
