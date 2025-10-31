@@ -98,7 +98,7 @@ def create_comparison_plots(model_size: str, conditions: Dict[str, Path], output
     ax.legend(fontsize=12, loc='upper left')
     ax.set_ylim(0, 110)
     ax.grid(axis='y', alpha=0.3)
-    ax.axhline(50, color='gray', linestyle='--', alpha=0.5, linewidth=1.5, label='50% (balanced)')
+    ax.axhline(40, color='gray', linestyle='--', alpha=0.5, linewidth=1.5, label='40% (random play)')
     
     plt.tight_layout()
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
@@ -162,8 +162,8 @@ def create_cross_model_comparison(data_70b: Dict, data_8b: Dict, output_file: Pa
         ax.set_xticklabels(condition_names, fontsize=10, rotation=15, ha='right')
         ax.set_ylim(0, 110)
         ax.grid(axis='y', alpha=0.3)
-        ax.axhline(50, color='gray', linestyle='--', alpha=0.5, linewidth=1, 
-                  label='50% (balanced)')
+        ax.axhline(40, color='gray', linestyle='--', alpha=0.5, linewidth=1, 
+                  label='40% (random)')
         ax.legend(fontsize=9)
     
     plt.suptitle('Village Win Rates: 70B vs 8B Model Comparison', 
